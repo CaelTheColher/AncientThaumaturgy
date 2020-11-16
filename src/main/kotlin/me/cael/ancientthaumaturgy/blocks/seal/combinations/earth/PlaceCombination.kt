@@ -7,6 +7,7 @@ import me.cael.ancientthaumaturgy.utils.getStack
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
+import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
@@ -27,6 +28,8 @@ class PlaceCombination(range: Double, depth: Double) : AbstractSealCombination(1
         val block = (stack.item as BlockItem).block
         val canPlace = (state.material.isReplaceable  && block.defaultState.canPlaceAt(world, pos))
         if (canPlace && world.setBlockState(pos, block.defaultState)) {
+            val soundGroup = block.defaultState.soundGroup
+            world.playSound(null, pos, soundGroup.placeSound, SoundCategory.BLOCKS, soundGroup.volume, soundGroup.pitch)
             stack.decrement(1)
             return true
         }
