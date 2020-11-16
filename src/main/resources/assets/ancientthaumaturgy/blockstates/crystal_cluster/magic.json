@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1 }
+        ]
+    }
+}

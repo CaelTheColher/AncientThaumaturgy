@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/air_1", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/air_2", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/air_3", "weight": 1 }
+        ]
+    }
+}

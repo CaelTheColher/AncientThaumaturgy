@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "ancientthaumaturgy",
+  "version": "${version}",
+
+  "name": "Ancient Thaumaturgy",
+  "description": "Actually a tech mod",
+  "authors": [
+    "Cael"
+  ],
+  "contact": {
+    "discord": "「 Lily 」#5284"
+  },
+
+  "license": "GNU Lesser General Public License v2.1",
+  "icon": "assets/ancientthaumaturgy/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "me.cael.ancientthaumaturgy.AncientThaumaturgy"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "me.cael.ancientthaumaturgy.AncientThaumaturgyClient"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.9.0",
+    "fabric": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.16.x",
+    "autoconfig1u": "*"
+  }
+}

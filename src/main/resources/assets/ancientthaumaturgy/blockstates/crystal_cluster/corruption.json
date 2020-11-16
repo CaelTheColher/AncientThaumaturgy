@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/corruption_1", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/corruption_2", "weight": 1 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/corruption_3", "weight": 1 }
+        ]
+    }
+}

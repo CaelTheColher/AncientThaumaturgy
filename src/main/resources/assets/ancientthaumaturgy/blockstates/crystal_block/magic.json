@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ancientthaumaturgy:block/crystal_block/magic"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "ancientthaumaturgy:block/crystal_block/water"
+  }
+}

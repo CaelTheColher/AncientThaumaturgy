@@ -1,0 +1,16 @@
+{
+    "ambientocclusion": true,
+    "textures": {
+        "particle": "ancientthaumaturgy:block/seal_block",
+        "texture": "ancientthaumaturgy:block/seal_block"
+    },
+    "elements": [
+        {   "from": [ 5.5, 5.5, 15.9 ],
+            "to": [ 10.5, 10.5, 15.9 ],
+            "faces": {
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" }
+            }
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "itemGroup.ancientthaumaturgy.item_group": "Ancient Thaumaturgy",
+  "block.ancientthaumaturgy.seal_block": "Seal",
+  "item.ancientthaumaturgy.essence.air": "Air Essence",
+  "item.ancientthaumaturgy.essence.earth": "Earth Essence",
+  "item.ancientthaumaturgy.essence.fire": "Fire Essence",
+  "item.ancientthaumaturgy.essence.water": "Water Essence",
+  "item.ancientthaumaturgy.essence.magic": "Magic Essence",
+  "item.ancientthaumaturgy.essence.corruption": "Corruption Essence",
+  "item.ancientthaumaturgy.crystal.air": "Air Crystal",
+  "item.ancientthaumaturgy.crystal.earth": "Earth Crystal",
+  "item.ancientthaumaturgy.crystal.fire": "Fire Crystal",
+  "item.ancientthaumaturgy.crystal.water": "Water Crystal",
+  "item.ancientthaumaturgy.crystal.magic": "Magic Crystal",
+  "item.ancientthaumaturgy.crystal.corruption": "Corruption Crystal",
+  "block.ancientthaumaturgy.crystal_block.air": "Air Crystal Block",
+  "block.ancientthaumaturgy.crystal_block.earth": "Earth Crystal Block",
+  "block.ancientthaumaturgy.crystal_block.fire": "Fire Crystal Block",
+  "block.ancientthaumaturgy.crystal_block.water": "Water Crystal Block",
+  "block.ancientthaumaturgy.crystal_block.magic": "Magic Crystal Block",
+  "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block"
+}

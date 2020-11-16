@@ -1,0 +1,7 @@
+{
+    "parent": "ancientthaumaturgy:block/seal_block",
+    "textures": {
+        "particle": "ancientthaumaturgy:block/seal_block_off",
+        "texture": "ancientthaumaturgy:block/seal_block_off"
+    }
+}
