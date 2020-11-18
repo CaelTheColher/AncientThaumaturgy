@@ -4,9 +4,6 @@ import me.cael.ancientthaumaturgy.blocks.seal.SealBlockEntity
 import me.cael.ancientthaumaturgy.blocks.seal.combinations.AbstractSealCombination
 import me.cael.ancientthaumaturgy.utils.forEach
 import net.minecraft.block.Block
-import net.minecraft.particle.BlockStateParticleEffect
-import net.minecraft.particle.ParticleTypes
-import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 

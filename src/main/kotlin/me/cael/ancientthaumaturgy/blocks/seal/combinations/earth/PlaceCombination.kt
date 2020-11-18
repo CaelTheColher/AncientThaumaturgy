@@ -35,15 +35,4 @@ class PlaceCombination(range: Double, depth: Double) : AbstractSealCombination(1
         }
         return false
     }
-
-    private fun getLinkedInventory(seal: SealBlockEntity) : Inventory? {
-        val area = Box(seal.pos, seal.pos).expand(2.0)
-        area.forEach { x, y, z ->
-            val pos = BlockPos(x,y,z)
-            val world = seal.world!!
-            val entity = world.getBlockEntity(pos)
-            if (entity is Inventory) return entity
-        }
-        return null
-    }
 }

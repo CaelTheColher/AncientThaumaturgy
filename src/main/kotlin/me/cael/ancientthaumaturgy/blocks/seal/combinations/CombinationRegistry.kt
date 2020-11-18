@@ -19,5 +19,9 @@ object CombinationRegistry {
         registry["EM"] = PlaceCombination(0.0, 0.0)
         registry["EMM"] = PlaceCombination(1.0, 0.0)
         registry["EME"] = PlaceCombination(1.0, 1.0)
+        // Decompose Block
+        registry["EC"] = DecomposeCombination(0.0, 0.0)
+        registry["ECC"] = DecomposeCombination(1.0, 0.0)
+        registry["ECE"] = DecomposeCombination(1.0, 1.0)
     }
 }
