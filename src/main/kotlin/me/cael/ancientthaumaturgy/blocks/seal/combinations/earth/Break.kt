@@ -7,7 +7,7 @@ import net.minecraft.block.Block
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class BreakCombination(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
+class Break(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
     override fun tick(seal: SealBlockEntity) {
         val area = getArea(seal.pos, seal.getDirection())
         area.forEach{ x,y,z ->

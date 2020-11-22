@@ -12,16 +12,20 @@ object CombinationRegistry {
 
         // Earth
         // Break Block
-        registry["E"] = BreakCombination(0.0, 0.0)
-        registry["EE"] = BreakCombination(1.0, 0.0)
-        registry["EEE"] = BreakCombination(1.0, 1.0)
+        registry["E"] = Break(0.0, 0.0)
+        registry["EE"] = Break(1.0, 0.0)
+        registry["EEE"] = Break(1.0, 1.0)
         // Place Block
-        registry["EM"] = PlaceCombination(0.0, 0.0)
-        registry["EMM"] = PlaceCombination(1.0, 0.0)
-        registry["EME"] = PlaceCombination(1.0, 1.0)
+        registry["EM"] = Place(0.0, 0.0)
+        registry["EMM"] = Place(1.0, 0.0)
+        registry["EME"] = Place(1.0, 1.0)
         // Decompose Block
-        registry["EC"] = DecomposeCombination(0.0, 0.0)
-        registry["ECC"] = DecomposeCombination(1.0, 0.0)
-        registry["ECE"] = DecomposeCombination(1.0, 1.0)
+        registry["EC"] = Decompose(0.0, 0.0)
+        registry["ECC"] = Decompose(1.0, 0.0)
+        registry["ECE"] = Decompose(1.0, 1.0)
+        // Smelt Block
+        registry["EF"] = Smelt(0.0, 0.0)
+        registry["EFE"] = Smelt(1.0, 1.0)
+        registry["EFF"] = Smelt(1.0, 0.0)
     }
 }

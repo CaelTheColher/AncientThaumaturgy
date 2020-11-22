@@ -8,12 +8,12 @@ import net.minecraft.block.Blocks
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class DecomposeCombination(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
-    val DECOMPOSE_MAP = LinkedHashMap<Block, Block>()
+class Decompose(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
+    val DECOMPOSE_TABLE = LinkedHashMap<Block, Block>()
 
     override fun tick(seal: SealBlockEntity) {
         val area = getArea(seal.pos, seal.getDirection())
-        DECOMPOSE_MAP.forEach { (t, _) ->
+        DECOMPOSE_TABLE.forEach { (t, _) ->
             area.forEach { x,y,z ->
                 val pos = BlockPos(x,y,z)
                 val world = seal.world!!
@@ -24,7 +24,7 @@ class DecomposeCombination(range: Double, depth: Double) : AbstractSealCombinati
 
     private fun tryDecompose(world: World, pos: BlockPos, target: Block) : Boolean {
         val state = world.getBlockState(pos)
-        val decomposed = DECOMPOSE_MAP[state.block] ?: return false
+        val decomposed = DECOMPOSE_TABLE[state.block] ?: return false
         if (state.block == target && world.setBlockState(pos, decomposed.defaultState)) {
             world.syncWorldEvent(2001, pos, Block.getRawIdFromState(state))
             return true
@@ -34,7 +34,7 @@ class DecomposeCombination(range: Double, depth: Double) : AbstractSealCombinati
 
     // very temporary while I don't set up a config
     init {
-        DECOMPOSE_MAP[Blocks.COBBLESTONE] = Blocks.GRAVEL
-        DECOMPOSE_MAP[Blocks.GRAVEL] = Blocks.SAND
+        DECOMPOSE_TABLE[Blocks.COBBLESTONE] = Blocks.GRAVEL
+        DECOMPOSE_TABLE[Blocks.GRAVEL] = Blocks.SAND
     }
 }

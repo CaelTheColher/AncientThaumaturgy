@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.world.World
 
-class PlaceCombination(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
+class Place(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
     override fun tick(seal: SealBlockEntity) {
         val area = getArea(seal.pos, seal.getDirection())
         area.forEach{ x,y,z ->
