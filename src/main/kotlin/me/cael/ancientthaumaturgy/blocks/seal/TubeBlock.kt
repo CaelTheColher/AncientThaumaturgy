@@ -2,23 +2,21 @@ package me.cael.ancientthaumaturgy.blocks.seal
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.block.ShapeContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Property
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
+import net.minecraft.world.BlockView
 
 class TubeBlock(settings: Settings) : Block(settings) {
+    override fun getOutlineShape(state: BlockState, view: BlockView?, pos: BlockPos?, context: ShapeContext?): VoxelShape = getShape(state)
+
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(
-                NORTH,
-                SOUTH,
-                EAST,
-                WEST,
-                UP,
-                DOWN
-        )
+        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN)
     }
 
     data class TubeShape(val directions: Array<Direction>, val shape: VoxelShape) {
@@ -42,7 +40,7 @@ class TubeBlock(settings: Settings) : Block(settings) {
     }
 
     companion object {
-        val CENTER_SHAPE: VoxelShape = createCuboidShape(5.5, 5.5, 5.5, 10.5, 10.5, 10.5)
+        val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
         val DOWN_SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 6.0, 10.0)
         val UP_SHAPE: VoxelShape = createCuboidShape(6.0, 10.5, 6.0, 10.0, 16.0, 10.0)
         val SOUTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 10.5, 10.0, 10.0, 16.0)

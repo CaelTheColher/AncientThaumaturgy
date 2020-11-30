@@ -25,13 +25,16 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
     private val spriteIdCollection = mutableListOf(
             SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/center")),
             SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/side")),
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/connection")),
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/junction"))
     )
     private val modelIdCollection = mutableListOf(
-            identifier("block/tube/center"),
-            identifier("block/tube/side")
+            identifier("block/tube/junction"),
+            identifier("block/tube/side"),
+            identifier("block/tube/center")
     )
     private val spriteArray = arrayOfNulls<Sprite>(4)
-    private val modelArray = arrayOfNulls<BakedModel>(7)
+    private val modelArray = arrayOfNulls<BakedModel>(10)
     private lateinit var transformation: ModelTransformation
 
     override fun bake(
@@ -49,6 +52,10 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
         modelArray[4] = sideModel.bake(loader, textureGetter, ModelRotation.X270_Y270, modelId) // WEST
         modelArray[5] = sideModel.bake(loader, textureGetter, ModelRotation.X180_Y0, modelId) // UP
         modelArray[6] = sideModel.bake(loader, textureGetter, ModelRotation.X0_Y0, modelId) // DOWN
+        val centerModel = loader.getOrLoadModel(modelIdCollection[2])
+        modelArray[7] = centerModel.bake(loader, textureGetter, rotationContainer, modelId) // NORTH-SOUTH
+        modelArray[8] = centerModel.bake(loader, textureGetter, ModelRotation.X0_Y90, modelId) //EAST-WEST
+        modelArray[9] = centerModel.bake(loader, textureGetter, ModelRotation.X90_Y0, modelId) //UP-DOWN
 
         spriteIdCollection.forEachIndexed { idx, spriteIdentifier ->
             spriteArray[idx] = textureGetter.apply(spriteIdentifier)
@@ -107,13 +114,23 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
 //                if (coverState.isOpaque) return
 //            }
 //        }
-        handleBakedModel(world, state, pos, randSupplier, context, modelArray[0])
-        if (state[TubeBlock.NORTH]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[1])
-        if (state[TubeBlock.EAST]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[2])
-        if (state[TubeBlock.SOUTH]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[3])
-        if (state[TubeBlock.WEST]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[4])
-        if (state[TubeBlock.UP]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[5])
-        if (state[TubeBlock.DOWN]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[6])
+
+        // I don't like this either
+        if (state[TubeBlock.NORTH] && state[TubeBlock.SOUTH] && !(state[TubeBlock.EAST] || state[TubeBlock.WEST])) {
+            handleBakedModel(world, state, pos, randSupplier, context, modelArray[7])
+        } else if (state[TubeBlock.EAST] && state[TubeBlock.WEST] && !(state[TubeBlock.NORTH] || state[TubeBlock.SOUTH])) {
+            handleBakedModel(world, state, pos, randSupplier, context, modelArray[8])
+        } else if (state[TubeBlock.UP] && state[TubeBlock.DOWN] && !(state[TubeBlock.NORTH] || state[TubeBlock.SOUTH] || state[TubeBlock.EAST] || state[TubeBlock.WEST])) {
+            handleBakedModel(world, state, pos, randSupplier, context, modelArray[9])
+        } else {
+            handleBakedModel(world, state, pos, randSupplier, context, modelArray[0])
+            if (state[TubeBlock.NORTH]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[1])
+            if (state[TubeBlock.EAST]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[2])
+            if (state[TubeBlock.SOUTH]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[3])
+            if (state[TubeBlock.WEST]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[4])
+            if (state[TubeBlock.UP]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[5])
+            if (state[TubeBlock.DOWN]) handleBakedModel(world, state, pos, randSupplier, context, modelArray[6])
+        }
     }
 
     private fun BakedModel.emitFromVanilla(context: RenderContext, randSupplier: Supplier<Random>, shouldEmit: (BakedQuad) -> Boolean) {
