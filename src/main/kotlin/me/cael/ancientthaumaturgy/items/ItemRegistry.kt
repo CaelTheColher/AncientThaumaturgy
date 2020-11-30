@@ -1,20 +1,17 @@
 package me.cael.ancientthaumaturgy.items
 
-import me.cael.ancientthaumaturgy.AncientThaumaturgy.NAMESPACE
 import me.cael.ancientthaumaturgy.blocks.seal.BlockRegistry
+import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
 object ItemRegistry {
-    class ItemInfo(id: String, val item: Item) {
-        val identifier = Identifier(NAMESPACE, id)
-
+    class ItemInfo(val id: String, val item: Item) {
         fun register() {
-            Registry.register(Registry.ITEM, identifier, item)
+            Registry.register(Registry.ITEM, identifier(id), item)
         }
     }
 
@@ -25,7 +22,7 @@ object ItemRegistry {
         return item
     }
 
-    val ITEM_GROUP: ItemGroup = FabricItemGroupBuilder.build(Identifier(NAMESPACE, "item_group")) { ItemStack(BlockRegistry.SEAL_BLOCK.asItem()) }
+    val ITEM_GROUP: ItemGroup = FabricItemGroupBuilder.build(identifier("item_group")) { ItemStack(BlockRegistry.SEAL_BLOCK.asItem()) }
 
     val AIR_ESSENCE = register("essence/air", Essence(Essence.Type.AIR))
     val EARTH_ESSENCE = register("essence/earth", Essence(Essence.Type.EARTH))

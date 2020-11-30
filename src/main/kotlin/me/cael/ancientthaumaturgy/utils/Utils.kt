@@ -1,8 +1,12 @@
 package me.cael.ancientthaumaturgy.utils
 
+import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.Box
+
+fun identifier(id: String) = Identifier(AncientThaumaturgy.NAMESPACE, id)
 
 inline fun Box.forEach(f: (Int, Int, Int) -> Unit) {
     for (y in minY.toInt()..maxY.toInt())

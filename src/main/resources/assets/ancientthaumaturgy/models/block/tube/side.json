@@ -1,0 +1,20 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "ancientthaumaturgy:block/tube/side",
+		"particle": "ancientthaumaturgy:block/tube/side"
+	},
+	"elements": [
+		{
+			"from": [6, 3, 0],
+			"to": [10, 7, 5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 11, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}

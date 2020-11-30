@@ -1,10 +1,9 @@
 package me.cael.ancientthaumaturgy.blocks.seal
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy.CLIENT
-import me.cael.ancientthaumaturgy.AncientThaumaturgy.NAMESPACE
 import me.cael.ancientthaumaturgy.items.ItemRegistry
+import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
-import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricMaterialBuilder
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry
 import net.minecraft.block.*
@@ -23,7 +22,7 @@ import kotlin.reflect.KClass
 @Suppress("UNCHECKED_CAST")
 object BlockRegistry {
     class BlockInfo<T: BlockEntity>(
-            id: String,
+            val identifier: Identifier,
             val block: Block,
             val hasItem: Boolean,
             val item: KClass<BlockItem>?,
@@ -31,8 +30,6 @@ object BlockRegistry {
             val renderer: KClass<BlockEntityRenderer<T>>?,
             val renderLayer: RenderLayer?
     ) {
-        val identifier = Identifier(NAMESPACE, id)
-
         fun register() {
             Registry.register(Registry.BLOCK, identifier, block)
             if (hasItem) {
@@ -60,7 +57,7 @@ object BlockRegistry {
     fun getBlockEntity(block: Block) = registry[block]?.entity
 
     fun register(id: String, block: Block, hasItem: Boolean = true, renderLayer: RenderLayer? = null): Block {
-        registry[block] = BlockInfo<BlockEntity>(id, block, hasItem, null, null, null, renderLayer)
+        registry[block] = BlockInfo<BlockEntity>(identifier(id), block, hasItem, null, null, null, renderLayer)
         return block
     }
 
@@ -68,7 +65,7 @@ object BlockRegistry {
         val blockItem = item as? KClass<BlockItem>
         val entity = (block as? BlockEntityProvider)?.let { BlockEntityType.Builder.create({it.createBlockEntity(null)}, block).build(null) as BlockEntityType<T> }
         val render = if (CLIENT) renderer?.let { it.get() as KClass<BlockEntityRenderer<T>> } else null
-        registry[block] = BlockInfo(id, block, hasItem, blockItem, entity, render, renderLayer)
+        registry[block] = BlockInfo(identifier(id), block, hasItem, blockItem, entity, render, renderLayer)
         return block
     }
 
@@ -90,6 +87,7 @@ object BlockRegistry {
 
     val SEAL_BLOCK = registerWithEntity<SealBlockEntity>("seal_block", SealBlock(), renderer = { SealRenderer::class }, renderLayer = RenderLayer.getCutout())
 
+    val TUBE_BLOCK = register("tube_block", TubeBlock(AbstractBlock.Settings.of((Material.GLASS))), true, renderLayer = RenderLayer.getTranslucent())
 
     fun registerBlocks() {
         registry.forEach { it.value.register() }

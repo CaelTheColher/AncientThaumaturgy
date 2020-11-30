@@ -2,6 +2,7 @@ package me.cael.ancientthaumaturgy.blocks.seal
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import me.cael.ancientthaumaturgy.items.Essence
+import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.minecraft.block.WallMountedBlock
 import net.minecraft.block.enums.WallMountLocation
@@ -31,7 +32,7 @@ class SealRenderer(dispatcher: BlockEntityRenderDispatcher?) : BlockEntityRender
     }
 
     private fun renderRune(rune: String, offset: Float, rotationOffset: Float, entity: SealBlockEntity, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, overlay: Int) {
-        val sealIdentifier = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, Identifier(AncientThaumaturgy.NAMESPACE, "rune/$rune"))
+        val sealIdentifier = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("rune/$rune"))
         val sealConsumer = sealIdentifier.getVertexConsumer(vertexConsumers, { texture -> RenderLayer.getEntityTranslucent(texture) })
         val direction = entity.getDirection()
         val directionVector = direction.opposite.unitVector
