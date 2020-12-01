@@ -1,0 +1,22 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"2": "ancientthaumaturgy:block/tank_block/end",
+		"4": "ancientthaumaturgy:block/tank_block/top",
+		"particle": "ancientthaumaturgy:block/tank_block/top"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 16, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 8, 9]},
+			"faces": {
+				"north": {"uv": [1, 0, 15, 16], "texture": "#4"},
+				"east": {"uv": [1, 0, 15, 16], "texture": "#4"},
+				"south": {"uv": [1, 0, 15, 16], "texture": "#4"},
+				"west": {"uv": [1, 0, 15, 16], "texture": "#4"},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#2"}
+			}
+		}
+	]
+}

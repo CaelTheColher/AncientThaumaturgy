@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "ancientthaumaturgy:block/tube/side",
-		"particle": "ancientthaumaturgy:block/tube/side"
+		"0": "ancientthaumaturgy:block/tube_block/side",
+		"particle": "ancientthaumaturgy:block/tube_block/side"
 	},
 	"elements": [
 		{

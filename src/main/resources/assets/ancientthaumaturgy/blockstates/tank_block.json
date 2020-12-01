@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "up=false,down=false": {
+      "model": "ancientthaumaturgy:block/tank_block/center"
+    },
+    "up=true,down=true": {
+      "model": "ancientthaumaturgy:block/tank_block/middle"
+    },
+    "up=true,down=false": {
+      "model": "ancientthaumaturgy:block/tank_block/bottom"
+    },
+    "up=false,down=true": {
+      "model": "ancientthaumaturgy:block/tank_block/top"
+    }
+  }
+}

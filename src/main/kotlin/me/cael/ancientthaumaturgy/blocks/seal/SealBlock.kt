@@ -1,5 +1,6 @@
 package me.cael.ancientthaumaturgy.blocks.seal
 
+import me.cael.ancientthaumaturgy.blocks.BlockRegistry
 import me.cael.ancientthaumaturgy.items.Essence
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.*
@@ -83,13 +84,13 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).no
         if(state.get(ENABLED) && world.isReceivingRedstonePower(pos)) world.setBlockState(pos, state.cycle(ENABLED), 2)
     }
 
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        builder.add(FACING, FACE, WATERLOGGED, ENABLED)
+    }
+
     override fun createBlockEntity(world: BlockView?): BlockEntity = SealBlockEntity(BlockRegistry.getBlockEntity(this))
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? = super.getPlacementState(ctx)?.with(WATERLOGGED, ctx.world.getFluidState(ctx.blockPos).fluid == Fluids.WATER)?.with(ENABLED, !ctx.world.isReceivingRedstonePower(ctx.blockPos))
 
     override fun getFluidState(state: BlockState): FluidState = if (state.get(WATERLOGGED)) Fluids.WATER.getStill(false) else Fluids.EMPTY.defaultState
-
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(FACING, FACE, WATERLOGGED, ENABLED)
-    }
 }

@@ -1,6 +1,12 @@
-package me.cael.ancientthaumaturgy.blocks.seal
+package me.cael.ancientthaumaturgy.blocks
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy.CLIENT
+import me.cael.ancientthaumaturgy.blocks.crucible.CrucibleBlock
+import me.cael.ancientthaumaturgy.blocks.tube.TubeBlock
+import me.cael.ancientthaumaturgy.blocks.seal.SealBlock
+import me.cael.ancientthaumaturgy.blocks.seal.SealBlockEntity
+import me.cael.ancientthaumaturgy.blocks.seal.SealRenderer
+import me.cael.ancientthaumaturgy.blocks.tank.TankBlock
 import me.cael.ancientthaumaturgy.items.ItemRegistry
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
@@ -87,7 +93,9 @@ object BlockRegistry {
 
     val SEAL_BLOCK = registerWithEntity<SealBlockEntity>("seal_block", SealBlock(), renderer = { SealRenderer::class }, renderLayer = RenderLayer.getCutout())
 
-    val TUBE_BLOCK = register("tube_block", TubeBlock(AbstractBlock.Settings.of((Material.GLASS))), true, renderLayer = RenderLayer.getTranslucent())
+    val TUBE_BLOCK = register("tube_block", TubeBlock(FabricBlockSettings.of(Material.GLASS)), true, renderLayer = RenderLayer.getTranslucent())
+    val CRUCIBLE_BLOCK = register("crucible_block", CrucibleBlock(FabricBlockSettings.of(Material.METAL, MaterialColor.ORANGE)), true, RenderLayer.getCutout())
+    val TANK_BLOCK = register("tank_block", TankBlock(FabricBlockSettings.of(Material.GLASS, MaterialColor.ORANGE)), true, RenderLayer.getTranslucent())
 
     fun registerBlocks() {
         registry.forEach { it.value.register() }

@@ -18,5 +18,6 @@
   "block.ancientthaumaturgy.crystal_block.fire": "Fire Crystal Block",
   "block.ancientthaumaturgy.crystal_block.water": "Water Crystal Block",
   "block.ancientthaumaturgy.crystal_block.magic": "Magic Crystal Block",
-  "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block"
-}
+  "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block",
+  "block.ancientthaumaturgy.crucible_block": "Crucible",
+  "block.ancientthaumaturgy.tube_block": "Thaumic Tube"}

@@ -1,7 +1,8 @@
-package me.cael.ancientthaumaturgy.blocks.seal
+package me.cael.ancientthaumaturgy.blocks.tube
 
 import me.cael.ancientthaumaturgy.utils.identifier
 import com.mojang.datafixers.util.Pair
+import me.cael.ancientthaumaturgy.blocks.BlockRegistry
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
 import net.minecraft.block.BlockState
@@ -23,15 +24,15 @@ import java.util.function.Supplier
 class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
 
     private val spriteIdCollection = mutableListOf(
-            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/center")),
-            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/side")),
-            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/connection")),
-            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube/junction"))
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube_block/center")),
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube_block/side")),
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube_block/connection")),
+            SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("block/tube_block/junction"))
     )
     private val modelIdCollection = mutableListOf(
-            identifier("block/tube/junction"),
-            identifier("block/tube/side"),
-            identifier("block/tube/center")
+            identifier("block/tube_block/junction"),
+            identifier("block/tube_block/side"),
+            identifier("block/tube_block/center")
     )
     private val spriteArray = arrayOfNulls<Sprite>(4)
     private val modelArray = arrayOfNulls<BakedModel>(10)

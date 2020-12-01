@@ -1,6 +1,6 @@
 package me.cael.ancientthaumaturgy.items
 
-import me.cael.ancientthaumaturgy.blocks.seal.BlockRegistry
+import me.cael.ancientthaumaturgy.blocks.BlockRegistry
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 import net.minecraft.item.Item
