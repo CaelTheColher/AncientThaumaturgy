@@ -20,4 +20,6 @@
   "block.ancientthaumaturgy.crystal_block.magic": "Magic Crystal Block",
   "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block",
   "block.ancientthaumaturgy.crucible_block": "Crucible",
-  "block.ancientthaumaturgy.tube_block": "Thaumic Tube"}
+  "block.ancientthaumaturgy.tube_block": "Thaumic Tube",
+  "block.ancientthaumaturgy.tank_block": "Thaumic Tank"
+}
