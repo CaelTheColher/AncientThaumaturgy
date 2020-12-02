@@ -1,18 +1,21 @@
 package me.cael.ancientthaumaturgy.blocks
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy.CLIENT
-import me.cael.ancientthaumaturgy.blocks.crucible.CrucibleBlock
-import me.cael.ancientthaumaturgy.blocks.tube.TubeBlock
+import me.cael.ancientthaumaturgy.blocks.machines.crucible.CrucibleBlock
 import me.cael.ancientthaumaturgy.blocks.seal.SealBlock
 import me.cael.ancientthaumaturgy.blocks.seal.SealBlockEntity
 import me.cael.ancientthaumaturgy.blocks.seal.SealRenderer
-import me.cael.ancientthaumaturgy.blocks.tank.TankBlock
+import me.cael.ancientthaumaturgy.blocks.machines.tank.TankBlock
+import me.cael.ancientthaumaturgy.blocks.machines.tube.TubeBlock
 import me.cael.ancientthaumaturgy.items.ItemRegistry
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry
-import net.minecraft.block.*
+import net.minecraft.block.Block
+import net.minecraft.block.BlockEntityProvider
+import net.minecraft.block.Material
+import net.minecraft.block.MaterialColor
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.client.render.RenderLayer

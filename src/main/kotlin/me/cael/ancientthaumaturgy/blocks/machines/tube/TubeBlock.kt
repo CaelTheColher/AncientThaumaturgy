@@ -1,4 +1,4 @@
-package me.cael.ancientthaumaturgy.blocks.tube
+package me.cael.ancientthaumaturgy.blocks.machines.tube
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

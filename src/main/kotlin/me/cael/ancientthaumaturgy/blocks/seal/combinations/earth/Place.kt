@@ -4,12 +4,10 @@ import me.cael.ancientthaumaturgy.blocks.seal.SealBlockEntity
 import me.cael.ancientthaumaturgy.blocks.seal.combinations.AbstractSealCombination
 import me.cael.ancientthaumaturgy.utils.forEach
 import me.cael.ancientthaumaturgy.utils.getStack
-import net.minecraft.inventory.Inventory
 import net.minecraft.item.BlockItem
 import net.minecraft.item.ItemStack
 import net.minecraft.sound.SoundCategory
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Box
 import net.minecraft.world.World
 
 class Place(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {

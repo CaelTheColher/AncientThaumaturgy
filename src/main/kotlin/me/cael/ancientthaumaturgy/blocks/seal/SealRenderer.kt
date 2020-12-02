@@ -1,11 +1,7 @@
 package me.cael.ancientthaumaturgy.blocks.seal
 
-import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import me.cael.ancientthaumaturgy.items.Essence
 import me.cael.ancientthaumaturgy.utils.identifier
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess
-import net.minecraft.block.WallMountedBlock
-import net.minecraft.block.enums.WallMountLocation
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -17,10 +13,8 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.client.util.math.Vector3f
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.state.property.Properties
-import net.minecraft.util.Identifier
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
-
 
 class SealRenderer(dispatcher: BlockEntityRenderDispatcher?) : BlockEntityRenderer<SealBlockEntity>(dispatcher) {
     override fun render(entity: SealBlockEntity, tickDelta: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, overlay: Int) {

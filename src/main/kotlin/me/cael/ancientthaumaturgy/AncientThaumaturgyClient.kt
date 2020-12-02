@@ -1,7 +1,7 @@
 package me.cael.ancientthaumaturgy
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
-import me.cael.ancientthaumaturgy.blocks.tube.TubeModel
+import me.cael.ancientthaumaturgy.blocks.machines.tube.TubeModel
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry

@@ -1,6 +1,9 @@
 package me.cael.ancientthaumaturgy.blocks.seal.combinations
 
-import me.cael.ancientthaumaturgy.blocks.seal.combinations.earth.*
+import me.cael.ancientthaumaturgy.blocks.seal.combinations.earth.Break
+import me.cael.ancientthaumaturgy.blocks.seal.combinations.earth.Decompose
+import me.cael.ancientthaumaturgy.blocks.seal.combinations.earth.Place
+import me.cael.ancientthaumaturgy.blocks.seal.combinations.earth.Smelt
 
 object CombinationRegistry {
     val registry = HashMap<String, AbstractSealCombination>()

@@ -1,8 +1,8 @@
-package me.cael.ancientthaumaturgy.blocks.tube
+package me.cael.ancientthaumaturgy.blocks.machines.tube
 
-import me.cael.ancientthaumaturgy.utils.identifier
 import com.mojang.datafixers.util.Pair
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
+import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext
 import net.minecraft.block.BlockState

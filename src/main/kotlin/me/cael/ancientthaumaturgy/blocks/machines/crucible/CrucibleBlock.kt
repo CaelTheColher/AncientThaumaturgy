@@ -1,4 +1,4 @@
-package me.cael.ancientthaumaturgy.blocks.crucible
+package me.cael.ancientthaumaturgy.blocks.machines.crucible
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
