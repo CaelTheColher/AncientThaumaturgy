@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "textures/block/burner_block/burner_front",
-		"1": "textures/block/burner_block/burner_side",
-		"2": "textures/block/burner_block/burner_top",
-		"3": "textures/block/burner_block/burnerout_side",
-		"4": "textures/block/burner_block/burnerout_top",
-		"5": "textures/block/burner_block/burner_bottom.png",
-		"particle": "definitely not thaumcraft 2 textures/burner_front"
+		"0": "ancientthaumaturgy:block/burner_block/front",
+		"1": "ancientthaumaturgy:block/burner_block/side",
+		"2": "ancientthaumaturgy:block/burner_block/top",
+		"3": "ancientthaumaturgy:block/burner_block/out_side",
+		"4": "ancientthaumaturgy:block/burner_block/out_top",
+		"5": "ancientthaumaturgy:block/burner_block/bottom",
+		"particle": "ancientthaumaturgy:block/burner_block/front"
 	},
 	"elements": [
 		{
