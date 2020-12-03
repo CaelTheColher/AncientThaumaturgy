@@ -17,13 +17,15 @@ class TubeBlock(settings: Settings) : Block(settings) {
     
     companion object {
         val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
+        val NORTH_SOUTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 5.0, 10.0, 10.0, 11.0)
+        val EAST_WEST_SHAPE: VoxelShape = createCuboidShape(5.0, 6.0, 6.0, 11.0, 10.0, 10.0)
+        val UP_DOWN_SHAPE: VoxelShape = createCuboidShape(6.0, 5.0, 6.0, 10.0, 11.0, 10.0)
         val DOWN_SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 6.0, 10.0)
         val UP_SHAPE: VoxelShape = createCuboidShape(6.0, 10.5, 6.0, 10.0, 16.0, 10.0)
         val SOUTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 10.5, 10.0, 10.0, 16.0)
         val NORTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 5.5, 10.0, 10.0, 0.0)
         val EAST_SHAPE: VoxelShape = createCuboidShape(10.5, 6.0, 6.0, 16.0, 10.0, 10.0)
         val WEST_SHAPE: VoxelShape = createCuboidShape(0.0, 6.0, 6.0, 5.5, 10.0, 10.0)
-        val NORTH_SOUTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 10.5, 10.0, 10.0, 16.0)
 
         val NORTH: BooleanProperty = Properties.NORTH
         val SOUTH: BooleanProperty = Properties.SOUTH
@@ -71,13 +73,23 @@ class TubeBlock(settings: Settings) : Block(settings) {
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN)
     }
-
     private val SHAPE_CACHE = hashSetOf<TubeShape>()
     private fun getShape(state: BlockState): VoxelShape {
         val directions = Direction.values().filter { dir -> state[getProperty(dir)] }.toTypedArray()
         var tubeShapeCache = SHAPE_CACHE.firstOrNull { shape -> shape.directions.contentEquals(directions) }
         if (tubeShapeCache == null) {
-            var shape = CENTER_SHAPE
+            var shape = run {
+                // I still hate this
+                if (state[NORTH] && state[SOUTH] && !(state[EAST] || state[WEST])) {
+                    NORTH_SOUTH_SHAPE
+                } else if (state[EAST] && state[WEST] && !(state[NORTH] || state[SOUTH])) {
+                    EAST_WEST_SHAPE
+                } else if (state[UP] && state[DOWN] && !(state[NORTH] || state[SOUTH] || state[EAST] || state[WEST])) {
+                    UP_DOWN_SHAPE
+                } else {
+                    CENTER_SHAPE
+                }
+            }
             Direction.values().forEach { direction ->
                 if (state[getProperty(direction)]) shape = VoxelShapes.union(shape, getShape(direction))
             }
