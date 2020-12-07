@@ -117,9 +117,9 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
 //        }
 
         // I don't like this either
-        if (state[TubeBlock.NORTH] && state[TubeBlock.SOUTH] && !(state[TubeBlock.EAST] || state[TubeBlock.WEST])) {
+        if (state[TubeBlock.NORTH] && state[TubeBlock.SOUTH] && !(state[TubeBlock.EAST] || state[TubeBlock.WEST] || state[TubeBlock.UP] || state[TubeBlock.DOWN])) {
             handleBakedModel(world, state, pos, randSupplier, context, modelArray[7])
-        } else if (state[TubeBlock.EAST] && state[TubeBlock.WEST] && !(state[TubeBlock.NORTH] || state[TubeBlock.SOUTH])) {
+        } else if (state[TubeBlock.EAST] && state[TubeBlock.WEST] && !(state[TubeBlock.NORTH] || state[TubeBlock.SOUTH] || state[TubeBlock.UP] || state[TubeBlock.DOWN])) {
             handleBakedModel(world, state, pos, randSupplier, context, modelArray[8])
         } else if (state[TubeBlock.UP] && state[TubeBlock.DOWN] && !(state[TubeBlock.NORTH] || state[TubeBlock.SOUTH] || state[TubeBlock.EAST] || state[TubeBlock.WEST])) {
             handleBakedModel(world, state, pos, randSupplier, context, modelArray[9])

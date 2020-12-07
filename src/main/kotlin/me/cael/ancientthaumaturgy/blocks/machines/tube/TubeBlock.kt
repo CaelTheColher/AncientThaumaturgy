@@ -1,8 +1,12 @@
 package me.cael.ancientthaumaturgy.blocks.machines.tube
 
+import me.cael.ancientthaumaturgy.blocks.BlockRegistry
+import me.cael.ancientthaumaturgy.blocks.machines.Machine
 import net.minecraft.block.Block
+import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
+import net.minecraft.block.entity.BlockEntity
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -12,8 +16,9 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.WorldAccess
 
-class TubeBlock(settings: Settings) : Block(settings) {
+class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
     
     companion object {
         val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
@@ -45,17 +50,16 @@ class TubeBlock(settings: Settings) : Block(settings) {
                 .with(DOWN, false)
     }
 
-    fun getShape(direction: Direction): VoxelShape {
-        var shape = VoxelShapes.empty()
-        if (direction == Direction.NORTH) shape = NORTH_SHAPE
-        if (direction == Direction.SOUTH) shape = SOUTH_SHAPE
-        if (direction == Direction.EAST) shape = EAST_SHAPE
-        if (direction == Direction.WEST) shape = WEST_SHAPE
-        if (direction == Direction.UP) shape = UP_SHAPE
-        if (direction == Direction.DOWN) shape = DOWN_SHAPE
-        return shape
+    override fun getStateForNeighborUpdate(state: BlockState, direction: Direction, newState: BlockState, world: WorldAccess, pos: BlockPos, posFrom: BlockPos): BlockState {
+        val neighbourBlockEntity = world.getBlockEntity(posFrom)
+        return state.with(getProperty(direction), neighbourBlockEntity is Machine)
     }
 
+    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
+        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN)
+    }
+
+    override fun createBlockEntity(world: BlockView?): BlockEntity = TubeBlockEntity(BlockRegistry.getBlockEntity(this))
     override fun getOutlineShape(state: BlockState, view: BlockView?, pos: BlockPos?, context: ShapeContext?): VoxelShape = getShape(state)
 
     fun getProperty(facing: Direction): Property<Boolean> {
@@ -70,9 +74,17 @@ class TubeBlock(settings: Settings) : Block(settings) {
         }
     }
 
-    override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
-        builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN)
+    fun getShape(direction: Direction): VoxelShape {
+        var shape = VoxelShapes.empty()
+        if (direction == Direction.NORTH) shape = NORTH_SHAPE
+        if (direction == Direction.SOUTH) shape = SOUTH_SHAPE
+        if (direction == Direction.EAST) shape = EAST_SHAPE
+        if (direction == Direction.WEST) shape = WEST_SHAPE
+        if (direction == Direction.UP) shape = UP_SHAPE
+        if (direction == Direction.DOWN) shape = DOWN_SHAPE
+        return shape
     }
+
     private val SHAPE_CACHE = hashSetOf<TubeShape>()
     private fun getShape(state: BlockState): VoxelShape {
         val directions = Direction.values().filter { dir -> state[getProperty(dir)] }.toTypedArray()
@@ -80,9 +92,9 @@ class TubeBlock(settings: Settings) : Block(settings) {
         if (tubeShapeCache == null) {
             var shape = run {
                 // I still hate this
-                if (state[NORTH] && state[SOUTH] && !(state[EAST] || state[WEST])) {
+                if (state[NORTH] && state[SOUTH] && !(state[EAST] || state[WEST] || state[UP] || state[DOWN])) {
                     NORTH_SOUTH_SHAPE
-                } else if (state[EAST] && state[WEST] && !(state[NORTH] || state[SOUTH])) {
+                } else if (state[EAST] && state[WEST] && !(state[NORTH] || state[SOUTH] || state[UP] || state[DOWN])) {
                     EAST_WEST_SHAPE
                 } else if (state[UP] && state[DOWN] && !(state[NORTH] || state[SOUTH] || state[EAST] || state[WEST])) {
                     UP_DOWN_SHAPE
