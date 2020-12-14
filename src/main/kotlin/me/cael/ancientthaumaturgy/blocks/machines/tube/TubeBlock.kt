@@ -1,12 +1,17 @@
 package me.cael.ancientthaumaturgy.blocks.machines.tube
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
-import me.cael.ancientthaumaturgy.blocks.machines.Machine
+import me.cael.ancientthaumaturgy.blocks.machines.MachineBlock
+import me.cael.ancientthaumaturgy.blocks.machines.MachineEntity
+import me.cael.ancientthaumaturgy.blocks.machines.networking.Network
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
 import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.entity.LivingEntity
+import net.minecraft.item.ItemStack
+import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -16,9 +21,10 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
+import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
+class TubeBlock(settings: Settings) : MachineBlock(settings), BlockEntityProvider {
     
     companion object {
         val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
@@ -38,6 +44,18 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
         val WEST: BooleanProperty = Properties.WEST
         val UP: BooleanProperty = Properties.UP
         val DOWN: BooleanProperty = Properties.DOWN
+
+        fun getProperty(facing: Direction): Property<Boolean> {
+            return when (facing) {
+                Direction.EAST -> EAST
+                Direction.WEST -> WEST
+                Direction.NORTH -> NORTH
+                Direction.SOUTH -> SOUTH
+                Direction.UP -> UP
+                Direction.DOWN -> DOWN
+                else -> EAST
+            }
+        }
     }
 
     init {
@@ -52,7 +70,24 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
 
     override fun getStateForNeighborUpdate(state: BlockState, direction: Direction, newState: BlockState, world: WorldAccess, pos: BlockPos, posFrom: BlockPos): BlockState {
         val neighbourBlockEntity = world.getBlockEntity(posFrom)
-        return state.with(getProperty(direction), neighbourBlockEntity is Machine)
+        return state.with(getProperty(direction), neighbourBlockEntity is MachineEntity)
+    }
+
+    override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, moved: Boolean) {
+        super.onStateReplaced(state, world, pos, newState, moved)
+        if(!world.isClient) {
+            if (state.isOf(newState.block))
+                Network.handleUpdate(world as ServerWorld, pos)
+            else
+                Network.handleBreak(world as ServerWorld, pos)
+        }
+    }
+
+    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
+        super.onPlaced(world, pos, state, placer, itemStack)
+        if (!world.isClient) {
+            Network.handleUpdate(world as ServerWorld, pos)
+        }
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
@@ -62,17 +97,6 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
     override fun createBlockEntity(world: BlockView?): BlockEntity = TubeBlockEntity(BlockRegistry.getBlockEntity(this))
     override fun getOutlineShape(state: BlockState, view: BlockView?, pos: BlockPos?, context: ShapeContext?): VoxelShape = getShape(state)
 
-    fun getProperty(facing: Direction): Property<Boolean> {
-        return when (facing) {
-            Direction.EAST -> EAST
-            Direction.WEST -> WEST
-            Direction.NORTH -> NORTH
-            Direction.SOUTH -> SOUTH
-            Direction.UP -> UP
-            Direction.DOWN -> DOWN
-            else -> EAST
-        }
-    }
 
     fun getShape(direction: Direction): VoxelShape {
         var shape = VoxelShapes.empty()
