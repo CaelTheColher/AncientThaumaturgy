@@ -1,7 +1,6 @@
 package me.cael.ancientthaumaturgy.blocks.machines.tube
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
-import me.cael.ancientthaumaturgy.blocks.machines.MachineBlock
 import me.cael.ancientthaumaturgy.blocks.machines.MachineEntity
 import me.cael.ancientthaumaturgy.blocks.machines.networking.Network
 import net.minecraft.block.Block
@@ -24,7 +23,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
-class TubeBlock(settings: Settings) : MachineBlock(settings), BlockEntityProvider {
+class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
     
     companion object {
         val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
