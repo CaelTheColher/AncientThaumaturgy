@@ -11,12 +11,57 @@ import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
 import net.minecraft.world.chunk.Chunk
+import java.util.*
+
 
 class Network(
         val world: ServerWorld,
         val tubes: MutableSet<BlockPos> = hashSetOf(),
         val machines: MutableMap<BlockPos, MutableSet<Direction>> = hashMapOf()
 ) {
+
+    // https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode
+    class Node(val pos: BlockPos) {
+        var gScore = 0
+        fun fScore(goal: BlockPos) = gScore + pos.getManhattanDistance(goal)
+        var cameFrom: Node? = null
+    }
+    private fun backtrack(current: Node): LinkedList<Node> {
+        val path = LinkedList<Node>()
+        path.addFirst(current)
+        var temp: Node? = current
+        while (temp?.cameFrom != null) {
+            path.addFirst(temp.cameFrom!!)
+            temp = temp.cameFrom
+        }
+        return path
+    }
+    private fun getNeighbours(node: Node): HashSet<Node> {
+        val neighbours = hashSetOf<Node>()
+        Direction.values().forEach {
+            val neighbour = node.pos.offset(it)
+            if (tubes.contains(neighbour)) neighbours.add(Node(neighbour))
+        }
+        return neighbours
+    }
+    private fun pathfind(start: BlockPos, goal: BlockPos): LinkedList<Node>? {
+        val openSet = PriorityQueue<Node>{ o1, o2 -> -o1.fScore(goal).compareTo(o2.fScore(goal)) }
+        openSet.add(Node(start))
+
+        while(openSet.isNotEmpty()) {
+            val current = openSet.poll()
+            if (current.pos == goal) return backtrack(current)
+            for (neighbour in getNeighbours(current)) {
+                val gScoreTemp = current.gScore + 1
+                if (gScoreTemp < neighbour.gScore) {
+                    neighbour.cameFrom = current
+                    neighbour.gScore = gScoreTemp
+                    if (!openSet.contains(neighbour)) openSet.add(neighbour)
+                }
+            }
+        }
+        return null
+    }
 
     fun remove() {
         val state = NetworkState.getNetworkState(world)
