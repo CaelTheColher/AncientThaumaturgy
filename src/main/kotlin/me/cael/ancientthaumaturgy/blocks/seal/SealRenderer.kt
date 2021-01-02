@@ -1,6 +1,6 @@
 package me.cael.ancientthaumaturgy.blocks.seal
 
-import me.cael.ancientthaumaturgy.items.Essence
+import me.cael.ancientthaumaturgy.items.EssenceItem
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumer
@@ -20,9 +20,9 @@ class SealRenderer(dispatcher: BlockEntityRenderDispatcher?) : BlockEntityRender
     override fun render(entity: SealBlockEntity, tickDelta: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, overlay: Int) {
         if (entity.cachedState.get(Properties.ENABLED) as Boolean) entity.lastRenderDegree += MathHelper.lerp(tickDelta, 0f, .3f)
         if (entity.lastRenderDegree >= 360) entity.lastRenderDegree = 0f
-        if (entity.runes.length > 0) renderRune("inner/" + Essence.Type.fromId(entity.runes[0].toString()).name.toLowerCase(), 0.996f, -1f, entity, matrices, vertexConsumers, overlay)
-        if (entity.runes.length > 1) renderRune("outer/" + Essence.Type.fromId(entity.runes[1].toString()).name.toLowerCase(), 0.95f, 1f, entity, matrices, vertexConsumers, overlay)
-        if (entity.runes.length > 2) renderRune("center/" + Essence.Type.fromId(entity.runes[2].toString()).name.toLowerCase(), 0.9f, 0f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 0) renderRune("inner/" + EssenceItem.Type.fromId(entity.runes[0].toString()).name.toLowerCase(), 0.996f, -1f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 1) renderRune("outer/" + EssenceItem.Type.fromId(entity.runes[1].toString()).name.toLowerCase(), 0.95f, 1f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 2) renderRune("center/" + EssenceItem.Type.fromId(entity.runes[2].toString()).name.toLowerCase(), 0.9f, 0f, entity, matrices, vertexConsumers, overlay)
     }
 
     private fun renderRune(rune: String, offset: Float, rotationOffset: Float, entity: SealBlockEntity, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, overlay: Int) {

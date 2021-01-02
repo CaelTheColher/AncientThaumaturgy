@@ -2,7 +2,7 @@ package me.cael.ancientthaumaturgy.items
 
 import net.minecraft.item.Item
 
-class Essence(val type: Type) : Item(Settings().group(ItemRegistry.ITEM_GROUP)) {
+class EssenceItem(val type: Type) : Item(Settings().group(ItemRegistry.ITEM_GROUP)) {
     enum class Type(val id: String) {
         AIR("A"), EARTH("E"), FIRE("F"), WATER("W"), MAGIC("M"), CORRUPTION("C");
 

@@ -2,8 +2,10 @@ package me.cael.ancientthaumaturgy
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
 import me.cael.ancientthaumaturgy.blocks.machines.tube.TubeModel
+import me.cael.ancientthaumaturgy.items.lexicon.ClientTickHandler
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry
 import net.fabricmc.fabric.api.client.model.ModelVariantProvider
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback
@@ -34,6 +36,7 @@ object AncientThaumaturgyClient : ClientModInitializer {
             registry.register(identifier("rune/center/magic"))
             registry.register(identifier("rune/center/corruption"))
 
+            registry.register(identifier("model/lexicon"))
         })
         ModelLoadingRegistry.INSTANCE.registerVariantProvider {
             ModelVariantProvider { modelIdentifier, _ ->
@@ -42,5 +45,6 @@ object AncientThaumaturgyClient : ClientModInitializer {
                 return@ModelVariantProvider null
             }
         }
+        ClientTickEvents.END_CLIENT_TICK.register(ClientTickHandler::clientTickEnd)
     }
 }

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "me.cael.ancientthaumaturgy.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "AccessorFirstPersonRenderer",
+    "MixinHeldItemRenderer",
+    "MixinMinecraftClient"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

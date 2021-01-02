@@ -1,7 +1,7 @@
 package me.cael.ancientthaumaturgy.blocks.seal
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
-import me.cael.ancientthaumaturgy.items.Essence
+import me.cael.ancientthaumaturgy.items.EssenceItem
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
@@ -43,11 +43,11 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).no
 
     override fun onUse(state: BlockState, world: World, pos: BlockPos, player: PlayerEntity, hand: Hand, hit: BlockHitResult): ActionResult {
         val stack = player.getStackInHand(hand)
-        if (stack.item is Essence) {
+        if (stack.item is EssenceItem) {
             if (!world.isClient) {
                 val blockEntity = world.getBlockEntity(pos) as SealBlockEntity
                 if (blockEntity.runes.length < 3) {
-                    blockEntity.runes += (stack.item as Essence).type.id
+                    blockEntity.runes += (stack.item as EssenceItem).type.id
                     if (!player.isCreative) stack.decrement(1)
                 }
                 blockEntity.markDirty()
