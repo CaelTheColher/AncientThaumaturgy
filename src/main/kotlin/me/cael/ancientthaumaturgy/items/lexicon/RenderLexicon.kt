@@ -23,14 +23,13 @@ import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.client.util.math.Vector3f
 import net.minecraft.screen.PlayerScreenHandler
+import net.minecraft.text.LiteralText
+import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.Arm
-import net.minecraft.util.Formatting
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Matrix4f
-import java.util.*
 
 
 // Hacky way to render 3D lexicon, will be reevaluated in the future.
@@ -51,7 +50,7 @@ object RenderLexicon {
             renderFirstPersonItem(mc.player!!, tickDelta, hand, swingProgress, equipProgress, matrices, vertexConsumers, light)
             true
         } catch (throwable: Throwable) {
-            println("Failed to render lexicon\n${throwable.message}")
+            println("Failed to render lexicon\n$throwable")
             false
         }
     }
@@ -78,7 +77,7 @@ object RenderLexicon {
 
         var ticks: Float = ClientTickHandler.ticksWithLexicaOpen
         if (ticks > 0 && ticks < 10) {
-            if (LexiconItem.isOpen()) {
+            if (LexiconItem.isOpen) {
                 ticks += partialTicks
             } else {
                 ticks -= partialTicks
@@ -113,93 +112,27 @@ object RenderLexicon {
         if (ticks < 3) {
             val font: TextRenderer = MinecraftClient.getInstance().textRenderer
             ms.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180f))
-            ms.translate(-0.30, -0.24, -0.07)
-            ms.scale(0.0023f, 0.0023f, -0.0023f)
+            ms.translate(-0.252, -0.235, -0.07)
+            ms.scale(0.0035f, 0.0035f, -0.0035f)
 
-            val title = "Lexica Thaumaturga"
-            font.draw(font.trimToWidth(title, 100), 0f, 0f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
+            val title = "Lexica"
+            font.draw(title, 0f, 0f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
+
+            ms.translate(-15.0, 10.0, 0.0)
+            val title2 = "Thaumaturga"
+            font.draw(title2, 0f, 0f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
 
             ms.translate(0.0, 10.0, 0.0)
-            ms.scale(0.80f, 0.80f, 0.80f)
-            val edition: Text = Text.of("69th Edition")
+            ms.scale(0.50f, 0.50f, 0.50f)
+            val edition: Text = LiteralText("1st Edition").fillStyle(Style.EMPTY.withBold(true).withItalic(true))
             font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().model, buffers, false, 0, light)
 
-            val quoteStr = "\"nice\" - me"
-
-            ms.translate(-5.0, 15.0, 0.0)
-            renderText(0f, 0f, 140, 0, 0x79ff92, quoteStr, ms.peek().model, buffers, light)
-
-            ms.translate(8.0, 110.0, 0.0)
-            val blurb = "Botania is a"
-            font.draw(blurb, 0f, 0f, 0x79ff92, false, ms.peek().model, buffers, false, 0, light)
-
-            ms.translate(0.0, 10.0, 0.0)
-            val blurb2 = Formatting.UNDERLINE.toString() + "" + Formatting.ITALIC + "tech mod"
-            font.draw(blurb2, 0f, 0f, 0x79ff92, false, ms.peek().model, buffers, false, 0, light)
-
-            ms.translate(0.0, -30.0, 0.0)
-
-            val authorTitle = "A book by Vazkii"
+            ms.translate(7.5, 190.0, 0.0)
+            val authorTitle = "A book by Tector"
             val len: Int = font.getWidth(authorTitle)
             font.draw(authorTitle, 58 - len / 2f, -8f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
         }
 
         ms.pop()
-    }
-
-
-    private fun renderText(_x: Float, _y: Float, _width: Int, paragraphSize: Int, color: Int, unlocalizedText: String, matrix: Matrix4f, buffers: VertexConsumerProvider, light: Int) {
-        val x = _x+2
-        var y = _y+10
-        val width = _width-4
-
-        val font: TextRenderer = MinecraftClient.getInstance().textRenderer
-        val text: String = unlocalizedText
-        val textEntries = text.split("<br>").toTypedArray()
-
-        val lines: MutableList<List<String>> = ArrayList()
-
-        var controlCodes: String
-        for (s in textEntries) {
-            var words: MutableList<String> = ArrayList()
-            var lineStr = ""
-            val tokens = s.split(" ").toTypedArray()
-            for (token in tokens) {
-                val prev = lineStr
-                val spaced = "$token "
-                lineStr += spaced
-                controlCodes = toControlCodes(getControlCodes(prev))
-                if (font.getWidth(lineStr) > width) {
-                    lines.add(words)
-                    lineStr = controlCodes + spaced
-                    words = ArrayList()
-                }
-                words.add(controlCodes + token)
-            }
-            if (lineStr.isNotEmpty()) {
-                lines.add(words)
-            }
-            lines.add(ArrayList())
-        }
-
-        for (words in lines) {
-            var xi = x
-            val spacing = 4
-            for (s in words) {
-                val extra = 0
-                font.draw(s, xi, y, color, false, matrix, buffers, false, 0, light)
-                xi += font.getWidth(s) + spacing + extra
-            }
-            y += if (words.isEmpty()) paragraphSize else 10
-        }
-    }
-
-    private fun getControlCodes(s: String): String {
-        val controls = s.replace("(?<!\u00a7)(.)".toRegex(), "")
-        return controls.replace(".*r".toRegex(), "r")
-    }
-
-    private fun toControlCodes(s: String): String {
-        return s.replace(".".toRegex(), "\u00a7$0")
     }
 }

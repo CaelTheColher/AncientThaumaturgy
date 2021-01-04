@@ -27,7 +27,7 @@ class ClientTickHandler {
                 partialTicks = 0f
             }
             val ticksToOpen = 10f
-            if (LexiconItem.isOpen()) {
+            if (LexiconItem.isOpen) {
                 if (ticksWithLexicaOpen < 0) {
                     ticksWithLexicaOpen = 0f
                 }

@@ -37,6 +37,7 @@ object AncientThaumaturgyClient : ClientModInitializer {
             registry.register(identifier("rune/center/corruption"))
 
             registry.register(identifier("model/lexicon"))
+
         })
         ModelLoadingRegistry.INSTANCE.registerVariantProvider {
             ModelVariantProvider { modelIdentifier, _ ->
