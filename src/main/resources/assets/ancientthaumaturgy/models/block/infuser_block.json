@@ -1,10 +1,10 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "ancientthaumaturgy:block/Infuser_block/top",
-		"1": "ancientthaumaturgy:block/Infuser_block/side",
-		"2": "ancientthaumaturgy:block/Infuser_block/bottom",
-		"particle": "ancientthaumaturgy:block/Infuser_block/top"
+		"0": "ancientthaumaturgy:block/infuser_block/top",
+		"1": "ancientthaumaturgy:block/infuser_block/side",
+		"2": "ancientthaumaturgy:block/infuser_block/bottom",
+		"particle": "ancientthaumaturgy:block/infuser_block/top"
 	},
 	"elements": [
 		{

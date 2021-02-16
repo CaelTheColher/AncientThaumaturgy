@@ -1,6 +1,7 @@
 {
   "itemGroup.ancientthaumaturgy.item_group": "Ancient Thaumaturgy",
-  "block.ancientthaumaturgy.seal_block": "Seal",
+
+
   "item.ancientthaumaturgy.essence.air": "Air Essence",
   "item.ancientthaumaturgy.essence.earth": "Earth Essence",
   "item.ancientthaumaturgy.essence.fire": "Fire Essence",
@@ -13,6 +14,9 @@
   "item.ancientthaumaturgy.crystal.water": "Water Crystal",
   "item.ancientthaumaturgy.crystal.magic": "Magic Crystal",
   "item.ancientthaumaturgy.crystal.corruption": "Corruption Crystal",
+  "item.ancientthaumaturgy.lexicon": "Lexica Thaumaturga",
+
+  "block.ancientthaumaturgy.seal_block": "Seal",
   "block.ancientthaumaturgy.crystal_block.air": "Air Crystal Block",
   "block.ancientthaumaturgy.crystal_block.earth": "Earth Crystal Block",
   "block.ancientthaumaturgy.crystal_block.fire": "Fire Crystal Block",
@@ -21,5 +25,8 @@
   "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block",
   "block.ancientthaumaturgy.crucible_block": "Crucible",
   "block.ancientthaumaturgy.tube_block": "Thaumic Tube",
-  "block.ancientthaumaturgy.tank_block": "Thaumic Tank"
+  "block.ancientthaumaturgy.tank_block": "Thaumic Tank",
+  "block.ancientthaumaturgy.infuser_block": "Thaumic Infuser",
+
+  "screen.ancientthaumaturgy.infuser_block": "Infusing"
 }
