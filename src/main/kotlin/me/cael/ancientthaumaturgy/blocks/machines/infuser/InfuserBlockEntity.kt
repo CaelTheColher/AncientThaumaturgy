@@ -8,10 +8,21 @@ import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.recipe.RecipeFinder
+import net.minecraft.recipe.RecipeInputProvider
+import net.minecraft.util.Tickable
 import net.minecraft.util.collection.DefaultedList
 
-class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Inventory {
+class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Inventory, RecipeInputProvider, Tickable {
     var inventory: DefaultedList<ItemStack> = DefaultedList.ofSize(8, ItemStack.EMPTY)
+
+    override fun tick() {
+        if (world!!.isClient) return
+        val recipe = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
+        if (recipe.isPresent) {
+            println("CU")
+        }
+    }
 
     override fun toTag(tag: CompoundTag): CompoundTag {
         super.toTag(tag)
@@ -49,6 +60,12 @@ class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Invento
             false
         } else {
             player!!.squaredDistanceTo(pos.x + 0.5, pos.y + 0.5, pos.z + 0.5) <= 64.0
+        }
+    }
+
+    override fun provideRecipeInputs(finder: RecipeFinder) {
+        inventory.forEach {
+            finder.addItem(it)
         }
     }
 }

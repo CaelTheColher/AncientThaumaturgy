@@ -1,0 +1,23 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:cobblestone"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    [
+      {
+        "item": "minecraft:coal"
+      },
+      {
+        "item": "minecraft:charcoal"
+      }
+    ]
+  ],
+  "result": {
+    "item": "minecraft:netherrack",
+    "count": 3
+  }
+}
