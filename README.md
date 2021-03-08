@@ -11,7 +11,7 @@ This mod is also VERY work-in-progress, don't expect anything playable for a whi
 
 ### Code
 
-All code files are distributed under the [LGPL license](LICENSE).
+Unless mentioned otherwise, all code files are distributed under the [LGPL license](LICENSE).
 
 ### Assets
 
