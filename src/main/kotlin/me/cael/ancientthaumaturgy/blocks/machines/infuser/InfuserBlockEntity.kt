@@ -10,17 +10,51 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.recipe.RecipeFinder
 import net.minecraft.recipe.RecipeInputProvider
+import net.minecraft.screen.PropertyDelegate
 import net.minecraft.util.Tickable
 import net.minecraft.util.collection.DefaultedList
 
 class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Inventory, RecipeInputProvider, Tickable {
+
     var inventory: DefaultedList<ItemStack> = DefaultedList.ofSize(8, ItemStack.EMPTY)
+    private var vis = 0
+    private var visRequirement = 0
+
+    val propertyDelegate = object: PropertyDelegate {
+        override fun get(index: Int): Int {
+            return when(index) {
+                0 -> vis
+                1 -> visRequirement
+                else -> 0
+            }
+        }
+
+        override fun set(index: Int, value: Int) {
+            when(index) {
+                0 -> vis = value
+                1 -> visRequirement = value
+            }
+        }
+
+        override fun size(): Int = 2
+    }
 
     override fun tick() {
-        if (world!!.isClient) return
-        val recipe = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
-        if (recipe.isPresent) {
-            println("CU")
+        if (!world!!.isClient) {
+            val match = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
+            if (match.isPresent) {
+                val recipe = match.get()
+                val result = recipe.output.copy()
+                visRequirement = recipe.vis
+                if (inventory[6].count + result.count <= 64 && (inventory[6].isEmpty || inventory[6].isItemEqual(result)) && vis >= visRequirement) {
+                    recipe.input.forEach { ingredient ->
+                        inventory.filter { ingredient.test(it) }.forEach { it.decrement(1) }
+                    }
+                    result.increment(inventory[6].count)
+                    vis -= visRequirement
+                    inventory[6] = result
+                }
+            }
         }
     }
 

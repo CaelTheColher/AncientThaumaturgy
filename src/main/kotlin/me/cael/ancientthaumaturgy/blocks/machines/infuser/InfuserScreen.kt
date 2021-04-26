@@ -24,5 +24,7 @@ class InfuserScreen(handler: InfuserScreenHandler, inventory: PlayerInventory, t
     override fun drawBackground(matrices: MatrixStack, delta: Float, mouseX: Int, mouseY: Int) {
         this.client!!.textureManager.bindTexture(background)
         this.drawTexture(matrices, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight)
+        val progress = handler.getInfusionProgress()
+        this.drawTexture(matrices, this.x+148, this.y+90+39-progress, 184, 39-progress, 7, 39)
     }
 }

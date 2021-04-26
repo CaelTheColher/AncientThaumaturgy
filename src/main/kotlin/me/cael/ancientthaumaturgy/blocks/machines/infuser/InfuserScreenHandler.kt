@@ -63,4 +63,14 @@ class InfuserScreenHandler(i: Int, playerInventory: PlayerInventory, val invento
     }
 
     override fun canUse(player: PlayerEntity): Boolean = inventory.canPlayerUse(player)
+
+    fun getInfusionProgress(): Int {
+        val vis = this.inventory.propertyDelegate[0]
+        val visRequirement = this.inventory.propertyDelegate[1]
+        if (vis == 0 || visRequirement == 0) {
+            return 0
+        }
+        return vis * 39 / visRequirement
+    }
+
 }

@@ -12,20 +12,16 @@ import net.minecraft.util.JsonHelper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.world.World
 
-class InfuserRecipe(private val identifier: Identifier, private val group: String, private val output: ItemStack, val input: DefaultedList<Ingredient>) : Recipe<InfuserBlockEntity> {
+class InfuserRecipe(private val identifier: Identifier, private val group: String, private val output: ItemStack, val input: DefaultedList<Ingredient>, val vis: Int) : Recipe<InfuserBlockEntity> {
 
     override fun matches(inv: InfuserBlockEntity, world: World): Boolean {
-        val recipeFinder = RecipeFinder()
-        inv.inventory.forEach {
-            itemStack ->
-                if (!itemStack.isEmpty) {
-                    recipeFinder.method_20478(itemStack, 1)
-                }
+        val matches = input.filter { ingredient ->
+            inv.inventory.stream().anyMatch { ingredient.test(it) }
         }
-        return inv.inventory.filter{it.isEmpty.not()}.size == input.size && recipeFinder.findRecipe(this, null)
+        return matches.size == input.size
     }
 
-    override fun craft(inv: InfuserBlockEntity?): ItemStack = ItemStack.EMPTY
+    override fun craft(inv: InfuserBlockEntity?): ItemStack = output.copy()
 
     override fun fits(width: Int, height: Int): Boolean = false
 
@@ -50,13 +46,14 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
         override fun read(id: Identifier, json: JsonObject): InfuserRecipe {
             val string = JsonHelper.getString(json, "group", "")
             val defaultedList = getIngredients(JsonHelper.getArray(json, "ingredients"))
+            val vis = JsonHelper.getInt(json, "vis")
             return if (defaultedList.isEmpty()) {
                 throw JsonParseException("No ingredients for shapeless recipe")
             } else if (defaultedList.size > 9) {
                 throw JsonParseException("Too many ingredients for shapeless recipe")
             } else {
                 val itemStack = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"))
-                InfuserRecipe(id, string, itemStack, defaultedList)
+                InfuserRecipe(id, string, itemStack, defaultedList, vis)
             }
         }
 
@@ -75,13 +72,13 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
             val string: String = buf.readString(32767)
             val i: Int = buf.readVarInt()
             val defaultedList = DefaultedList.ofSize(i, Ingredient.EMPTY)
-
+            val vis = buf.readVarInt()
             for (j in defaultedList.indices) {
                 defaultedList[j] = Ingredient.fromPacket(buf)
             }
 
             val itemStack: ItemStack = buf.readItemStack()
-            return InfuserRecipe(id, string, itemStack, defaultedList)
+            return InfuserRecipe(id, string, itemStack, defaultedList, vis)
         }
 
         override fun write(buf: PacketByteBuf, recipe: InfuserRecipe) {
@@ -92,6 +89,7 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
                 it.write(buf)
             }
 
+            buf.writeInt(recipe.vis)
             buf.writeItemStack(recipe.output)
         }
 
