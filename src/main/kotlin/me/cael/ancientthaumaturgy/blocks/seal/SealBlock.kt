@@ -5,6 +5,8 @@ import me.cael.ancientthaumaturgy.items.EssenceItem
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.enums.WallMountLocation
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
@@ -22,19 +24,21 @@ import net.minecraft.util.math.Direction
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
+import net.minecraft.world.tick.OrderedTick
+import org.jetbrains.annotations.Nullable
 import java.util.*
 
-class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).noCollision()), Waterloggable, BlockEntityProvider {
+class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).noCollision()), Waterloggable, BlockEntityProvider {
 
     companion object {
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED
         val ENABLED: BooleanProperty = Properties.ENABLED
         val EAST_SHAPE: VoxelShape = createCuboidShape(0.0, 5.5, 5.5, 1.0, 10.5, 10.5)
-        val WEST_SHAPE: VoxelShape = createCuboidShape(16.0, 5.5, 5.5, 15.0, 10.5, 10.5)
+        val WEST_SHAPE: VoxelShape = createCuboidShape(15.0, 5.5, 5.5, 16.0, 10.5, 10.5)
         val SOUTH_SHAPE: VoxelShape = createCuboidShape(5.5, 5.5, 0.0, 10.5, 10.5, 1.0)
-        val NORTH_SHAPE: VoxelShape = createCuboidShape(5.5, 5.5, 16.0, 10.5, 10.5, 15.0)
+        val NORTH_SHAPE: VoxelShape = createCuboidShape(5.5, 5.5, 15.0, 10.5, 10.5, 16.0)
         val UP_SHAPE: VoxelShape = createCuboidShape(5.5, 0.0, 5.5, 10.5, 1.0, 10.5)
-        val DOWN_SHAPE: VoxelShape = createCuboidShape(5.5, 16.0, 5.5, 10.5, 15.0, 10.5)
+        val DOWN_SHAPE: VoxelShape = createCuboidShape(5.5, 15.0, 5.5, 10.5, 16.0, 10.5)
     }
 
     init {
@@ -51,7 +55,6 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).no
                     if (!player.isCreative) stack.decrement(1)
                 }
                 blockEntity.markDirty()
-                blockEntity.sync()
             }
             return ActionResult.CONSUME
         }
@@ -74,7 +77,7 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).no
         if (!world.isClient) {
             val bl = state.get(ENABLED) as Boolean
             if (bl == world.isReceivingRedstonePower(pos)) {
-                if (bl) world.blockTickScheduler.schedule(pos, this, 0)
+                if (bl) world.blockTickScheduler.scheduleTick(OrderedTick.create(this, pos))
                 else world.setBlockState(pos, state.cycle(ENABLED) as BlockState, 2)
             }
         }
@@ -88,7 +91,11 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.SUPPORTED).no
         builder.add(FACING, FACE, WATERLOGGED, ENABLED)
     }
 
-    override fun createBlockEntity(world: BlockView?): BlockEntity = SealBlockEntity(BlockRegistry.getBlockEntity(this))
+    override fun <T : BlockEntity?> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
+        return BlockEntityTicker {w, p, s, be -> SealBlockEntity.ticker(w, p, s, be as SealBlockEntity) }
+    }
+
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): @Nullable BlockEntity? = SealBlockEntity(BlockRegistry.getBlockEntity(this), pos, state)
 
     override fun getPlacementState(ctx: ItemPlacementContext): BlockState? = super.getPlacementState(ctx)?.with(WATERLOGGED, ctx.world.getFluidState(ctx.blockPos).fluid == Fluids.WATER)?.with(ENABLED, !ctx.world.isReceivingRedstonePower(ctx.blockPos))
 

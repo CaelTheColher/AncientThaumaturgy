@@ -1,27 +1,27 @@
 /*
- * This class is distributed as part of the Botania Mod.
- * Get the Source Code in github:
- * https://github.com/Vazkii/Botania
+ * This class is modified from the Botania mod created by Vazkii
+ * Botania Source Code: https://github.com/Vazkii/Botania
  *
  * Botania is Open Source and distributed under the
  * Botania License: http://botaniamod.net/license.php
  */
 package me.cael.ancientthaumaturgy.items.lexicon
 
+import me.cael.ancientthaumaturgy.AncientThaumaturgy.LOGGER
 import me.cael.ancientthaumaturgy.items.ItemRegistry
 import me.cael.ancientthaumaturgy.mixin.AccessorFirstPersonRenderer
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.network.AbstractClientPlayerEntity
-import net.minecraft.client.options.Perspective
+import net.minecraft.client.option.Perspective
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.entity.model.BookModel
+import net.minecraft.client.render.entity.model.EntityModelLayers
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.client.util.math.Vector3f
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.text.LiteralText
 import net.minecraft.text.Style
@@ -30,6 +30,7 @@ import net.minecraft.util.Arm
 import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.Vec3f
 
 
 // Hacky way to render 3D lexicon, will be reevaluated in the future.
@@ -37,7 +38,7 @@ import net.minecraft.util.math.MathHelper
 @Suppress("SameParameterValue")
 object RenderLexicon {
 
-    private val model = BookModel()
+    private val model = BookModel(MinecraftClient.getInstance().entityModelLoader.getModelPart(EntityModelLayers.BOOK))
     private val TEXTURE = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("model/lexicon"))
 
     fun renderHand(tickDelta: Float, hand: Hand, swingProgress: Float, equipProgress: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int) : Boolean {
@@ -50,7 +51,7 @@ object RenderLexicon {
             renderFirstPersonItem(mc.player!!, tickDelta, hand, swingProgress, equipProgress, matrices, vertexConsumers, light)
             true
         } catch (throwable: Throwable) {
-            println("Failed to render lexicon\n$throwable")
+            LOGGER.atError().log("Failed to render lexicon.", throwable)
             false
         }
     }
@@ -86,12 +87,12 @@ object RenderLexicon {
 
         if (side == Arm.RIGHT) {
             ms.translate((0.3f + 0.02f * ticks).toDouble(), (0.125f + 0.01f * ticks).toDouble(), (-0.2f - 0.035f * ticks).toDouble())
-            ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180f + ticks * 6))
+            ms.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180f + ticks * 6))
         } else {
             ms.translate((0.1f - 0.02f * ticks).toDouble(), (0.125f + 0.01f * ticks).toDouble(), (-0.2f - 0.035f * ticks).toDouble())
-            ms.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(200f + ticks * 10))
+            ms.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(200f + ticks * 10))
         }
-        ms.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(-0.3f + ticks * 2.85f))
+        ms.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-0.3f + ticks * 2.85f))
         val opening = MathHelper.clamp(ticks / 12f, 0f, 1f)
 
         var pageFlipTicks: Float = ClientTickHandler.pageFlipTicks
@@ -111,26 +112,26 @@ object RenderLexicon {
 
         if (ticks < 3) {
             val font: TextRenderer = MinecraftClient.getInstance().textRenderer
-            ms.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180f))
+            ms.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180f))
             ms.translate(-0.252, -0.235, -0.07)
             ms.scale(0.0035f, 0.0035f, -0.0035f)
 
             val title = "Lexica"
-            font.draw(title, 0f, 0f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
+            font.draw(title, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
 
             ms.translate(-15.0, 10.0, 0.0)
             val title2 = "Thaumaturga"
-            font.draw(title2, 0f, 0f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
+            font.draw(title2, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
 
             ms.translate(0.0, 10.0, 0.0)
             ms.scale(0.50f, 0.50f, 0.50f)
             val edition: Text = LiteralText("1st Edition").fillStyle(Style.EMPTY.withBold(true).withItalic(true))
-            font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().model, buffers, false, 0, light)
+            font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().positionMatrix, buffers, false, 0, light)
 
             ms.translate(7.5, 190.0, 0.0)
             val authorTitle = "A book by Tector"
             val len: Int = font.getWidth(authorTitle)
-            font.draw(authorTitle, 58 - len / 2f, -8f, 0xD69700, false, ms.peek().model, buffers, false, 0, light)
+            font.draw(authorTitle, 58 - len / 2f, -8f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
         }
 
         ms.pop()

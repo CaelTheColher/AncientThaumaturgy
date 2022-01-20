@@ -5,39 +5,40 @@ import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
 import net.minecraft.client.texture.Sprite
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
-import net.minecraft.client.util.math.Vector3f
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.Vec3f
 
-class SealRenderer(dispatcher: BlockEntityRenderDispatcher?) : BlockEntityRenderer<SealBlockEntity>(dispatcher) {
+class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
     override fun render(entity: SealBlockEntity, tickDelta: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, overlay: Int) {
+        println("hello from render")
         if (entity.cachedState.get(Properties.ENABLED) as Boolean) entity.lastRenderDegree += MathHelper.lerp(tickDelta, 0f, .3f)
         if (entity.lastRenderDegree >= 360) entity.lastRenderDegree = 0f
-        if (entity.runes.length > 0) renderRune("inner/" + EssenceItem.Type.fromId(entity.runes[0].toString()).name.toLowerCase(), 0.996f, -1f, entity, matrices, vertexConsumers, overlay)
-        if (entity.runes.length > 1) renderRune("outer/" + EssenceItem.Type.fromId(entity.runes[1].toString()).name.toLowerCase(), 0.95f, 1f, entity, matrices, vertexConsumers, overlay)
-        if (entity.runes.length > 2) renderRune("center/" + EssenceItem.Type.fromId(entity.runes[2].toString()).name.toLowerCase(), 0.9f, 0f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 0) renderRune("inner/" + EssenceItem.Type.fromId(entity.runes[0].toString()).name.lowercase(), 0.996f, -1f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 1) renderRune("outer/" + EssenceItem.Type.fromId(entity.runes[1].toString()).name.lowercase(), 0.95f, 1f, entity, matrices, vertexConsumers, overlay)
+        if (entity.runes.length > 2) renderRune("center/" + EssenceItem.Type.fromId(entity.runes[2].toString()).name.lowercase(), 0.9f, 0f, entity, matrices, vertexConsumers, overlay)
     }
 
     private fun renderRune(rune: String, offset: Float, rotationOffset: Float, entity: SealBlockEntity, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, overlay: Int) {
+        println("hello from renderRune")
         val sealIdentifier = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("rune/$rune"))
         val sealConsumer = sealIdentifier.getVertexConsumer(vertexConsumers, { texture -> RenderLayer.getEntityTranslucent(texture) })
         val direction = entity.getDirection()
         val directionVector = direction.opposite.unitVector
         val rotationVector = when(direction) {
-            Direction.UP -> Vector3f.NEGATIVE_Y
-            Direction.DOWN -> Vector3f.POSITIVE_Y
-            Direction.NORTH -> Vector3f.POSITIVE_Z
-            Direction.SOUTH -> Vector3f.NEGATIVE_Z
-            Direction.EAST -> Vector3f.NEGATIVE_X
-            Direction.WEST -> Vector3f.POSITIVE_X
-            else -> Vector3f.POSITIVE_Z
+            Direction.UP -> Vec3f.NEGATIVE_Y
+            Direction.DOWN -> Vec3f.POSITIVE_Y
+            Direction.NORTH -> Vec3f.POSITIVE_Z
+            Direction.SOUTH -> Vec3f.NEGATIVE_Z
+            Direction.EAST -> Vec3f.NEGATIVE_X
+            Direction.WEST -> Vec3f.POSITIVE_X
+            else -> Vec3f.POSITIVE_Z
         }
         directionVector.multiplyComponentwise(offset, offset, offset)
         matrices.push()
@@ -57,10 +58,11 @@ class SealRenderer(dispatcher: BlockEntityRenderDispatcher?) : BlockEntityRender
         matrices.pop()
     }
 
-    private fun renderVertices(bb: VertexConsumer, sprite: Sprite, entry: MatrixStack.Entry, normal: Vector3f, overlay: Int, light: Int, f: Float, g: Float, h: Float, i: Float, j: Float, k: Float, l: Float, m: Float) {
-        bb.vertex(entry.model, f, h, j).color(1f, 1f, 1f, 1f).texture(sprite.maxU, sprite.minV).overlay(overlay).light(light).normal(entry.normal, normal.x, normal.y, normal.z).next()
-        bb.vertex(entry.model, g, h, k).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.minV).overlay(overlay).light(light).normal(entry.normal, normal.x, normal.y, normal.z).next()
-        bb.vertex(entry.model, g, i, l).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.maxV).overlay(overlay).light(light).normal(entry.normal, normal.x, normal.y, normal.z).next()
-        bb.vertex(entry.model, f, i, m).color(1f, 1f, 1f, 1f).texture(sprite.maxU, sprite.maxV).overlay(overlay).light(light).normal(entry.normal, normal.x, normal.y, normal.z).next()
+    private fun renderVertices(bb: VertexConsumer, sprite: Sprite, entry: MatrixStack.Entry, normal: Vec3f, overlay: Int, light: Int, f: Float, g: Float, h: Float, i: Float, j: Float, k: Float, l: Float, m: Float) {
+        println("hello from renderVertices")
+        bb.vertex(entry.positionMatrix, f, h, j).color(1f, 1f, 1f, 1f).texture(sprite.maxU, sprite.minV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
+        bb.vertex(entry.positionMatrix, g, h, k).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.minV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
+        bb.vertex(entry.positionMatrix, g, i, l).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.maxV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
+        bb.vertex(entry.positionMatrix, f, i, m).color(1f, 1f, 1f, 1f).texture(sprite.maxU, sprite.maxV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
     }
 }

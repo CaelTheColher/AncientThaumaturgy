@@ -2,7 +2,6 @@ package me.cael.ancientthaumaturgy.blocks.machines.tube
 
 import me.cael.ancientthaumaturgy.blocks.BlockRegistry
 import me.cael.ancientthaumaturgy.blocks.machines.MachineEntity
-import me.cael.ancientthaumaturgy.blocks.machines.networking.Network
 import net.minecraft.block.Block
 import net.minecraft.block.BlockEntityProvider
 import net.minecraft.block.BlockState
@@ -10,7 +9,6 @@ import net.minecraft.block.ShapeContext
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -33,7 +31,7 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
         val DOWN_SHAPE: VoxelShape = createCuboidShape(6.0, 0.0, 6.0, 10.0, 6.0, 10.0)
         val UP_SHAPE: VoxelShape = createCuboidShape(6.0, 10.5, 6.0, 10.0, 16.0, 10.0)
         val SOUTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 10.5, 10.0, 10.0, 16.0)
-        val NORTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 5.5, 10.0, 10.0, 0.0)
+        val NORTH_SHAPE: VoxelShape = createCuboidShape(6.0, 6.0, 0.0, 10.0, 10.0, 5.5)
         val EAST_SHAPE: VoxelShape = createCuboidShape(10.5, 6.0, 6.0, 16.0, 10.0, 10.0)
         val WEST_SHAPE: VoxelShape = createCuboidShape(0.0, 6.0, 6.0, 5.5, 10.0, 10.0)
 
@@ -74,26 +72,26 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
 
     override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, moved: Boolean) {
         super.onStateReplaced(state, world, pos, newState, moved)
-        if(!world.isClient) {
-            if (state.isOf(newState.block))
-                Network.handleUpdate(world as ServerWorld, pos)
-            else
-                Network.handleBreak(world as ServerWorld, pos)
-        }
+//        if(!world.isClient) {
+//            if (state.isOf(newState.block))
+//                Network.handleUpdate(world as ServerWorld, pos)
+//            else
+//                Network.handleBreak(world as ServerWorld, pos)
+//        }
     }
 
     override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
         super.onPlaced(world, pos, state, placer, itemStack)
-        if (!world.isClient) {
-            Network.handleUpdate(world as ServerWorld, pos)
-        }
+//        if (!world.isClient) {
+//            Network.handleUpdate(world as ServerWorld, pos)
+//        }
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
         builder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN)
     }
 
-    override fun createBlockEntity(world: BlockView?): BlockEntity = TubeBlockEntity(BlockRegistry.getBlockEntity(this))
+    override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = TubeBlockEntity(BlockRegistry.getBlockEntity(this), pos, state)
     override fun getOutlineShape(state: BlockState, view: BlockView?, pos: BlockPos?, context: ShapeContext?): VoxelShape = getShape(state)
 
 

@@ -8,11 +8,13 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.loader.launch.common.FabricLauncherBase
 import net.minecraft.util.registry.Registry
+import org.apache.logging.log4j.LogManager
 
 
 object AncientThaumaturgy : ModInitializer {
     const val NAMESPACE = "ancientthaumaturgy"
     val CLIENT = FabricLauncherBase.getLauncher().environmentType == EnvType.CLIENT
+    val LOGGER = LogManager.getLogger("Ancient Thaumaturgy")
 
     override fun onInitialize() {
         BlockRegistry.registerBlocks()

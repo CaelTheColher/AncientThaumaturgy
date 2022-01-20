@@ -44,7 +44,7 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
     class InfuserRecipeSerializer : RecipeSerializer<InfuserRecipe> {
 
         override fun read(id: Identifier, json: JsonObject): InfuserRecipe {
-            val string = JsonHelper.getString(json, "group", "")
+            val string = JsonHelper.getString(json, "group", "")!!
             val defaultedList = getIngredients(JsonHelper.getArray(json, "ingredients"))
             val vis = JsonHelper.getInt(json, "vis")
             return if (defaultedList.isEmpty()) {
@@ -52,7 +52,7 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
             } else if (defaultedList.size > 9) {
                 throw JsonParseException("Too many ingredients for shapeless recipe")
             } else {
-                val itemStack = ShapedRecipe.getItemStack(JsonHelper.getObject(json, "result"))
+                val itemStack = ShapedRecipe.getItem(JsonHelper.getObject(json, "result")).defaultStack
                 InfuserRecipe(id, string, itemStack, defaultedList, vis)
             }
         }

@@ -7,14 +7,15 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.Inventories
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.recipe.RecipeFinder
+import net.minecraft.nbt.NbtCompound
 import net.minecraft.recipe.RecipeInputProvider
+import net.minecraft.recipe.RecipeMatcher
 import net.minecraft.screen.PropertyDelegate
-import net.minecraft.util.Tickable
 import net.minecraft.util.collection.DefaultedList
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 
-class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Inventory, RecipeInputProvider, Tickable {
+class InfuserBlockEntity(type: BlockEntityType<*>?, pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state), Inventory, RecipeInputProvider {
 
     var inventory: DefaultedList<ItemStack> = DefaultedList.ofSize(8, ItemStack.EMPTY)
     private var vis = 0
@@ -39,35 +40,34 @@ class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Invento
         override fun size(): Int = 2
     }
 
-    override fun tick() {
-        if (!world!!.isClient) {
-            val match = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
-            if (match.isPresent) {
-                val recipe = match.get()
-                val result = recipe.output.copy()
-                visRequirement = recipe.vis
-                if (inventory[6].count + result.count <= 64 && (inventory[6].isEmpty || inventory[6].isItemEqual(result)) && vis >= visRequirement) {
-                    recipe.input.forEach { ingredient ->
-                        inventory.filter { ingredient.test(it) }.forEach { it.decrement(1) }
-                    }
-                    result.increment(inventory[6].count)
-                    vis -= visRequirement
-                    inventory[6] = result
+    fun tick() {
+        val match = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
+        if (match.isPresent) {
+            val recipe = match.get()
+            val result = recipe.output.copy()
+            visRequirement = recipe.vis
+            vis = visRequirement // debug
+            if (inventory[6].count + result.count <= 64 && (inventory[6].isEmpty || inventory[6].isItemEqual(result)) && vis >= visRequirement) {
+
+                recipe.input.forEach { ingredient ->
+                    inventory.filter { ingredient.test(it) }.forEach { it.decrement(1) }
                 }
+                result.increment(inventory[6].count)
+                vis -= visRequirement
+                inventory[6] = result
             }
         }
     }
 
-    override fun toTag(tag: CompoundTag): CompoundTag {
-        super.toTag(tag)
-        Inventories.toTag(tag, this.inventory)
-        return tag
+    override fun writeNbt(tag: NbtCompound){
+        Inventories.writeNbt(tag, this.inventory)
+        super.writeNbt(tag)
     }
 
-    override fun fromTag(state: BlockState, tag: CompoundTag) {
-        super.fromTag(state, tag)
+    override fun readNbt(tag: NbtCompound) {
+        super.readNbt(tag)
         this.inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY)
-        Inventories.fromTag(tag, this.inventory)
+        Inventories.readNbt(tag, this.inventory)
     }
 
     override fun clear() = inventory.clear()
@@ -97,9 +97,18 @@ class InfuserBlockEntity(type: BlockEntityType<*>?) : BlockEntity(type), Invento
         }
     }
 
-    override fun provideRecipeInputs(finder: RecipeFinder) {
+    override fun provideRecipeInputs(matcher: RecipeMatcher) {
         inventory.forEach {
-            finder.addItem(it)
+            matcher.addInput(it)
+        }
+    }
+
+    companion object {
+        @Suppress("unused_parameter")
+        fun ticker(world: World, pos: BlockPos, state: BlockState, entity: InfuserBlockEntity) {
+            if (!world.isClient) {
+                entity.tick()
+            }
         }
     }
 }

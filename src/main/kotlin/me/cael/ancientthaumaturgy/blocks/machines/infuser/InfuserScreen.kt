@@ -1,5 +1,6 @@
 package me.cael.ancientthaumaturgy.blocks.machines.infuser
 
+import com.mojang.blaze3d.systems.RenderSystem
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.gui.screen.ingame.HandledScreen
 import net.minecraft.client.util.math.MatrixStack
@@ -22,7 +23,7 @@ class InfuserScreen(handler: InfuserScreenHandler, inventory: PlayerInventory, t
     override fun drawForeground(matrices: MatrixStack, mouseX: Int, mouseY: Int) {}
 
     override fun drawBackground(matrices: MatrixStack, delta: Float, mouseX: Int, mouseY: Int) {
-        this.client!!.textureManager.bindTexture(background)
+        RenderSystem.setShaderTexture(0, background)
         this.drawTexture(matrices, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight)
         val progress = handler.getInfusionProgress()
         this.drawTexture(matrices, this.x+148, this.y+90+39-progress, 184, 39-progress, 7, 39)
