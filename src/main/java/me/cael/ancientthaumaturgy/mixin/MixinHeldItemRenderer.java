@@ -1,6 +1,6 @@
 package me.cael.ancientthaumaturgy.mixin;
 
-import me.cael.ancientthaumaturgy.items.lexicon.RenderLexicon;
+import me.cael.ancientthaumaturgy.common.item.lexicon.RenderLexicon;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.HeldItemRenderer;

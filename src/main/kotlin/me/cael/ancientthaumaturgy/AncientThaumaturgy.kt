@@ -1,24 +1,32 @@
 package me.cael.ancientthaumaturgy
 
-import me.cael.ancientthaumaturgy.blocks.BlockRegistry
-import me.cael.ancientthaumaturgy.blocks.machines.infuser.InfuserRecipe
-import me.cael.ancientthaumaturgy.blocks.seal.combinations.CombinationRegistry
-import me.cael.ancientthaumaturgy.items.ItemRegistry
-import net.fabricmc.api.EnvType
+import me.cael.ancientthaumaturgy.common.block.BlockCompendium
+import me.cael.ancientthaumaturgy.common.blockentity.BlockEntityCompendium
+import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.CombinationRegistry
+import me.cael.ancientthaumaturgy.common.container.ScreenHandlerCompendium
+import me.cael.ancientthaumaturgy.common.item.ItemCompendium
+import me.cael.ancientthaumaturgy.common.recipe.InfuserRecipe
+import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.loader.launch.common.FabricLauncherBase
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.util.registry.Registry
 import org.apache.logging.log4j.LogManager
 
 
 object AncientThaumaturgy : ModInitializer {
     const val NAMESPACE = "ancientthaumaturgy"
-    val CLIENT = FabricLauncherBase.getLauncher().environmentType == EnvType.CLIENT
+    private val creativeTab = FabricItemGroupBuilder.build(identifier("item_group")) { ItemStack(BlockCompendium.SEAL_BLOCK.asItem()) }
     val LOGGER = LogManager.getLogger("Ancient Thaumaturgy")
 
+    fun creativeGroupSettings(): Item.Settings = Item.Settings().group(creativeTab)
+
     override fun onInitialize() {
-        BlockRegistry.registerBlocks()
-        ItemRegistry.registerItems()
+        BlockCompendium.initialize()
+        BlockEntityCompendium.initialize()
+        ScreenHandlerCompendium.initialize()
+        ItemCompendium.initialize()
         CombinationRegistry.registerCombinations()
         Registry.register(Registry.RECIPE_SERIALIZER, InfuserRecipe.ID, InfuserRecipe.SERIALIZER);
         Registry.register(Registry.RECIPE_TYPE, InfuserRecipe.ID, InfuserRecipe.TYPE)

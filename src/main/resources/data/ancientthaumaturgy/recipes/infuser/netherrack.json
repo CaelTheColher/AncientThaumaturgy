@@ -16,7 +16,8 @@
       }
     ]
   ],
-  "vis": 15,
+  "vis": 150,
+  "infuseTime": 20,
   "result": {
     "item": "minecraft:netherrack",
     "count": 3

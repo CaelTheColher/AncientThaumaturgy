@@ -26,7 +26,7 @@
     "client": [
       {
         "adapter": "kotlin",
-        "value": "me.cael.ancientthaumaturgy.AncientThaumaturgyClient"
+        "value": "me.cael.ancientthaumaturgy.client.AncientThaumaturgyClient"
       }
     ]
   },
