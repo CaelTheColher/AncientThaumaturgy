@@ -46,6 +46,8 @@ object AncientThaumaturgyClient : ClientModInitializer {
 
             registry.register(identifier("model/lexicon"))
 
+            registry.register(identifier("block/yep_vis_and_not_just_recolored_water"))
+
         })
         ModelLoadingRegistry.INSTANCE.registerVariantProvider {
             ModelVariantProvider { modelIdentifier, _ ->

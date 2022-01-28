@@ -78,7 +78,7 @@ class InfuserScreenHandler(i: Int, val playerInventory: PlayerInventory, val inv
     }
 
     fun shouldSync() : Boolean {
-        return (inventory.ticks != ticks) && (inventory.infuseTime != infuseTime)
+        return (inventory.ticks != ticks) || (inventory.infuseTime != infuseTime)
     }
 
     fun postSync() {

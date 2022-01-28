@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 
 open class MachineEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState, storageMax: Long = 0, inputMax: Long = 0, outputMax: Long = 0) : BlockEntity(type, pos, state) {
 
-    val visStorage = object : SimpleEnergyStorage(storageMax, inputMax, outputMax) {
+    open val visStorage = object : SimpleEnergyStorage(storageMax, inputMax, outputMax) {
         override fun onFinalCommit() {
             markDirtyAndSync()
         }

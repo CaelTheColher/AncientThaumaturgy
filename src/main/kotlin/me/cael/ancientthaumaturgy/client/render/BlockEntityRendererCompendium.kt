@@ -10,6 +10,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory
 object BlockEntityRendererCompendium: GenericCompendium<BlockEntityRendererFactory<*>>() {
     init {
         register("seal_block", BlockEntityRendererFactory { SealRenderer() })
+        register("tank_block", BlockEntityRendererFactory { TankRenderer() })
     }
 
     @Suppress("UNCHECKED_CAST")

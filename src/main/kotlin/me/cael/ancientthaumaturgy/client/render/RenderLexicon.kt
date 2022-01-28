@@ -5,10 +5,12 @@
  * Botania is Open Source and distributed under the
  * Botania License: http://botaniamod.net/license.php
  */
-package me.cael.ancientthaumaturgy.common.item.lexicon
+package me.cael.ancientthaumaturgy.client.render
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy.LOGGER
 import me.cael.ancientthaumaturgy.common.item.ItemCompendium
+import me.cael.ancientthaumaturgy.common.item.lexicon.ClientTickHandler
+import me.cael.ancientthaumaturgy.common.item.lexicon.LexiconItem
 import me.cael.ancientthaumaturgy.mixin.AccessorFirstPersonRenderer
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.MinecraftClient
@@ -107,7 +109,7 @@ object RenderLexicon {
         model.setPageAngles(ClientTickHandler.total, MathHelper.clamp(leftPageAngle, 0.0f, 1.0f), MathHelper.clamp(rightPageAngle, 0.0f, 1.0f), opening)
 
         val mat = TEXTURE
-        val buffer = mat.getVertexConsumer(buffers, { texture: Identifier? -> RenderLayer.getEntitySolid(texture) })
+        val buffer = mat.getVertexConsumer(buffers) { texture: Identifier? -> RenderLayer.getEntitySolid(texture) }
         model.render(ms, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f)
 
         if (ticks < 3) {
