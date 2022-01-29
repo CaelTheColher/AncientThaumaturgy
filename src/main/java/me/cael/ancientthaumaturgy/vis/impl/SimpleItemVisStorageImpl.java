@@ -1,7 +1,7 @@
 package me.cael.ancientthaumaturgy.vis.impl;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
-import me.cael.ancientthaumaturgy.vis.api.base.DelegatingEnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
+import me.cael.ancientthaumaturgy.vis.api.base.DelegatingVisStorage;
 import me.cael.ancientthaumaturgy.vis.api.base.SimpleBatteryItem;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -13,19 +13,19 @@ import net.minecraft.item.ItemStack;
 
 /**
  * Note: instances of this class do not perform any context validation,
- * that is handled by the DelegatingEnergyStorage they are wrapped behind.
+ * that is handled by the DelegatingVisStorage they are wrapped behind.
  */
 @SuppressWarnings({"UnstableApiUsage"})
-public class SimpleItemEnergyStorageImpl implements EnergyStorage {
-	public static EnergyStorage createSimpleStorage(ContainerItemContext ctx, long capacity, long maxInsert, long maxExtract) {
+public class SimpleItemVisStorageImpl implements VisStorage {
+	public static VisStorage createSimpleStorage(ContainerItemContext ctx, long capacity, long maxInsert, long maxExtract) {
 		StoragePreconditions.notNegative(capacity);
 		StoragePreconditions.notNegative(maxInsert);
 		StoragePreconditions.notNegative(maxExtract);
 
 		Item startingItem = ctx.getItemVariant().getItem();
 
-		return new DelegatingEnergyStorage(
-				new SimpleItemEnergyStorageImpl(ctx, capacity, maxInsert, maxExtract),
+		return new DelegatingVisStorage(
+				new SimpleItemVisStorageImpl(ctx, capacity, maxInsert, maxExtract),
 				() -> ctx.getItemVariant().isOf(startingItem) && ctx.getAmount() > 0
 		);
 	}
@@ -34,7 +34,7 @@ public class SimpleItemEnergyStorageImpl implements EnergyStorage {
 	private final long capacity;
 	private final long maxInsert, maxExtract;
 
-	private SimpleItemEnergyStorageImpl(ContainerItemContext ctx, long capacity, long maxInsert, long maxExtract) {
+	private SimpleItemVisStorageImpl(ContainerItemContext ctx, long capacity, long maxInsert, long maxExtract) {
 		this.ctx = ctx;
 		this.capacity = capacity;
 		this.maxInsert = maxInsert;
@@ -42,11 +42,11 @@ public class SimpleItemEnergyStorageImpl implements EnergyStorage {
 	}
 
 	/**
-	 * Try to set the energy of the stack to {@code energyAmountPerCount}, return true if success.
+	 * Try to set the vis of the stack to {@code energyAmountPerCount}, return true if success.
 	 */
 	private boolean trySetEnergy(long energyAmountPerCount, long count, TransactionContext transaction) {
 		ItemStack newStack = ctx.getItemVariant().toStack();
-		SimpleBatteryItem.setStoredEnergyUnchecked(newStack, energyAmountPerCount);
+		SimpleBatteryItem.setStoredVisUnchecked(newStack, energyAmountPerCount);
 		ItemVariant newVariant = ItemVariant.of(newStack);
 
 		// Try to convert exactly `count` items.
@@ -106,7 +106,7 @@ public class SimpleItemEnergyStorageImpl implements EnergyStorage {
 
 	@Override
 	public long getAmount() {
-		return ctx.getAmount() * SimpleBatteryItem.getStoredEnergyUnchecked(ctx.getItemVariant().getNbt());
+		return ctx.getAmount() * SimpleBatteryItem.getStoredVisUnchecked(ctx.getItemVariant().getNbt());
 	}
 
 	@Override

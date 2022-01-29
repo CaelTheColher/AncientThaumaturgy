@@ -21,6 +21,7 @@ class Place(range: Double, depth: Double) : AbstractSealCombination(10, range, d
         }
     }
 
+    // TODO: Remake this using a fakeplayer to avoid bypassing protections in multiplayer
     private fun tryPlace(world: World, pos: BlockPos, stack: ItemStack) : Boolean {
         val state = world.getBlockState(pos)
         val block = (stack.item as BlockItem).block

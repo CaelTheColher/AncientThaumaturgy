@@ -1,15 +1,15 @@
 package me.cael.ancientthaumaturgy.vis.api.base;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 /**
- * An energy storage that can't accept energy, but will allow extracting any amount of energy.
+ * A vis storage that can't accept vis, but will allow extracting any amount of vis.
  * Creative batteries are a possible use case.
  * {@link #INSTANCE} can be used instead of creating a new object every time.
  */
-public class InfiniteEnergyStorage implements EnergyStorage {
-	public static final InfiniteEnergyStorage INSTANCE = new InfiniteEnergyStorage();
+public class InfiniteVisStorage implements VisStorage {
+	public static final InfiniteVisStorage INSTANCE = new InfiniteVisStorage();
 
 	@Override
 	public boolean supportsInsertion() {

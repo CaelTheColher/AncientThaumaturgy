@@ -15,7 +15,7 @@
  */
 package me.cael.ancientthaumaturgy.vis.api.base;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import org.jetbrains.annotations.ApiStatus;
@@ -23,17 +23,17 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.List;
 
 /**
- * A {@link EnergyStorage} wrapping multiple storages.
+ * A {@link VisStorage} wrapping multiple storages.
  *
- * <p>The storages passed to {@linkplain CombinedEnergyStorage#CombinedEnergyStorage the constructor} will be iterated in order.
+ * <p>The storages passed to {@linkplain CombinedVisStorage#CombinedVisStorage the constructor} will be iterated in order.
  *
- * @param <S> The class of every part. {@code ? extends EnergyStorage<T>} can be used if the parts are of different types.
+ * @param <S> The class of every part. {@code ? extends VisStorage<T>} can be used if the parts are of different types.
  */
 @ApiStatus.Experimental
-public class CombinedEnergyStorage<S extends EnergyStorage> implements EnergyStorage {
+public class CombinedVisStorage<S extends VisStorage> implements VisStorage {
     public List<S> parts;
 
-    public CombinedEnergyStorage(List<S> parts) {
+    public CombinedVisStorage(List<S> parts) {
         this.parts = parts;
     }
 

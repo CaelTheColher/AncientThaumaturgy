@@ -3,7 +3,7 @@ package me.cael.ancientthaumaturgy.common.blockentity
 import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.block.TankBlock
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage
+import me.cael.ancientthaumaturgy.vis.api.VisStorage
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.util.registry.Registry
 
@@ -16,8 +16,8 @@ object BlockEntityCompendium: RegistryCompendium<BlockEntityType<*>>(Registry.BL
     val CRUCIBLE_BLOCK_TYPE = register("crucible_block", BlockEntityType.Builder.create(::CrucibleBlockEntity, BlockCompendium.CRUCIBLE_BLOCK).build(null)) as BlockEntityType<CrucibleBlockEntity>
 
     init {
-        EnergyStorage.SIDED.registerForBlockEntities({ be, _ -> (be as MachineEntity).visStorage }, SEAL_BLOCK_TYPE, TUBE_BLOCK_TYPE, INFUSER_BLOCK_TYPE, CRUCIBLE_BLOCK_TYPE)
-        EnergyStorage.SIDED.registerForBlockEntity({be, _ ->
+        VisStorage.SIDED.registerForBlockEntities({ be, _ -> (be as MachineEntity).visStorage }, SEAL_BLOCK_TYPE, TUBE_BLOCK_TYPE, INFUSER_BLOCK_TYPE, CRUCIBLE_BLOCK_TYPE)
+        VisStorage.SIDED.registerForBlockEntity({ be, _ ->
             val combinedStorage = TankBlockEntity.CombinedTankStorage()
             TankBlock.findAllTanks(be.world!!.getChunk(be.pos), be.world!!.getBlockState(be.pos), be.pos, mutableSetOf(), combinedStorage)
             combinedStorage

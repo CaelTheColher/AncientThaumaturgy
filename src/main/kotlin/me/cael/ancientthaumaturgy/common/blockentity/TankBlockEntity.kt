@@ -1,9 +1,9 @@
 package me.cael.ancientthaumaturgy.common.blockentity
 
 import me.cael.ancientthaumaturgy.common.block.TankBlock
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorageUtil
-import me.cael.ancientthaumaturgy.vis.api.base.CombinedEnergyStorage
+import me.cael.ancientthaumaturgy.vis.api.VisStorage
+import me.cael.ancientthaumaturgy.vis.api.VisStorageUtil
+import me.cael.ancientthaumaturgy.vis.api.base.CombinedVisStorage
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -13,7 +13,7 @@ class TankBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
     fun tick() {
         if (!cachedState[TankBlock.DOWN]) return
         val bellow = world?.getBlockEntity(pos.down()) as? TankBlockEntity ?: return
-        val moved = EnergyStorageUtil.move(visStorage, bellow.visStorage, Long.MAX_VALUE, null)
+        val moved = VisStorageUtil.move(visStorage, bellow.visStorage, Long.MAX_VALUE, null)
         if (moved > 0) {
             bellow.markDirtyAndSync()
             markDirtyAndSync()
@@ -29,7 +29,7 @@ class TankBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
         }
     }
 
-    class CombinedTankStorage : CombinedEnergyStorage<EnergyStorage>(mutableListOf<EnergyStorage>()) {
+    class CombinedTankStorage : CombinedVisStorage<VisStorage>(mutableListOf<VisStorage>()) {
         fun add(tank: TankBlockEntity): Boolean {
             parts.add(tank.visStorage)
             return true

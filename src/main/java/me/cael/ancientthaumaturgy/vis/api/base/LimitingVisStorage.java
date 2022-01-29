@@ -1,25 +1,25 @@
 package me.cael.ancientthaumaturgy.vis.api.base;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 import java.util.Objects;
 
 /**
- * An energy storage that will apply additional per-insert and per-extract limits to another storage.
+ * A vis storage that will apply additional per-insert and per-extract limits to another storage.
  */
-public class LimitingEnergyStorage implements EnergyStorage {
-	protected final EnergyStorage backingStorage;
+public class LimitingVisStorage implements VisStorage {
+	protected final VisStorage backingStorage;
 	protected final long maxInsert, maxExtract;
 
 	/**
 	 * Create a new limiting storage.
 	 * @param backingStorage Storage to delegate to.
-	 * @param maxInsert The maximum amount of energy that can be inserted in one operation.
-	 * @param maxExtract The maximum amount of energy that can be extracted in one operation.
+	 * @param maxInsert The maximum amount of vis that can be inserted in one operation.
+	 * @param maxExtract The maximum amount of vis that can be extracted in one operation.
 	 */
-	public LimitingEnergyStorage(EnergyStorage backingStorage, long maxInsert, long maxExtract) {
+	public LimitingVisStorage(VisStorage backingStorage, long maxInsert, long maxExtract) {
 		Objects.requireNonNull(backingStorage);
 		StoragePreconditions.notNegative(maxInsert);
 		StoragePreconditions.notNegative(maxExtract);

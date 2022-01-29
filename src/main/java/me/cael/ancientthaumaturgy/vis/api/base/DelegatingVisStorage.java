@@ -1,6 +1,6 @@
 package me.cael.ancientthaumaturgy.vis.api.base;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
@@ -10,13 +10,13 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 /**
- * An energy storage that delegates to another energy storage,
+ * A vis storage that delegates to another vis storage,
  * with an optional boolean supplier to check that the storage is still valid.
- * This can be used for easier item energy storage implementation, or overridden for custom delegation logic.
+ * This can be used for easier item vis storage implementation, or overridden for custom delegation logic.
  */
 @SuppressWarnings({"UnstableApiUsage"})
-public class DelegatingEnergyStorage implements EnergyStorage {
-	protected final Supplier<EnergyStorage> backingStorage;
+public class DelegatingVisStorage implements VisStorage {
+	protected final Supplier<VisStorage> backingStorage;
 	protected final BooleanSupplier validPredicate;
 
 	/**
@@ -25,7 +25,7 @@ public class DelegatingEnergyStorage implements EnergyStorage {
 	 * @param validPredicate A function that can return false to prevent any operation, or true to call the delegate as usual.
 	 *                       {@code null} can be passed if no filtering is necessary.
 	 */
-	public DelegatingEnergyStorage(EnergyStorage backingStorage, @Nullable BooleanSupplier validPredicate) {
+	public DelegatingVisStorage(VisStorage backingStorage, @Nullable BooleanSupplier validPredicate) {
 		this(() -> backingStorage, validPredicate);
 		Objects.requireNonNull(backingStorage);
 	}
@@ -33,7 +33,7 @@ public class DelegatingEnergyStorage implements EnergyStorage {
 	/**
 	 * More general constructor that allows the backing storage to change over time.
 	 */
-	public DelegatingEnergyStorage(Supplier<EnergyStorage> backingStorage, @Nullable BooleanSupplier validPredicate) {
+	public DelegatingVisStorage(Supplier<VisStorage> backingStorage, @Nullable BooleanSupplier validPredicate) {
 		this.backingStorage = Objects.requireNonNull(backingStorage);
 		this.validPredicate = validPredicate == null ? () -> true : validPredicate;
 	}

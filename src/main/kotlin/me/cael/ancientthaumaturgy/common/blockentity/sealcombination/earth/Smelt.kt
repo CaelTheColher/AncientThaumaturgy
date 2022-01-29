@@ -25,6 +25,7 @@ class Smelt(range: Double, depth: Double) : AbstractSealCombination(10, range, d
         }
     }
 
+    // TODO: Remake this using a fakeplayer to avoid bypassing protections in multiplayer
     private fun trySmelt(world: World, pos: BlockPos) : Boolean {
         val state = world.getBlockState(pos)
         val smeltResult = getSmeltingResult(state.block.asItem(), world) ?: return false

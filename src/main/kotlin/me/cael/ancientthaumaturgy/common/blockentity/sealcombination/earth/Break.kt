@@ -17,6 +17,7 @@ class Break(range: Double, depth: Double) : AbstractSealCombination(10, range, d
         }
     }
 
+    // TODO: Remake this using a fakeplayer to avoid bypassing protections in multiplayer
     private fun tryBreak(world: World, pos: BlockPos) : Boolean {
         val state = world.getBlockState(pos)
         val canBreak = state.getHardness(world, pos) >= 0

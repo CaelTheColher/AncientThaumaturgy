@@ -1,21 +1,21 @@
 package me.cael.ancientthaumaturgy.vis.api.base;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant;
 
 /**
- * A base energy storage implementation with fixed capacity, and per-operation insertion and extraction limits.
+ * A base vis storage implementation with fixed capacity, and per-operation insertion and extraction limits.
  * Make sure to override {@link #onFinalCommit} to call {@code markDirty} and similar functions.
  */
 @SuppressWarnings({"unused", "UnstableApiUsage"})
-public class SimpleEnergyStorage extends SnapshotParticipant<Long> implements EnergyStorage {
+public class SimpleVisStorage extends SnapshotParticipant<Long> implements VisStorage {
 	public long amount = 0;
 	public final long capacity;
 	public final long maxInsert, maxExtract;
 
-	public SimpleEnergyStorage(long capacity, long maxInsert, long maxExtract) {
+	public SimpleVisStorage(long capacity, long maxInsert, long maxExtract) {
 		StoragePreconditions.notNegative(capacity);
 		StoragePreconditions.notNegative(maxInsert);
 		StoragePreconditions.notNegative(maxExtract);

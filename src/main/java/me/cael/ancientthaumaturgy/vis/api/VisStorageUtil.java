@@ -8,21 +8,21 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Helper functions to work with {@link EnergyStorage}s.
+ * Helper functions to work with {@link VisStorage}s.
  */
 @SuppressWarnings({"unused", "UnstableApiUsage"})
-public class EnergyStorageUtil {
+public class VisStorageUtil {
 	/**
-	 * Move energy between two energy storages, and return the amount that was successfully moved.
+	 * Move vis between two vis storages, and return the amount that was successfully moved.
 	 *
 	 * @param from The source storage. May be null.
 	 * @param to The target storage. May be null.
 	 * @param maxAmount The maximum amount that may be moved.
 	 * @param transaction The transaction this transfer is part of,
 	 *                    or {@code null} if a transaction should be opened just for this transfer.
-	 * @return The amount of energy that was successfully moved.
+	 * @return The amount of vis that was successfully moved.
 	 */
-	public static long move(@Nullable EnergyStorage from, @Nullable EnergyStorage to, long maxAmount, @Nullable TransactionContext transaction) {
+	public static long move(@Nullable VisStorage from, @Nullable VisStorage to, long maxAmount, @Nullable TransactionContext transaction) {
 		if (from == null || to == null) return 0;
 
 		StoragePreconditions.notNegative(maxAmount);
@@ -50,13 +50,13 @@ public class EnergyStorageUtil {
 	}
 
 	/**
-	 * Return true if the passed stack offers an energy storage through {@link EnergyStorage#ITEM}.
-	 * This can typically be used for inventories or slots that want to accept energy storages only.
+	 * Return true if the passed stack offers a vis storage through {@link VisStorage#ITEM}.
+	 * This can typically be used for inventories or slots that want to accept vis storages only.
 	 */
 	public static boolean isEnergyStorage(ItemStack stack) {
-		return ContainerItemContext.withInitial(stack).find(EnergyStorage.ITEM) != null;
+		return ContainerItemContext.withInitial(stack).find(VisStorage.ITEM) != null;
 	}
 
-	private EnergyStorageUtil() {
+	private VisStorageUtil() {
 	}
 }

@@ -1,21 +1,21 @@
 package me.cael.ancientthaumaturgy.vis.impl;
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage;
+import me.cael.ancientthaumaturgy.vis.api.VisStorage;
 import me.cael.ancientthaumaturgy.vis.api.base.SimpleBatteryItem;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
-public class EnergyImpl {
+public class VisImpl {
 	static {
-		EnergyStorage.ITEM.registerFallback((stack, ctx) -> {
+		VisStorage.ITEM.registerFallback((stack, ctx) -> {
 			if (stack.getItem() instanceof SimpleBatteryItem battery) {
-				return SimpleBatteryItem.createStorage(ctx, battery.getEnergyCapacity(), battery.getEnergyMaxInput(), battery.getEnergyMaxOutput());
+				return SimpleBatteryItem.createStorage(ctx, battery.getVisCapacity(), battery.getVisMaxInput(), battery.getVisMaxOutput());
 			} else {
 				return null;
 			}
 		});
 	}
 
-	public static final EnergyStorage EMPTY = new EnergyStorage() {
+	public static final VisStorage EMPTY = new VisStorage() {
 		@Override
 		public boolean supportsInsertion() {
 			return false;

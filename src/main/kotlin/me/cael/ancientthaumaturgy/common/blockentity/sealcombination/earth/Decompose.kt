@@ -22,6 +22,7 @@ class Decompose(range: Double, depth: Double) : AbstractSealCombination(10, rang
         }
     }
 
+    // TODO: Remake this using a fakeplayer to avoid bypassing protections in multiplayer
     private fun tryDecompose(world: World, pos: BlockPos, target: Block) : Boolean {
         val state = world.getBlockState(pos)
         val decomposed = DECOMPOSE_TABLE[state.block] ?: return false

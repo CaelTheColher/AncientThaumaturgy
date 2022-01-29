@@ -1,7 +1,7 @@
 package me.cael.ancientthaumaturgy.common.blockentity
 
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorage
-import me.cael.ancientthaumaturgy.vis.api.EnergyStorageUtil
+import me.cael.ancientthaumaturgy.vis.api.VisStorage
+import me.cael.ancientthaumaturgy.vis.api.VisStorageUtil
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
@@ -11,10 +11,10 @@ class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Bloc
 
     fun tick() {
         visStorage.amount = visStorage.capacity
-        val targets = linkedSetOf<EnergyStorage>()
+        val targets = linkedSetOf<VisStorage>()
         Direction.values().forEach { direction ->
             val targetPos = pos.offset(direction)
-            EnergyStorage.SIDED.find(world, targetPos, direction.opposite)?.let { target ->
+            VisStorage.SIDED.find(world, targetPos, direction.opposite)?.let { target ->
                 if(target.supportsInsertion() && target.amount < target.capacity) {
                     targets.add(target)
                 }
@@ -23,7 +23,7 @@ class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Bloc
         if(targets.size > 0) {
             val transferAmount = visStorage.amount.coerceAtMost(visStorage.maxExtract) / targets.size
             targets.forEach { target ->
-                EnergyStorageUtil.move(visStorage, target, transferAmount, null)
+                VisStorageUtil.move(visStorage, target, transferAmount, null)
             }
         }
     }

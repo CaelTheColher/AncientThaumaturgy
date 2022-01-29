@@ -1,5 +1,5 @@
 package me.cael.ancientthaumaturgy.common.blockentity
-import me.cael.ancientthaumaturgy.vis.api.base.SimpleEnergyStorage
+import me.cael.ancientthaumaturgy.vis.api.base.SimpleVisStorage
 import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos
 
 open class MachineEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState, storageMax: Long = 0, inputMax: Long = 0, outputMax: Long = 0) : BlockEntity(type, pos, state) {
 
-    open val visStorage = object : SimpleEnergyStorage(storageMax, inputMax, outputMax) {
+    open val visStorage = object : SimpleVisStorage(storageMax, inputMax, outputMax) {
         override fun onFinalCommit() {
             markDirtyAndSync()
         }
