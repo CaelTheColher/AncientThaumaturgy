@@ -11,10 +11,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-minecraft {
-}
-
-
 repositories {
     mavenCentral()
     maven {
@@ -103,4 +99,4 @@ publishing {
 	}
 }
 
-compileKotlin.kotlinOptions.jvmTarget = "1.8"
+compileKotlin.kotlinOptions.jvmTarget = "17"
