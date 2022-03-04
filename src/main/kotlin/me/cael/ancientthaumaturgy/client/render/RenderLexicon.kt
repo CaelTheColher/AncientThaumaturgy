@@ -11,12 +11,9 @@ import me.cael.ancientthaumaturgy.AncientThaumaturgy.LOGGER
 import me.cael.ancientthaumaturgy.common.item.ItemCompendium
 import me.cael.ancientthaumaturgy.common.item.lexicon.ClientTickHandler
 import me.cael.ancientthaumaturgy.common.item.lexicon.LexiconItem
-import me.cael.ancientthaumaturgy.mixin.AccessorFirstPersonRenderer
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.font.TextRenderer
-import net.minecraft.client.network.AbstractClientPlayerEntity
-import net.minecraft.client.option.Perspective
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -24,12 +21,11 @@ import net.minecraft.client.render.entity.model.BookModel
 import net.minecraft.client.render.entity.model.EntityModelLayers
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
+import net.minecraft.item.ItemStack
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.text.LiteralText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
-import net.minecraft.util.Arm
-import net.minecraft.util.Hand
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 import net.minecraft.util.math.Vec3f
@@ -37,20 +33,17 @@ import net.minecraft.util.math.Vec3f
 
 // Hacky way to render 3D lexicon, will be reevaluated in the future.
 // Victor Kohler: yeah... reevaluated. So anyway here is a hacky fabric port.
-@Suppress("SameParameterValue")
 object RenderLexicon {
 
     private val model = BookModel(MinecraftClient.getInstance().entityModelLoader.getModelPart(EntityModelLayers.BOOK))
     private val TEXTURE = SpriteIdentifier(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, identifier("model/lexicon"))
 
-    fun renderHand(tickDelta: Float, hand: Hand, swingProgress: Float, equipProgress: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int) : Boolean {
-        val mc = MinecraftClient.getInstance()
-        if (mc.options.perspective != Perspective.FIRST_PERSON || mc.player!!.getStackInHand(hand).isEmpty
-                || mc.player!!.getStackInHand(hand).item != ItemCompendium.LEXICON) {
+    fun renderHand(stack: ItemStack, leftHanded: Boolean, ms: MatrixStack, buffers: VertexConsumerProvider, light: Int) : Boolean {
+        if (stack.isEmpty || !stack.isOf(ItemCompendium.LEXICON)) {
             return false
         }
         return try {
-            renderFirstPersonItem(mc.player!!, tickDelta, hand, swingProgress, equipProgress, matrices, vertexConsumers, light)
+            doRender(leftHanded, ms, buffers, light, ClientTickHandler.partialTicks)
             true
         } catch (throwable: Throwable) {
             LOGGER.atError().log("Failed to render lexicon.", throwable)
@@ -58,24 +51,8 @@ object RenderLexicon {
         }
     }
 
-    // [VanillaCopy] FirstPersonRenderer, irrelevant branches stripped out
-    private fun renderFirstPersonItem(player: AbstractClientPlayerEntity, partialTicks: Float, hand: Hand, swingProgress: Float, equipProgress: Float, ms: MatrixStack, buffers: VertexConsumerProvider, light: Int) {
-        val flag = hand == Hand.MAIN_HAND
-        val handside = if (flag) player.mainArm else player.mainArm.opposite
-        ms.push()
-        val flag3 = handside == Arm.RIGHT
-        val f5 = -0.4f * MathHelper.sin(MathHelper.sqrt(swingProgress) * Math.PI.toFloat())
-        val f6 = 0.2f * MathHelper.sin(MathHelper.sqrt(swingProgress) * (Math.PI.toFloat() * 2f))
-        val f10 = -0.2f * MathHelper.sin(swingProgress * Math.PI.toFloat())
-        val l = if (flag3) 1 else -1
-        ms.translate((l.toFloat() * f5).toDouble(), f6.toDouble(), f10.toDouble())
-        (MinecraftClient.getInstance().heldItemRenderer as AccessorFirstPersonRenderer).ancientthaumaturgy_equipOffset(ms, handside, equipProgress)
-        (MinecraftClient.getInstance().heldItemRenderer as AccessorFirstPersonRenderer).ancientthaumaturgy_swingOffset(ms, handside, swingProgress)
-        doRender(handside, ms, buffers, light, partialTicks)
-        ms.pop()
-    }
 
-    private fun doRender(side: Arm, ms: MatrixStack, buffers: VertexConsumerProvider, light: Int, partialTicks: Float) {
+    private fun doRender(leftHanded: Boolean, ms: MatrixStack, buffers: VertexConsumerProvider, light: Int, partialTicks: Float) {
         ms.push()
 
         var ticks: Float = ClientTickHandler.ticksWithLexicaOpen
@@ -87,7 +64,7 @@ object RenderLexicon {
             }
         }
 
-        if (side == Arm.RIGHT) {
+        if (!leftHanded) {
             ms.translate((0.3f + 0.02f * ticks).toDouble(), (0.125f + 0.01f * ticks).toDouble(), (-0.2f - 0.035f * ticks).toDouble())
             ms.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180f + ticks * 6))
         } else {
