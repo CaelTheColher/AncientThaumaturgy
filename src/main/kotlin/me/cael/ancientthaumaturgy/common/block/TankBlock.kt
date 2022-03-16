@@ -1,6 +1,7 @@
 package me.cael.ancientthaumaturgy.common.block
 
 import me.cael.ancientthaumaturgy.common.blockentity.BlockEntityCompendium
+import me.cael.ancientthaumaturgy.common.blockentity.MachineEntity
 import me.cael.ancientthaumaturgy.common.blockentity.TankBlockEntity
 import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
@@ -52,7 +53,7 @@ class TankBlock(settings: Settings) : BlockWithEntity(settings) {
     @Suppress("UNCHECKED_CAST")
     override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
         return checkType(type, BlockEntityCompendium.TANK_BLOCK_TYPE,
-            TankBlockEntity.Companion::ticker
+            MachineEntity.Companion::ticker
         )
     }
 

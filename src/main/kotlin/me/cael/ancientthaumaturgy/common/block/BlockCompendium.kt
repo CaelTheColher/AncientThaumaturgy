@@ -27,7 +27,7 @@ object BlockCompendium: RegistryCompendium<Block>(Registry.BLOCK) {
     val SEAL_BLOCK = register("seal_block", SealBlock())
     val TUBE_BLOCK = register("tube_block", TubeBlock(FabricBlockSettings.of(Material.GLASS)))
     val INFUSER_BLOCK = register("infuser_block", InfuserBlock(FabricBlockSettings.of(Material.STONE)))
-    val CRUCIBLE_BLOCK = register("crucible_block", CrucibleBlock(FabricBlockSettings.of(Material.METAL, MapColor.ORANGE)))
+    val CRUCIBLE_BLOCK = register("crucible_block", CrucibleBlock(FabricBlockSettings.of(Material.METAL, MapColor.ORANGE).nonOpaque()))
 
     val AIR_CRYSTAL_CLUSTER = register("crystal_cluster/air", Block(crystalBlockSettings(MapColor.YELLOW).nonOpaque()))
     val EARTH_CRYSTAL_CLUSTER = register("crystal_cluster/earth", Block(crystalBlockSettings(MapColor.GREEN).nonOpaque()))

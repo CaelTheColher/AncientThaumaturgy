@@ -1,5 +1,6 @@
 package me.cael.ancientthaumaturgy.common.block
 
+import me.cael.ancientthaumaturgy.common.blockentity.MachineEntity
 import me.cael.ancientthaumaturgy.common.blockentity.SealBlockEntity
 import me.cael.ancientthaumaturgy.common.item.EssenceItem
 import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
@@ -91,8 +92,8 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).n
         builder.add(FACING, FACE, WATERLOGGED, ENABLED)
     }
 
-    override fun <T : BlockEntity?> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
-        return BlockEntityTicker {w, p, s, be -> SealBlockEntity.ticker(w, p, s, be as SealBlockEntity) }
+    override fun <T : BlockEntity?> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T> {
+        return BlockEntityTicker {w, p, s, be -> MachineEntity.ticker(w, p, s, be as SealBlockEntity) }
     }
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = SealBlockEntity(pos, state)

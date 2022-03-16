@@ -2,6 +2,7 @@ package me.cael.ancientthaumaturgy.common.block
 
 import me.cael.ancientthaumaturgy.common.blockentity.BlockEntityCompendium
 import me.cael.ancientthaumaturgy.common.blockentity.InfuserBlockEntity
+import me.cael.ancientthaumaturgy.common.blockentity.MachineEntity
 import me.cael.ancientthaumaturgy.common.container.InfuserScreenHandler
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.block.BlockRenderType
@@ -42,7 +43,7 @@ class InfuserBlock(settings: Settings) : BlockWithEntity(settings) {
     @Suppress("UNCHECKED_CAST")
     override fun <T : BlockEntity?> getTicker(world: World?, state: BlockState?, type: BlockEntityType<T>?): BlockEntityTicker<T>? {
         return checkType(type, BlockEntityCompendium.INFUSER_BLOCK_TYPE,
-            InfuserBlockEntity.Companion::ticker
+            MachineEntity.Companion::ticker
         )
     }
 

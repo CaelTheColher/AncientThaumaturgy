@@ -1,39 +1,92 @@
 package me.cael.ancientthaumaturgy.common.blockentity
 
-import me.cael.ancientthaumaturgy.vis.api.VisStorage
-import me.cael.ancientthaumaturgy.vis.api.VisStorageUtil
+import me.cael.ancientthaumaturgy.common.recipe.CrucibleRecipe
 import net.minecraft.block.BlockState
+import net.minecraft.entity.ItemEntity
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.inventory.Inventories
+import net.minecraft.inventory.Inventory
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NbtCompound
+import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
-import net.minecraft.util.math.Direction
-import net.minecraft.world.World
+import net.minecraft.util.math.Box
 
-class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEntityCompendium.CRUCIBLE_BLOCK_TYPE, pos, state, 1000, 0, 100) {
+class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEntityCompendium.CRUCIBLE_BLOCK_TYPE, pos, state, 1000, 0, 100), Inventory {
 
-    fun tick() {
-        visStorage.amount = visStorage.capacity
-        val targets = linkedSetOf<VisStorage>()
-        Direction.values().forEach { direction ->
-            val targetPos = pos.offset(direction)
-            VisStorage.SIDED.find(world, targetPos, direction.opposite)?.let { target ->
-                if(target.supportsInsertion() && target.amount < target.capacity) {
-                    targets.add(target)
-                }
+    var inventory: DefaultedList<ItemStack> = DefaultedList.ofSize(1, ItemStack.EMPTY)
+    var lastRenderedAmount = 0f
+    var visPerTick = 0L
+    var smeltTime = 0
+
+    override fun tick() {
+        super.tick()
+        if (smeltTime > 0 ) {
+            val toAdd = visPerTick.coerceAtMost((visStorage.capacity - visStorage.amount))
+            visStorage.amount += toAdd
+            --smeltTime
+            return
+        } else {
+            visPerTick = 0
+            val match = world!!.recipeManager.getFirstMatch(CrucibleRecipe.TYPE, this, world)
+            if (inventory[0].count > 0 && visStorage.amount < visStorage.capacity && match.isPresent) {
+                --inventory[0].count
+                val recipe = match.get()
+                visPerTick = recipe.visPerTick
+                smeltTime += recipe.smeltTime
             }
         }
-        if(targets.size > 0) {
-            val transferAmount = visStorage.amount.coerceAtMost(visStorage.maxExtract) / targets.size
-            targets.forEach { target ->
-                VisStorageUtil.move(visStorage, target, transferAmount, null)
-            }
+        checkForItems()
+        markDirtyAndSync()
+    }
+
+    private fun checkForItems() {
+        val itemEntities = world!!.getOtherEntities(null, Box(pos)) { it is ItemEntity && (inventory[0].isEmpty || inventory[0].isItemEqual(it.stack) ) }
+        if (itemEntities.isEmpty()) return
+        val itemEntity = itemEntities.removeFirst() as ItemEntity
+        val item = itemEntity.stack
+        if (inventory[0].isEmpty) {
+            inventory[0] = item.copy()
+            item.count = 0
+        }
+        if (item.isItemEqual(inventory[0])) {
+            val remaining = inventory[0].maxCount - inventory[0].count
+            val toAdd = if(item.count >= remaining) remaining else item.count
+            inventory[0].count += toAdd
+            item.count -= toAdd
         }
     }
 
-    companion object {
-        @Suppress("unused_parameter")
-        fun ticker(world: World, pos: BlockPos, state: BlockState, entity: CrucibleBlockEntity) {
-            if (!world.isClient) {
-                entity.tick()
-            }
+    override fun writeNbt(nbt: NbtCompound){
+        Inventories.writeNbt(nbt, this.inventory)
+        super.writeNbt(nbt)
+    }
+
+    override fun readNbt(nbt: NbtCompound) {
+        super.readNbt(nbt)
+        this.inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY)
+        Inventories.readNbt(nbt, this.inventory)
+    }
+
+    override fun clear() = inventory.clear()
+
+    override fun size(): Int = inventory.size
+
+    override fun isEmpty(): Boolean = inventory.all{ it.isEmpty }
+
+    override fun getStack(slot: Int): ItemStack = inventory[slot]
+
+    override fun removeStack(slot: Int, amount: Int): ItemStack = Inventories.splitStack(inventory, slot, amount)
+
+    override fun removeStack(slot: Int): ItemStack = Inventories.removeStack(inventory, slot)
+
+    override fun setStack(slot: Int, stack: ItemStack?) {
+        inventory[slot] = stack
+        if (stack!!.count > maxCountPerStack) {
+            stack.count = maxCountPerStack
         }
     }
+
+    override fun canPlayerUse(player: PlayerEntity?): Boolean = false
+
 }

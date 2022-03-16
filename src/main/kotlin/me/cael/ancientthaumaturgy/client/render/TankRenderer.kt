@@ -12,12 +12,12 @@ import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.RenderLayers
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
+import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
-import java.util.*
 
 
 class TankRenderer : BlockEntityRenderer<TankBlockEntity> {
@@ -31,21 +31,19 @@ class TankRenderer : BlockEntityRenderer<TankBlockEntity> {
                 entity.visStorage.amount.toFloat() / entity.visStorage.capacity.toFloat()
             )
         }
-        val world = entity.world
         val blockState = entity.cachedState
-        val blockPos = entity.pos
         val blockRenderManager = MinecraftClient.getInstance().blockRenderManager
+        val bakedModel: BakedModel = blockRenderManager.getModel(blockState)
         blockRenderManager.modelRenderer.render(
-            world,
-            blockRenderManager.getModel(blockState),
-            blockState,
-            blockPos,
-            matrices,
+            matrices.peek(),
             vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(blockState, false)),
-            false,
-            Random(),
-            blockState.getRenderingSeed(blockPos),
-            OverlayTexture.DEFAULT_UV
+            blockState,
+            bakedModel,
+            1f,
+            1f,
+            1f,
+            light,
+            overlay
         )
     }
 
@@ -64,7 +62,7 @@ class TankRenderer : BlockEntityRenderer<TankBlockEntity> {
 
         // Make sure fill is within [TANK_W, 1 - TANK_W]
         fill = fill.coerceAtMost(if (entity.cachedState[Properties.UP]) 1f else 0.99f)
-        fill = fill.coerceAtLeast(0.01f)
+        fill = fill.coerceAtLeast(0.02f)
         // Top and bottom positions of the fluid inside the tank
         val topHeight = fill
         val bottomHeight = if (entity.cachedState[Properties.DOWN]) 0f else 0.01f

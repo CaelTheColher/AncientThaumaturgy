@@ -1,0 +1,8 @@
+{
+  "type": "ancientthaumaturgy:crucible",
+  "ingredient": {
+    "item": "minecraft:cobblestone"
+  },
+  "visPerTick": 5,
+  "smeltTime": 20
+}

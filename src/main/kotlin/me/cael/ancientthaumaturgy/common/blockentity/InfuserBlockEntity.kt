@@ -11,7 +11,6 @@ import net.minecraft.recipe.RecipeInputProvider
 import net.minecraft.recipe.RecipeMatcher
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.World
 
 class InfuserBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEntityCompendium.INFUSER_BLOCK_TYPE, pos, state, 1000, 100), Inventory, RecipeInputProvider {
 
@@ -20,7 +19,8 @@ class InfuserBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Block
     var ticks = 0
     var infuseTime = 0
 
-    fun tick() {
+    override fun tick() {
+        super.tick()
         val match = world!!.recipeManager.getFirstMatch(InfuserRecipe.TYPE, this, world)
         if (match.isPresent) {
             val recipe = match.get()
@@ -86,15 +86,6 @@ class InfuserBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Block
     override fun provideRecipeInputs(matcher: RecipeMatcher) {
         inventory.forEach {
             matcher.addInput(it)
-        }
-    }
-
-    companion object {
-        @Suppress("unused_parameter")
-        fun ticker(world: World, pos: BlockPos, state: BlockState, entity: InfuserBlockEntity) {
-            if (!world.isClient) {
-                entity.tick()
-            }
         }
     }
 }
