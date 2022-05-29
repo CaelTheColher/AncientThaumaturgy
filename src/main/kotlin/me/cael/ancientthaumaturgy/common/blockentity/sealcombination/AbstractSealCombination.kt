@@ -1,7 +1,6 @@
 package me.cael.ancientthaumaturgy.common.blockentity.sealcombination
 
 import me.cael.ancientthaumaturgy.common.blockentity.SealBlockEntity
-import me.cael.ancientthaumaturgy.utils.forEach
 import net.minecraft.inventory.Inventory
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
@@ -17,13 +16,14 @@ abstract class AbstractSealCombination(val delay: Int = 0, val range: Double = 0
     }
 
     fun getLinkedInventory(seal: SealBlockEntity) : Inventory? {
-        val area = Box(seal.pos, seal.pos).expand(2.0)
-        area.forEach { x, y, z ->
-            val pos = BlockPos(x,y,z)
-            val world = seal.world!!
-            val entity = world.getBlockEntity(pos)
-            if (entity is Inventory) return entity
+        val linkedPos = seal.linkedInventory ?: return null
+        val world = seal.world!!
+        val entity = world.getBlockEntity(linkedPos)
+        return if (entity is Inventory) {
+            entity
+        } else {
+            seal.linkedInventory = null
+            null
         }
-        return null
     }
 }

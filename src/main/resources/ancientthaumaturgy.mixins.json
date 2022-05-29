@@ -3,6 +3,7 @@
   "package": "me.cael.ancientthaumaturgy.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "AccessorLootContextTypes"
   ],
   "client": [
     "MixinHeldItemRenderer",

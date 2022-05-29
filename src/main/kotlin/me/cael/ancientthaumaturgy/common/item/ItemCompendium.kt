@@ -11,6 +11,8 @@ object ItemCompendium: RegistryCompendium<Item>(Registry.ITEM) {
 
     val LEXICON = register("lexicon", LexiconItem())
 
+    val ARCANE_TINKERING_TOOL = register("arcane_tinkering_tool", ArcaneTinkeringToolItem())
+
     val AIR_ESSENCE = register("essence/air", EssenceItem(EssenceItem.Type.AIR))
     val EARTH_ESSENCE = register("essence/earth", EssenceItem(EssenceItem.Type.EARTH))
     val FIRE_ESSENCE = register("essence/fire", EssenceItem(EssenceItem.Type.FIRE))

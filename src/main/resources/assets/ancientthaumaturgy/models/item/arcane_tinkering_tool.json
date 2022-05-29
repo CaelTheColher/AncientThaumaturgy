@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "ancientthaumaturgy:item/arcane_tinkering_tool"
+  }
+}

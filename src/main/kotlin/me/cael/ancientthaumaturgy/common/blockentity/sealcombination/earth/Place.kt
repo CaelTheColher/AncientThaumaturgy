@@ -13,10 +13,11 @@ import net.minecraft.world.World
 class Place(range: Double, depth: Double) : AbstractSealCombination(10, range, depth) {
     override fun tick(seal: SealBlockEntity) {
         val area = getArea(seal.pos, seal.getDirection())
+        val inventory = getLinkedInventory(seal)
         area.forEach{ x,y,z ->
             val pos = BlockPos(x,y,z)
             val world = seal.world!!
-            val blockStack: ItemStack = getLinkedInventory(seal)?.getStack { stack -> stack.item is BlockItem } ?: return
+            val blockStack: ItemStack = inventory?.getStack { stack -> stack.item is BlockItem } ?: return
             if (tryPlace(world, pos, blockStack)) return
         }
     }

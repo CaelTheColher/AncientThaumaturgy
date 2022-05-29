@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ActionResult
 import net.minecraft.util.Hand
+import net.minecraft.util.ItemScatterer
 import net.minecraft.util.function.BooleanBiFunction
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
@@ -45,6 +46,14 @@ class CrucibleBlock(settings: Settings) : BlockWithEntity(settings) {
         return ActionResult.PASS
     }
 
+    override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, notify: Boolean) {
+        if (!state.isOf(newState.block)) {
+            (world.getBlockEntity(pos) as? CrucibleBlockEntity)?.let{
+                ItemScatterer.spawn(world, pos, it)
+            }
+        }
+        super.onStateReplaced(state, world, pos, newState, notify)
+    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : BlockEntity?> getTicker(world: World?, state: BlockState?, type: BlockEntityType<T>?): BlockEntityTicker<T>? {

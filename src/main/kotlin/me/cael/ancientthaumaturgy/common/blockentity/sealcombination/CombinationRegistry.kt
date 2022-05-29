@@ -1,24 +1,38 @@
 package me.cael.ancientthaumaturgy.common.blockentity.sealcombination
 
-import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.Break
-import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.Decompose
-import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.Place
-import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.Smelt
+import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.*
 
 object CombinationRegistry {
     val registry = HashMap<String, AbstractSealCombination>()
 
     fun registerCombinations() {
+
+        /*
+        AIR: Displaces
+        EARTH: Affects blocks/the world?
+        FIRE: Damage/Burning
+        WATER: Healing?
+        MAGIC: M A G I C
+        CORRUPTION: Degradation
+
+        Primary Element: the main effect (i.e. affect a block/the world)
+        Secondary Element: the variation (i.e. break a block)
+        Tertiary Element: the modifier (i.e. bigger range, faster operation time)
+
+         */
+
         // Air
         // Test
         registry["AAA"] = TestCombination()
 
+        //TODO: Make seals give observer signals on action
+
         // Earth
-        // Break Block
+        // Break Block || TODO: Check the interaction with crops
         registry["E"] = Break(0.0, 0.0)
         registry["EE"] = Break(1.0, 0.0)
         registry["EEE"] = Break(1.0, 1.0)
-        // Place Block
+        // Place Block || TODO: Make this also replant seeds
         registry["EM"] = Place(0.0, 0.0)
         registry["EMM"] = Place(1.0, 0.0)
         registry["EME"] = Place(1.0, 1.0)
@@ -28,7 +42,16 @@ object CombinationRegistry {
         registry["ECE"] = Decompose(1.0, 1.0)
         // Smelt Block
         registry["EF"] = Smelt(0.0, 0.0)
-        registry["EFE"] = Smelt(1.0, 1.0)
         registry["EFF"] = Smelt(1.0, 0.0)
+        registry["EFE"] = Smelt(1.0, 1.0)
+        // Create ores from stone/air? Orechid much
+        registry["EW"] = CreateOre(0.0, 0.0)
+        registry["EWW"] = CreateOre(1.0, 0.0)
+        registry["EWE"] = CreateOre(1.0, 1.0)
+        // IDK
+        registry["EA"]
+
+
+
     }
 }

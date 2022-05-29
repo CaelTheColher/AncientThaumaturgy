@@ -13,6 +13,7 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
     var lastRenderDegree = 0f
     var runes = ""
     var counter = 0
+    var linkedInventory: BlockPos? = null
 
     override fun tick() {
         if (world!!.isClient || !(cachedState.get(Properties.ENABLED) as Boolean)) return
@@ -30,12 +31,23 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
 
     override fun writeNbt(nbt: NbtCompound){
         nbt.putString("runes", runes)
+        val linkedPos = NbtCompound()
+        if (linkedInventory != null) {
+            linkedPos.putInt("x", linkedInventory!!.x)
+            linkedPos.putInt("y", linkedInventory!!.y)
+            linkedPos.putInt("z", linkedInventory!!.z)
+        }
+        nbt.put("linkedInventory", linkedPos)
         super.writeNbt(nbt)
     }
 
     override fun readNbt(nbt: NbtCompound) {
         super.readNbt(nbt)
         runes = nbt.getString("runes")
+        val linkedPos = nbt.getCompound("linkedInventory")
+        if (!linkedPos.isEmpty) {
+            linkedInventory = posFromNbt(linkedPos)
+        }
     }
 
 }

@@ -1,0 +1,45 @@
+{
+  "type": "ancientthaumaturgy:ore_seal",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "minecraft:coal_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "minecraft:copper_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "minecraft:iron_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:gold_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:redstone_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:diamond_ore"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "minecraft:emerald_ore"
+        }
+      ]
+    }
+  ]
+}
