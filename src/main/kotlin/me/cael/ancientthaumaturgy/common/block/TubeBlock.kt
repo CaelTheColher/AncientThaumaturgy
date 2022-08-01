@@ -21,6 +21,7 @@ import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
+@Suppress("OVERRIDE_DEPRECATION")
 class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
     
     companion object {

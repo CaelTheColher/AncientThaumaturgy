@@ -23,7 +23,6 @@ import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
 import net.minecraft.screen.PlayerScreenHandler
-import net.minecraft.text.LiteralText
 import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
@@ -104,7 +103,7 @@ object RenderLexicon {
 
             ms.translate(0.0, 10.0, 0.0)
             ms.scale(0.50f, 0.50f, 0.50f)
-            val edition: Text = LiteralText("1st Edition").fillStyle(Style.EMPTY.withBold(true).withItalic(true))
+            val edition: Text = Text.literal("1st Edition").fillStyle(Style.EMPTY.withBold(true).withItalic(true))
             font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().positionMatrix, buffers, false, 0, light)
 
             ms.translate(7.5, 190.0, 0.0)

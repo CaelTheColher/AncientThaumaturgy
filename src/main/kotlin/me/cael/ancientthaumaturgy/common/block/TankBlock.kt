@@ -18,6 +18,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 import net.minecraft.world.chunk.Chunk
 
+@Suppress("OVERRIDE_DEPRECATION")
 class TankBlock(settings: Settings) : BlockWithEntity(settings) {
 
     companion object {

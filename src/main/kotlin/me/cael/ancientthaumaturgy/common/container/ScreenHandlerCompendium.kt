@@ -4,7 +4,7 @@ import me.cael.ancientthaumaturgy.client.screen.InfuserScreen
 import me.cael.ancientthaumaturgy.common.blockentity.InfuserBlockEntity
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry
-import net.fabricmc.fabric.impl.screenhandler.ExtendedScreenHandlerType
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.screen.ScreenHandlerType
 import net.minecraft.util.registry.Registry
 

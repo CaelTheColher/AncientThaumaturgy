@@ -3,6 +3,9 @@ package me.cael.ancientthaumaturgy.client.render
 import me.cael.ancientthaumaturgy.common.blockentity.SealBlockEntity
 import me.cael.ancientthaumaturgy.common.item.EssenceItem
 import me.cael.ancientthaumaturgy.utils.identifier
+import me.cael.ancientthaumaturgy.utils.toDegrees
+import net.minecraft.block.WallMountedBlock
+import net.minecraft.block.enums.WallMountLocation
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumer
 import net.minecraft.client.render.VertexConsumerProvider
@@ -42,7 +45,22 @@ class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
         directionVector.multiplyComponentwise(offset, offset, offset)
         matrices.push()
         matrices.translate(0.5,0.5,0.5)
-        matrices.multiply(rotationVector.getDegreesQuaternion(entity.lastRenderDegree * rotationOffset))
+        val face = entity.cachedState[WallMountedBlock.FACE]
+        val facing = entity.cachedState[WallMountedBlock.FACING]
+        var rotation = when (facing) {
+            Direction.WEST, Direction.SOUTH -> 180f
+            Direction.EAST, Direction.NORTH -> 0f
+            else -> 0f
+        }
+        rotation = if (rotationOffset != 0f) {
+            entity.lastRenderDegree * rotationOffset
+        } else when(face) {
+            WallMountLocation.CEILING -> facing.toDegrees()
+            WallMountLocation.FLOOR -> facing.asRotation()
+            else -> rotation
+        }
+
+        matrices.multiply(rotationVector.getDegreesQuaternion(rotation))
         matrices.translate(-0.5,-0.5,-0.5)
         matrices.translate(directionVector.x * 1.1093, directionVector.y * 1.1093, directionVector.z * 1.1093)
         when(direction) {

@@ -6,8 +6,11 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
 
-abstract class AbstractSealCombination(val delay: Int = 0, val range: Double = 0.0, val depth: Double = 0.0) {
+abstract class AbstractSealCombination(val delay: Int = 1, val range: Double = 0.0, val depth: Double = 0.0) {
     abstract fun tick(seal: SealBlockEntity)
+
+    open fun afterRuneChange(seal: SealBlockEntity) { }
+    open fun beforeRuneChange(seal: SealBlockEntity) { }
 
     fun getArea(pos: BlockPos, direction: Direction): Box {
         val newPos = pos.add(direction.vector)
@@ -26,4 +29,5 @@ abstract class AbstractSealCombination(val delay: Int = 0, val range: Double = 0
             null
         }
     }
+
 }

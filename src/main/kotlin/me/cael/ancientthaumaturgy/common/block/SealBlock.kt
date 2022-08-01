@@ -9,10 +9,12 @@ import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityTicker
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.block.enums.WallMountLocation
+import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.fluid.FluidState
 import net.minecraft.fluid.Fluids
 import net.minecraft.item.ItemPlacementContext
+import net.minecraft.item.ItemStack
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
@@ -22,12 +24,13 @@ import net.minecraft.util.Hand
 import net.minecraft.util.hit.BlockHitResult
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
+import net.minecraft.util.math.random.Random
 import net.minecraft.util.shape.VoxelShape
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 import net.minecraft.world.tick.OrderedTick
-import java.util.*
 
+@Suppress("OVERRIDE_DEPRECATION")
 class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).noCollision()), Waterloggable, BlockEntityProvider {
 
     companion object {
@@ -52,7 +55,10 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).n
             if (!world.isClient) {
                 val blockEntity = world.getBlockEntity(pos) as SealBlockEntity
                 if (blockEntity.runes.length < 3) {
+                    blockEntity.beforeRuneChange()
                     blockEntity.runes += (stack.item as EssenceItem).type.id
+                    blockEntity.owner = player.uuid
+                    blockEntity.afterRuneChange()
                     if (!player.isCreative) stack.decrement(1)
                 }
                 blockEntity.markDirtyAndSync()
@@ -60,6 +66,21 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).n
             return ActionResult.CONSUME
         }
         return ActionResult.FAIL
+    }
+
+    override fun onBreak(world: World, pos: BlockPos, state: BlockState, player: PlayerEntity) {
+        super.onBreak(world, pos, state, player)
+        if (!world.isClient) {
+            val blockEntity = world.getBlockEntity(pos) as? SealBlockEntity
+            blockEntity?.beforeRuneChange()
+        }
+    }
+
+    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
+        if (placer == null || placer !is PlayerEntity || world.isClient) return
+        val blockEntity = world.getBlockEntity(pos) as SealBlockEntity
+        blockEntity.owner = placer.uuid
+        blockEntity.markDirtyAndSync()
     }
 
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape = when (state[FACE]) {
@@ -82,6 +103,15 @@ class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).n
                 else world.setBlockState(pos, state.cycle(ENABLED) as BlockState, 2)
             }
         }
+    }
+
+    override fun randomDisplayTick(
+        state: BlockState?,
+        world: World?,
+        pos: BlockPos?,
+        random: Random?
+    ) {
+        super.randomDisplayTick(state, world, pos, random)
     }
 
     override fun scheduledTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {

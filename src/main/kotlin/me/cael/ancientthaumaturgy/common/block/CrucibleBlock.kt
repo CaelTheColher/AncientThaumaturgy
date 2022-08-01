@@ -23,6 +23,7 @@ import net.minecraft.util.shape.VoxelShapes
 import net.minecraft.world.BlockView
 import net.minecraft.world.World
 
+@Suppress("OVERRIDE_DEPRECATION")
 class CrucibleBlock(settings: Settings) : BlockWithEntity(settings) {
 
     companion object {

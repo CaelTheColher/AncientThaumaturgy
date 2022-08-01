@@ -30,7 +30,19 @@ dependencies {
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
     // Dependency
-    //modApi("me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}") {
+	modImplementation ("com.github.qouteall.ImmersivePortalsMod:imm_ptl_core:${project.imm_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
+		transitive(false)
+	}
+	modImplementation ("com.github.qouteall.ImmersivePortalsMod:q_misc_util:${project.imm_version}"){
+		exclude(group: "net.fabricmc.fabric-api")
+		transitive(false)
+	}
+	include "com.github.qouteall.ImmersivePortalsMod:imm_ptl_core:${project.imm_version}"
+	include "com.github.qouteall.ImmersivePortalsMod:q_misc_util:${project.imm_version}"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+	//modApi("me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}") {
     //    exclude(group: "net.fabricmc.fabric-api")
     //}
     //include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
@@ -99,4 +111,8 @@ publishing {
 	}
 }
 
-compileKotlin.kotlinOptions.jvmTarget = "17"
+compileKotlin {
+	kotlinOptions {
+		jvmTarget = "17"
+	}
+}

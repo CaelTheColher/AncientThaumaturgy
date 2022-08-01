@@ -1,6 +1,7 @@
 package me.cael.ancientthaumaturgy.common.blockentity.sealcombination
 
 import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.*
+import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.magic.Portal
 
 object CombinationRegistry {
     val registry = HashMap<String, AbstractSealCombination>()
@@ -51,6 +52,15 @@ object CombinationRegistry {
         // IDK
         registry["EA"]
 
+        // Magic
+        // Portal
+//        registry["MA"]  = Portal('')
+        registry["MAA"] = Portal('A')
+        registry["MAE"] = Portal('E')
+        registry["MAF"] = Portal('F')
+        registry["MAW"] = Portal('W')
+        registry["MAM"] = Portal('M')
+        registry["MAC"] = Portal('C')
 
 
     }
