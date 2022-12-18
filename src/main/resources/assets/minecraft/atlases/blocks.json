@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "ancientthaumaturgy:model/lexicon"
+    },
+    {
+      "type": "single",
+      "resource": "ancientthaumaturgy:block/yep_vis_and_not_just_recolored_water"
+    },
+    {
+      "type": "directory",
+      "source": "rune/inner",
+      "prefix": "rune/inner/"
+    },
+    {
+      "type": "directory",
+      "source": "rune/center",
+      "prefix": "rune/center/"
+    },
+    {
+      "type": "directory",
+      "source": "rune/outer",
+      "prefix": "rune/outer/"
+    }
+  ]
+}
