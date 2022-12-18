@@ -1,7 +1,6 @@
 package me.cael.ancientthaumaturgy.utils
 
 import me.cael.ancientthaumaturgy.AncientThaumaturgy
-import net.minecraft.block.entity.BlockEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NbtCompound
@@ -9,9 +8,6 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Box
 import net.minecraft.util.math.Direction
-import net.minecraft.util.registry.RegistryKey
-import net.minecraft.world.World
-import qouteall.q_misc_util.dimension.DimId
 
 fun identifier(id: String) = Identifier(AncientThaumaturgy.NAMESPACE, id)
 
@@ -47,18 +43,18 @@ fun Direction.toDegrees() : Float = when (this) {
     else -> this.asRotation()
 }
 
-data class PortalDestination(val pos: BlockPos, val world: RegistryKey<World>) {
-    fun toNbt() : NbtCompound {
-        val nbt = NbtCompound()
-        nbt.put("pos", pos.toNbt())
-        nbt.putString("world", world.value.toString())
-        return nbt
-    }
-    companion object {
-        fun fromNbt(nbt: NbtCompound) : PortalDestination {
-            val pos = BlockEntity.posFromNbt(nbt.getCompound("pos"))
-            val world = DimId.idToKey(nbt.getString("world"))
-            return PortalDestination(pos, world)
-        }
-    }
-}
+//data class PortalDestination(val pos: BlockPos, val world: RegistryKey<World>) {
+//    fun toNbt() : NbtCompound {
+//        val nbt = NbtCompound()
+//        nbt.put("pos", pos.toNbt())
+//        nbt.putString("world", world.value.toString())
+//        return nbt
+//    }
+//    companion object {
+//        fun fromNbt(nbt: NbtCompound) : PortalDestination {
+//            val pos = BlockEntity.posFromNbt(nbt.getCompound("pos"))
+//            val world = DimId.idToKey(nbt.getString("world"))
+//            return PortalDestination(pos, world)
+//        }
+//    }
+//}

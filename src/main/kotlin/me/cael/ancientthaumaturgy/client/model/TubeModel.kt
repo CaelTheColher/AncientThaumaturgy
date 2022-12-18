@@ -1,6 +1,5 @@
 package me.cael.ancientthaumaturgy.client.model
 
-import com.mojang.datafixers.util.Pair
 import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.block.TubeBlock
 import me.cael.ancientthaumaturgy.utils.identifier
@@ -40,24 +39,24 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
     private lateinit var transformation: ModelTransformation
 
     override fun bake(
-            loader: ModelLoader,
-            textureGetter: Function<SpriteIdentifier, Sprite>,
-            rotationContainer: ModelBakeSettings?,
-            modelId: Identifier?
+        baker: Baker,
+        textureGetter: Function<SpriteIdentifier, Sprite>,
+        rotationContainer: ModelBakeSettings,
+        modelId: Identifier
     ): BakedModel {
-        modelArray[0] = loader.getOrLoadModel(modelIdCollection[0]).bake(loader, textureGetter, rotationContainer, modelId)
+        modelArray[0] = baker.getOrLoadModel(modelIdCollection[0]).bake(baker, textureGetter, rotationContainer, modelId)
         transformation = modelArray[0]!!.transformation
-        val sideModel = loader.getOrLoadModel(modelIdCollection[1])
-        modelArray[1] = sideModel.bake(loader, textureGetter, ModelRotation.X270_Y0, modelId) // NORTH
-        modelArray[2] = sideModel.bake(loader, textureGetter, ModelRotation.X270_Y90, modelId) // EAST
-        modelArray[3] = sideModel.bake(loader, textureGetter, ModelRotation.X270_Y180, modelId) // SOUTH
-        modelArray[4] = sideModel.bake(loader, textureGetter, ModelRotation.X270_Y270, modelId) // WEST
-        modelArray[5] = sideModel.bake(loader, textureGetter, ModelRotation.X180_Y0, modelId) // UP
-        modelArray[6] = sideModel.bake(loader, textureGetter, ModelRotation.X0_Y0, modelId) // DOWN
-        val centerModel = loader.getOrLoadModel(modelIdCollection[2])
-        modelArray[7] = centerModel.bake(loader, textureGetter, rotationContainer, modelId) // NORTH-SOUTH
-        modelArray[8] = centerModel.bake(loader, textureGetter, ModelRotation.X0_Y90, modelId) //EAST-WEST
-        modelArray[9] = centerModel.bake(loader, textureGetter, ModelRotation.X90_Y0, modelId) //UP-DOWN
+        val sideModel = baker.getOrLoadModel(modelIdCollection[1])
+        modelArray[1] = sideModel.bake(baker, textureGetter, ModelRotation.X270_Y0, modelId) // NORTH
+        modelArray[2] = sideModel.bake(baker, textureGetter, ModelRotation.X270_Y90, modelId) // EAST
+        modelArray[3] = sideModel.bake(baker, textureGetter, ModelRotation.X270_Y180, modelId) // SOUTH
+        modelArray[4] = sideModel.bake(baker, textureGetter, ModelRotation.X270_Y270, modelId) // WEST
+        modelArray[5] = sideModel.bake(baker, textureGetter, ModelRotation.X180_Y0, modelId) // UP
+        modelArray[6] = sideModel.bake(baker, textureGetter, ModelRotation.X0_Y0, modelId) // DOWN
+        val centerModel = baker.getOrLoadModel(modelIdCollection[2])
+        modelArray[7] = centerModel.bake(baker, textureGetter, rotationContainer, modelId) // NORTH-SOUTH
+        modelArray[8] = centerModel.bake(baker, textureGetter, ModelRotation.X0_Y90, modelId) //EAST-WEST
+        modelArray[9] = centerModel.bake(baker, textureGetter, ModelRotation.X90_Y0, modelId) //UP-DOWN
 
         spriteIdCollection.forEachIndexed { idx, spriteIdentifier ->
             spriteArray[idx] = textureGetter.apply(spriteIdentifier)
@@ -66,11 +65,9 @@ class TubeModel : BakedModel, FabricBakedModel, UnbakedModel {
     }
 
     override fun getModelDependencies(): MutableCollection<Identifier> = modelIdCollection
-
-    override fun getTextureDependencies(
-            unbakedModelGetter: Function<Identifier, UnbakedModel>?,
-            unresolvedTextureReferences: MutableSet<Pair<String, String>>?
-    ): MutableCollection<SpriteIdentifier> = spriteIdCollection
+    override fun setParents(modelLoader: Function<Identifier, UnbakedModel>?) {
+        return
+    }
 
     override fun getQuads(state: BlockState?, face: Direction?, random: Random): MutableList<BakedQuad> = mutableListOf()
 

@@ -6,13 +6,10 @@ import net.fabricmc.fabric.api.renderer.v1.Renderer
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
-import net.minecraft.client.render.RenderLayers
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
-import net.minecraft.client.render.model.BakedModel
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.screen.PlayerScreenHandler
@@ -31,20 +28,6 @@ class TankRenderer : BlockEntityRenderer<TankBlockEntity> {
                 entity.visStorage.amount.toFloat() / entity.visStorage.capacity.toFloat()
             )
         }
-        val blockState = entity.cachedState
-        val blockRenderManager = MinecraftClient.getInstance().blockRenderManager
-        val bakedModel: BakedModel = blockRenderManager.getModel(blockState)
-        blockRenderManager.modelRenderer.render(
-            matrices.peek(),
-            vertexConsumers.getBuffer(RenderLayers.getEntityBlockLayer(blockState, false)),
-            blockState,
-            bakedModel,
-            1f,
-            1f,
-            1f,
-            light,
-            overlay
-        )
     }
 
     private val TANK_W = 0.08f

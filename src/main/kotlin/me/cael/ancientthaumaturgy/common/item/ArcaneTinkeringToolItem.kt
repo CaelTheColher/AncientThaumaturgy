@@ -1,6 +1,5 @@
 package me.cael.ancientthaumaturgy.common.item
 
-import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import me.cael.ancientthaumaturgy.common.blockentity.SealBlockEntity
 import net.minecraft.inventory.Inventory
 import net.minecraft.item.Item
@@ -8,7 +7,7 @@ import net.minecraft.item.ItemUsageContext
 import net.minecraft.util.ActionResult
 import net.minecraft.util.math.BlockPos
 
-class ArcaneTinkeringToolItem : Item(AncientThaumaturgy.creativeGroupSettings().maxCount(1)) {
+class ArcaneTinkeringToolItem : Item(Settings().maxCount(1)) {
 
     var selected: BlockPos? = null
 

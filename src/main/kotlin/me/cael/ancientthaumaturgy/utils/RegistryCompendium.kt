@@ -1,7 +1,7 @@
 package me.cael.ancientthaumaturgy.utils
 
+import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.Registry
 
 open class RegistryCompendium<T: Any>(private val registry: Registry<T>): GenericCompendium<T>() {
 

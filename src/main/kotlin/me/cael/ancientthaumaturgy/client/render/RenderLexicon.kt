@@ -27,7 +27,7 @@ import net.minecraft.text.Style
 import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Vec3f
+import net.minecraft.util.math.RotationAxis
 
 
 // Hacky way to render 3D lexicon, will be reevaluated in the future.
@@ -65,12 +65,12 @@ object RenderLexicon {
 
         if (!leftHanded) {
             ms.translate((0.3f + 0.02f * ticks).toDouble(), (0.125f + 0.01f * ticks).toDouble(), (-0.2f - 0.035f * ticks).toDouble())
-            ms.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180f + ticks * 6))
+            ms.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f + ticks * 6))
         } else {
             ms.translate((0.1f - 0.02f * ticks).toDouble(), (0.125f + 0.01f * ticks).toDouble(), (-0.2f - 0.035f * ticks).toDouble())
-            ms.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(200f + ticks * 10))
+            ms.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(200f + ticks * 10))
         }
-        ms.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-0.3f + ticks * 2.85f))
+        ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-0.3f + ticks * 2.85f))
         val opening = MathHelper.clamp(ticks / 12f, 0f, 1f)
 
         var pageFlipTicks: Float = ClientTickHandler.pageFlipTicks
@@ -90,7 +90,7 @@ object RenderLexicon {
 
         if (ticks < 3) {
             val font: TextRenderer = MinecraftClient.getInstance().textRenderer
-            ms.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180f))
+            ms.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180f))
             ms.translate(-0.252, -0.235, -0.07)
             ms.scale(0.0035f, 0.0035f, -0.0035f)
 

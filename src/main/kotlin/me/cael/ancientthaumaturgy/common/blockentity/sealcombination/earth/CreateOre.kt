@@ -9,9 +9,9 @@ import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
 import net.minecraft.loot.context.LootContext
 import net.minecraft.loot.context.LootContextType
+import net.minecraft.registry.tag.BlockTags
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.sound.SoundCategory
-import net.minecraft.tag.BlockTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 

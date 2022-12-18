@@ -30,28 +30,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
     // Dependency
-	modImplementation ("com.github.qouteall.ImmersivePortalsMod:imm_ptl_core:${project.imm_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-		transitive(false)
-	}
-	modImplementation ("com.github.qouteall.ImmersivePortalsMod:q_misc_util:${project.imm_version}"){
-		exclude(group: "net.fabricmc.fabric-api")
-		transitive(false)
-	}
-	include "com.github.qouteall.ImmersivePortalsMod:imm_ptl_core:${project.imm_version}"
-	include "com.github.qouteall.ImmersivePortalsMod:q_misc_util:${project.imm_version}"
+
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-	//modApi("me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}") {
-    //    exclude(group: "net.fabricmc.fabric-api")
-    //}
-    //include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
-    //modApi "alexiil.mc.lib:libblockattributes-fluids:${project.lba_version}"
-    //include "alexiil.mc.lib:libblockattributes-fluids:${project.lba_version}"
-
-    // Compatibility
-    //modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-    //modImplementation "dev.emi:trinkets:${project.trinkets_version}"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

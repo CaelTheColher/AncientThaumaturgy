@@ -5,10 +5,10 @@ import me.cael.ancientthaumaturgy.common.blockentity.InfuserBlockEntity
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
+import net.minecraft.registry.Registries
 import net.minecraft.screen.ScreenHandlerType
-import net.minecraft.util.registry.Registry
 
-object ScreenHandlerCompendium: RegistryCompendium<ScreenHandlerType<*>>(Registry.SCREEN_HANDLER) {
+object ScreenHandlerCompendium: RegistryCompendium<ScreenHandlerType<*>>(Registries.SCREEN_HANDLER) {
     val INFUSER_BLOCK = register("infuser_block", ExtendedScreenHandlerType { i, playerInventory, packetByteBuf ->
         val pos = packetByteBuf.readBlockPos()
         val player = playerInventory.player

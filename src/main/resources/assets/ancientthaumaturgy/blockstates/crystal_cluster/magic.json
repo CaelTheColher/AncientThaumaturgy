@@ -1,9 +1,34 @@
 {
     "variants": {
-        "": [
+        "facing=up": [
             { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1 },
             { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1 },
             { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1 }
+        ],
+        "facing=down": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1, "x": 180 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1, "x": 180 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1, "x": 180 }
+        ],
+        "facing=east": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1, "x": 90, "y": 90 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1, "x": 90, "y": 90 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1, "x": 90, "y": 90 }
+        ],
+        "facing=west": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1, "x": 90, "y": 270 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1, "x": 90, "y": 270 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1, "x": 90, "y": 270 }
+        ],
+        "facing=north": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1, "x": 90 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1, "x": 90 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1, "x": 90 }
+        ],
+        "facing=south": [
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_1", "weight": 1, "x": 90, "y": 180 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_2", "weight": 1, "x": 90, "y": 180 },
+            { "model": "ancientthaumaturgy:block/crystal_cluster/magic_3", "weight": 1, "x": 90, "y": 180 }
         ]
     }
 }

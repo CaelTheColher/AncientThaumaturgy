@@ -51,7 +51,6 @@ class TankBlock(settings: Settings) : BlockWithEntity(settings) {
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
         return checkType(type, BlockEntityCompendium.TANK_BLOCK_TYPE,
             MachineEntity.Companion::ticker
@@ -65,5 +64,5 @@ class TankBlock(settings: Settings) : BlockWithEntity(settings) {
     override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean = true
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = TankBlockEntity(pos, state)
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape = OUTLINE_SHAPE
-    override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.INVISIBLE
+    override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.MODEL
 }

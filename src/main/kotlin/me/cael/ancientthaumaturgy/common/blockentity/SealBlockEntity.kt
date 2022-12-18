@@ -1,18 +1,14 @@
 package me.cael.ancientthaumaturgy.common.blockentity
 
 import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.CombinationRegistry
-import me.cael.ancientthaumaturgy.utils.PortalDestination
 import me.cael.ancientthaumaturgy.utils.toNbt
 import net.minecraft.block.BlockState
 import net.minecraft.block.WallMountedBlock
 import net.minecraft.block.enums.WallMountLocation
-import net.minecraft.entity.Entity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Direction
-import qouteall.imm_ptl.core.portal.Portal
-import qouteall.q_misc_util.MiscHelper
 import java.util.*
 
 class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEntityCompendium.SEAL_BLOCK_TYPE, pos, state) {
@@ -20,9 +16,9 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
     var runes = ""
     var counter = 0
     var linkedInventory: BlockPos? = null
-    var portalDestination: PortalDestination? = null
+//    var portalDestination: PortalDestination? = null
     var owner: UUID? = null
-    var portal: Portal? = null
+//    var portal: Portal? = null
     var partner: SealBlockEntity? = null
 
     override fun tick() {
@@ -42,17 +38,17 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
     }
 
     fun removePortal() {
-        this.portalDestination = null
-        this.portal?.remove(Entity.RemovalReason.DISCARDED)
-        this.portal = null
+//        this.portalDestination = null
+//        this.portal?.remove(Entity.RemovalReason.DISCARDED)
+//        this.portal = null
         this.partner = null
     }
 
-    fun findPartner() : SealBlockEntity? {
-        if (portalDestination == null) return partner
-        val found = MiscHelper.getServer().getWorld(portalDestination!!.world)?.getBlockEntity(portalDestination!!.pos) as? SealBlockEntity
-        return partner ?: found
-    }
+//    fun findPartner() : SealBlockEntity? {
+//        if (portalDestination == null) return partner
+//        val found = MiscHelper.getServer().getWorld(portalDestination!!.world)?.getBlockEntity(portalDestination!!.pos) as? SealBlockEntity
+//        return partner ?: found
+//    }
 
     fun getDirection(): Direction = when(cachedState[WallMountedBlock.FACE]) {
         WallMountLocation.CEILING -> Direction.DOWN
@@ -65,7 +61,7 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
     override fun writeNbt(nbt: NbtCompound){
         nbt.putString("runes", runes)
         nbt.put("linkedInventory", linkedInventory?.toNbt() ?: NbtCompound())
-        nbt.put("portalDestination", portalDestination?.toNbt() ?: NbtCompound())
+//        nbt.put("portalDestination", portalDestination?.toNbt() ?: NbtCompound())
         nbt.putUuid("owner", owner)
         super.writeNbt(nbt)
     }
@@ -77,10 +73,10 @@ class SealBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(BlockEnt
         if (!linkedPos.isEmpty) {
             linkedInventory = posFromNbt(linkedPos)
         }
-        val destination = nbt.getCompound("portalDestination")
-        if (!destination.isEmpty) {
-            portalDestination = PortalDestination.fromNbt(destination)
-        }
+//        val destination = nbt.getCompound("portalDestination")
+//        if (!destination.isEmpty) {
+//            portalDestination = PortalDestination.fromNbt(destination)
+//        }
         owner = nbt.getUuid("owner")
     }
 

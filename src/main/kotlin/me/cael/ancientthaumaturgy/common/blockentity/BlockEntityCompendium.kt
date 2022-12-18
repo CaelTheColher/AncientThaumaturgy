@@ -5,9 +5,9 @@ import me.cael.ancientthaumaturgy.common.block.TankBlock
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import me.cael.ancientthaumaturgy.vis.api.VisStorage
 import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
 
-object BlockEntityCompendium: RegistryCompendium<BlockEntityType<*>>(Registry.BLOCK_ENTITY_TYPE) {
+object BlockEntityCompendium: RegistryCompendium<BlockEntityType<*>>(Registries.BLOCK_ENTITY_TYPE) {
 
     val TANK_BLOCK_TYPE = register("tank_block", BlockEntityType.Builder.create(::TankBlockEntity, BlockCompendium.TANK_BLOCK).build(null)) as BlockEntityType<TankBlockEntity>
     val SEAL_BLOCK_TYPE = register("seal_block", BlockEntityType.Builder.create(::SealBlockEntity, BlockCompendium.SEAL_BLOCK).build(null)) as BlockEntityType<SealBlockEntity>

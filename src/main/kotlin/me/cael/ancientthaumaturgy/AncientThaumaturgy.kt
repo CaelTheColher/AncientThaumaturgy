@@ -9,19 +9,22 @@ import me.cael.ancientthaumaturgy.common.recipe.CrucibleRecipe
 import me.cael.ancientthaumaturgy.common.recipe.InfuserRecipe
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
-import net.minecraft.item.Item
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
 import net.minecraft.item.ItemStack
-import net.minecraft.util.registry.Registry
+import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
+import net.minecraft.text.Text
 import org.apache.logging.log4j.LogManager
 
 
 object AncientThaumaturgy : ModInitializer {
     const val NAMESPACE = "ancientthaumaturgy"
-    private val creativeTab = FabricItemGroupBuilder.build(identifier("item_group")) { ItemStack(BlockCompendium.SEAL_BLOCK.asItem()) }
-    val LOGGER = LogManager.getLogger("Ancient Thaumaturgy")
+    val creativeTab = FabricItemGroup.builder(identifier("item_group"))
+        .displayName(Text.translatable("itemGroup.ancientthaumaturgy.item_group"))
+        .icon { ItemStack(ItemCompendium.LEXICON) }
+        .build()
 
-    fun creativeGroupSettings(): Item.Settings = Item.Settings().group(creativeTab)
+    val LOGGER = LogManager.getLogger("Ancient Thaumaturgy")
 
     override fun onInitialize() {
         BlockCompendium.initialize()
@@ -29,10 +32,10 @@ object AncientThaumaturgy : ModInitializer {
         ScreenHandlerCompendium.initialize()
         ItemCompendium.initialize()
         CombinationRegistry.registerCombinations()
-        Registry.register(Registry.RECIPE_SERIALIZER, InfuserRecipe.ID, InfuserRecipe.SERIALIZER)
-        Registry.register(Registry.RECIPE_TYPE, InfuserRecipe.ID, InfuserRecipe.TYPE)
-        Registry.register(Registry.RECIPE_SERIALIZER, CrucibleRecipe.ID, CrucibleRecipe.SERIALIZER)
-        Registry.register(Registry.RECIPE_TYPE, CrucibleRecipe.ID, CrucibleRecipe.TYPE)
+        Registry.register(Registries.RECIPE_SERIALIZER, InfuserRecipe.ID, InfuserRecipe.SERIALIZER)
+        Registry.register(Registries.RECIPE_TYPE, InfuserRecipe.ID, InfuserRecipe.TYPE)
+        Registry.register(Registries.RECIPE_SERIALIZER, CrucibleRecipe.ID, CrucibleRecipe.SERIALIZER)
+        Registry.register(Registries.RECIPE_TYPE, CrucibleRecipe.ID, CrucibleRecipe.TYPE)
 
     }
 

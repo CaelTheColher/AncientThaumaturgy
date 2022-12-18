@@ -17,7 +17,8 @@ import net.minecraft.screen.PlayerScreenHandler
 import net.minecraft.state.property.Properties
 import net.minecraft.util.math.Direction
 import net.minecraft.util.math.MathHelper
-import net.minecraft.util.math.Vec3f
+import net.minecraft.util.math.RotationAxis
+import org.joml.Vector3f
 
 class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
     override fun render(entity: SealBlockEntity, tickDelta: Float, matrices: MatrixStack, vertexConsumers: VertexConsumerProvider, light: Int, overlay: Int) {
@@ -34,15 +35,15 @@ class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
         val direction = entity.getDirection()
         val directionVector = direction.opposite.unitVector
         val rotationVector = when(direction) {
-            Direction.UP -> Vec3f.NEGATIVE_Y
-            Direction.DOWN -> Vec3f.POSITIVE_Y
-            Direction.NORTH -> Vec3f.POSITIVE_Z
-            Direction.SOUTH -> Vec3f.NEGATIVE_Z
-            Direction.EAST -> Vec3f.NEGATIVE_X
-            Direction.WEST -> Vec3f.POSITIVE_X
-            else -> Vec3f.POSITIVE_Z
+            Direction.UP -> RotationAxis.NEGATIVE_Y
+            Direction.DOWN -> RotationAxis.POSITIVE_Y
+            Direction.NORTH -> RotationAxis.POSITIVE_Z
+            Direction.SOUTH -> RotationAxis.NEGATIVE_Z
+            Direction.EAST -> RotationAxis.NEGATIVE_X
+            Direction.WEST -> RotationAxis.POSITIVE_X
+            else -> RotationAxis.POSITIVE_Z
         }
-        directionVector.multiplyComponentwise(offset, offset, offset)
+        directionVector.mul(offset, offset, offset)
         matrices.push()
         matrices.translate(0.5,0.5,0.5)
         val face = entity.cachedState[WallMountedBlock.FACE]
@@ -60,7 +61,7 @@ class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
             else -> rotation
         }
 
-        matrices.multiply(rotationVector.getDegreesQuaternion(rotation))
+        matrices.multiply(rotationVector.rotationDegrees(rotation))
         matrices.translate(-0.5,-0.5,-0.5)
         matrices.translate(directionVector.x * 1.1093, directionVector.y * 1.1093, directionVector.z * 1.1093)
         when(direction) {
@@ -75,7 +76,7 @@ class SealRenderer : BlockEntityRenderer<SealBlockEntity> {
         matrices.pop()
     }
 
-    private fun renderVertices(bb: VertexConsumer, sprite: Sprite, entry: MatrixStack.Entry, normal: Vec3f, overlay: Int, light: Int, f: Float, g: Float, h: Float, i: Float, j: Float, k: Float, l: Float, m: Float) {
+    private fun renderVertices(bb: VertexConsumer, sprite: Sprite, entry: MatrixStack.Entry, normal: Vector3f, overlay: Int, light: Int, f: Float, g: Float, h: Float, i: Float, j: Float, k: Float, l: Float, m: Float) {
         bb.vertex(entry.positionMatrix, f, h, j).color(1f, 1f, 1f, 1f).texture(sprite.maxU, sprite.minV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
         bb.vertex(entry.positionMatrix, g, h, k).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.minV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
         bb.vertex(entry.positionMatrix, g, i, l).color(1f, 1f, 1f, 1f).texture(sprite.minU, sprite.maxV).overlay(overlay).light(light).normal(entry.normalMatrix, normal.x, normal.y, normal.z).next()
