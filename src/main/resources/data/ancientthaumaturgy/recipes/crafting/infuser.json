@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "C#C",
+    "ICI"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "I": {
+      "item": "minecraft:copper_ingot"
+    },
+    "C": {
+      "item": "minecraft:cut_copper_slab"
+    },
+    "#": {
+      "tag": "ancientthaumaturgy:crystals"
+    }
+  },
+  "result": {
+    "item": "ancientthaumaturgy:infuser_block",
+    "count": 1
+  }
+}

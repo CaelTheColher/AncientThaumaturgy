@@ -1,0 +1,20 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:copper_block"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "tag": "ancientthaumaturgy:crystals"
+    }
+  ],
+  "vis": 100,
+  "infuseTime": 20,
+  "result": {
+    "item": "ancientthaumaturgy:tank_block",
+    "count": 1
+  }
+}

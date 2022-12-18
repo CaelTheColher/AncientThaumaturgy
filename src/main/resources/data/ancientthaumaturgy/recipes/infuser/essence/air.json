@@ -1,0 +1,20 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "ancientthaumaturgy:crystal/air"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "vis": 100,
+  "infuseTime": 15,
+  "result": {
+    "item": "ancientthaumaturgy:essence/air",
+    "count": 1
+  }
+}

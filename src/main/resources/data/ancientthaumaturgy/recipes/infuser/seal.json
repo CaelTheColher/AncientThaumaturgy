@@ -1,0 +1,20 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "tag": "ancientthaumaturgy:crystals"
+    }
+  ],
+  "vis": 200,
+  "infuseTime": 40,
+  "result": {
+    "item": "ancientthaumaturgy:seal_block",
+    "count": 1
+  }
+}

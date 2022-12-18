@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ancientthaumaturgy:crystal/air",
+    "ancientthaumaturgy:crystal/earth",
+    "ancientthaumaturgy:crystal/fire",
+    "ancientthaumaturgy:crystal/water",
+    "ancientthaumaturgy:crystal/magic",
+    "ancientthaumaturgy:crystal/corruption"
+  ]
+}

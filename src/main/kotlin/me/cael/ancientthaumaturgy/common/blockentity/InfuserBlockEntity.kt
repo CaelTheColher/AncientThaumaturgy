@@ -28,7 +28,9 @@ class InfuserBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Block
             visRequirement = recipe.vis
             infuseTime = recipe.infuseTime
             //vis = visRequirement // debug
-            if (inventory[6].count + result.count <= 64 && (inventory[6].isEmpty || inventory[6].isItemEqual(result)) && visStorage.amount >= visRequirement) {
+
+            val inventoryCheck = (inventory.filterIndexed { index, itemStack -> index < inventory.size - 3 && !itemStack.isEmpty }.count() == recipe.input.size) // avoid item loss by checking if recipe and inventory (minus the output slots) are the same size
+            if (inventoryCheck && inventory[6].count + result.count <= 64 && (inventory[6].isEmpty || inventory[6].isItemEqual(result)) && visStorage.amount >= visRequirement) {
                 ticks++
                 if (ticks >= infuseTime) {
                     recipe.input.forEach { ingredient ->
