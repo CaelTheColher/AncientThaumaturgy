@@ -13,10 +13,18 @@
   "item.ancientthaumaturgy.crystal.water": "Water Crystal",
   "item.ancientthaumaturgy.crystal.magic": "Magic Crystal",
   "item.ancientthaumaturgy.crystal.corruption": "Corruption Crystal",
+
   "item.ancientthaumaturgy.lexicon": "Lexica Thaumaturga",
   "item.ancientthaumaturgy.arcane_tinkering_tool": "Arcane Tinkering Tool",
 
-  "item.ancientthaumaturgy.portal_wand": "Cafeteria Magic Handheld Portal Seal™",
+  "item.ancientthaumaturgy.thaumium_ingot"  : "Thaumium Ingot",
+  "item.ancientthaumaturgy.thaumium_sword"  : "Thaumium Sword",
+  "item.ancientthaumaturgy.thaumium_pickaxe": "Thaumium Pickaxe",
+  "item.ancientthaumaturgy.thaumium_axe"    : "Thaumium Axe",
+  "item.ancientthaumaturgy.thaumium_shovel" : "Thaumium Shovel",
+  "item.ancientthaumaturgy.thaumium_hoe"    : "Thaumium Hoe",
+
+  "item.ancientthaumaturgy.portal_wand": "Cafeteria Magic© Handheld Portal Seal Device™",
 
   "block.ancientthaumaturgy.crystal_block.air": "Air Crystal Block",
   "block.ancientthaumaturgy.crystal_block.earth": "Earth Crystal Block",

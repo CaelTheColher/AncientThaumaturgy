@@ -1,0 +1,17 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "tag": "ancientthaumaturgy:crystals"
+    }
+  ],
+  "vis": 20,
+  "infuseTime": 10,
+  "result": {
+    "item": "ancientthaumaturgy:thaumium_ingot",
+    "count": 1
+  }
+}

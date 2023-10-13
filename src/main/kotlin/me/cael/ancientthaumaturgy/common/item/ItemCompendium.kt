@@ -7,7 +7,7 @@ import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.item.lexicon.LexiconItem
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
-import net.minecraft.item.Item
+import net.minecraft.item.*
 import net.minecraft.registry.Registries
 
 object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
@@ -30,7 +30,14 @@ object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
     val MAGIC_CRYSTAL = register("crystal/magic", Item(Item.Settings()))
     val CORRUPTION_CRYSTAL = register("crystal/corruption", Item(Item.Settings()))
 
-    val portal_wand = register("portal_wand", PortalWandItem())
+    val THAUMIUM_INGOT = register("thaumium_ingot", Item(Item.Settings()))
+    val THAUMIUM_SWORD = register("thaumium_sword", SwordItem(ThaumiumToolMaterial(), 3, -2.4F, Item.Settings()))
+    val THAUMIUM_PICKAXE = register("thaumium_pickaxe", PickaxeItem(ThaumiumToolMaterial(), 1, -2.8f, Item.Settings()))
+    val THAUMIUM_AXE = register("thaumium_axe", AxeItem(ThaumiumToolMaterial(), 6.0f, -3.1f, Item.Settings()))
+    val THAUMIUM_SHOVEL = register("thaumium_shovel", ShovelItem(ThaumiumToolMaterial(), 1.5f, -3.0f, Item.Settings()))
+    val THAUMIUM_HOE = register("thaumium_hoe", HoeItem(ThaumiumToolMaterial(), -2, -1.0f, Item.Settings()))
+
+    val PORTAL_WAND = register("portal_wand", PortalWandItem())
 
     override fun initialize() {
         BlockCompendium.registerBlockItems(map)
