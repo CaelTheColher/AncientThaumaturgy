@@ -1,14 +1,13 @@
 package me.cael.ancientthaumaturgy.common.block
 
+import me.cael.ancientthaumaturgy.common.blockentity.BlockEntityCompendium
 import me.cael.ancientthaumaturgy.common.blockentity.MachineEntity
 import me.cael.ancientthaumaturgy.common.blockentity.TubeBlockEntity
-import net.minecraft.block.Block
-import net.minecraft.block.BlockEntityProvider
-import net.minecraft.block.BlockState
-import net.minecraft.block.ShapeContext
+import net.minecraft.block.*
 import net.minecraft.block.entity.BlockEntity
-import net.minecraft.entity.LivingEntity
-import net.minecraft.item.ItemStack
+import net.minecraft.block.entity.BlockEntityTicker
+import net.minecraft.block.entity.BlockEntityType
+import net.minecraft.item.ItemPlacementContext
 import net.minecraft.state.StateManager
 import net.minecraft.state.property.BooleanProperty
 import net.minecraft.state.property.Properties
@@ -22,7 +21,7 @@ import net.minecraft.world.World
 import net.minecraft.world.WorldAccess
 
 @Suppress("OVERRIDE_DEPRECATION")
-class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
+class TubeBlock(settings: Settings) : BlockWithEntity(settings) {
     
     companion object {
         val CENTER_SHAPE: VoxelShape = createCuboidShape(5.0, 5.0, 5.0, 11.0, 11.0, 11.0)
@@ -71,21 +70,21 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
         return state.with(getProperty(direction), neighbourBlockEntity is MachineEntity)
     }
 
-    override fun onStateReplaced(state: BlockState, world: World, pos: BlockPos, newState: BlockState, moved: Boolean) {
-        super.onStateReplaced(state, world, pos, newState, moved)
-//        if(!world.isClient) {
-//            if (state.isOf(newState.block))
-//                Network.handleUpdate(world as ServerWorld, pos)
-//            else
-//                Network.handleBreak(world as ServerWorld, pos)
-//        }
+    override fun getPlacementState(ctx: ItemPlacementContext): BlockState {
+        var state = defaultState
+        Direction.values().forEach { direction ->
+            val targetPos = ctx.blockPos.offset(direction)
+            val neighbourBlockEntity = ctx.world.getBlockEntity(targetPos)
+            state = state.with(getProperty(direction), neighbourBlockEntity is MachineEntity)
+        }
+        return state
     }
 
-    override fun onPlaced(world: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, itemStack: ItemStack) {
-        super.onPlaced(world, pos, state, placer, itemStack)
-//        if (!world.isClient) {
-//            Network.handleUpdate(world as ServerWorld, pos)
-//        }
+    override fun <T : BlockEntity> getTicker(world: World, state: BlockState, type: BlockEntityType<T>): BlockEntityTicker<T>? {
+        return checkType(
+            type, BlockEntityCompendium.TUBE_BLOCK_TYPE,
+            MachineEntity.Companion::ticker
+        )
     }
 
     override fun appendProperties(builder: StateManager.Builder<Block, BlockState>) {
@@ -94,7 +93,7 @@ class TubeBlock(settings: Settings) : Block(settings), BlockEntityProvider {
 
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = TubeBlockEntity(pos, state)
     override fun getOutlineShape(state: BlockState, view: BlockView?, pos: BlockPos?, context: ShapeContext?): VoxelShape = getShape(state)
-
+    override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.MODEL
 
     fun getShape(direction: Direction): VoxelShape {
         var shape = VoxelShapes.empty()

@@ -30,6 +30,8 @@ object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
     val MAGIC_CRYSTAL = register("crystal/magic", Item(Item.Settings()))
     val CORRUPTION_CRYSTAL = register("crystal/corruption", Item(Item.Settings()))
 
+    val portal_wand = register("portal_wand", PortalWandItem())
+
     override fun initialize() {
         BlockCompendium.registerBlockItems(map)
         map.forEach {(_, item) ->

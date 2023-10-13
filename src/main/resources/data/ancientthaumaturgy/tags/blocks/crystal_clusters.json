@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ancientthaumaturgy:crystal_cluster/air",
+    "ancientthaumaturgy:crystal_cluster/earth",
+    "ancientthaumaturgy:crystal_cluster/fire",
+    "ancientthaumaturgy:crystal_cluster/water",
+    "ancientthaumaturgy:crystal_cluster/magic",
+    "ancientthaumaturgy:crystal_cluster/corruption"
+  ]
+}

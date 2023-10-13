@@ -1,6 +1,7 @@
 package me.cael.ancientthaumaturgy.common.blockentity.sealcombination
 
 import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.earth.*
+import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.magic.portal.Portal
 
 object CombinationRegistry {
     val registry = HashMap<String, AbstractSealCombination>()
@@ -9,7 +10,7 @@ object CombinationRegistry {
 
         /*
         AIR: Displaces
-        EARTH: Affects blocks.json/the world?
+        EARTH: Affects blocks/the world?
         FIRE: Damage/Burning
         WATER: Healing?
         MAGIC: M A G I C
@@ -54,12 +55,12 @@ object CombinationRegistry {
         // Magic
         // Portal
 //        registry["MA"]  = Portal('')
-//        registry["MAA"] = Portal('A')
-//        registry["MAE"] = Portal('E')
-//        registry["MAF"] = Portal('F')
-//        registry["MAW"] = Portal('W')
-//        registry["MAM"] = Portal('M')
-//        registry["MAC"] = Portal('C')
+        registry["MAA"] = Portal('A')
+        registry["MAE"] = Portal('E')
+        registry["MAF"] = Portal('F')
+        registry["MAW"] = Portal('W')
+        registry["MAM"] = Portal('M')
+        registry["MAC"] = Portal('C')
 
 
     }

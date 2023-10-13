@@ -1,7 +1,6 @@
 {
   "itemGroup.ancientthaumaturgy.item_group": "Ancient Thaumaturgy",
 
-
   "item.ancientthaumaturgy.essence.air": "Air Essence",
   "item.ancientthaumaturgy.essence.earth": "Earth Essence",
   "item.ancientthaumaturgy.essence.fire": "Fire Essence",
@@ -17,13 +16,22 @@
   "item.ancientthaumaturgy.lexicon": "Lexica Thaumaturga",
   "item.ancientthaumaturgy.arcane_tinkering_tool": "Arcane Tinkering Tool",
 
-  "block.ancientthaumaturgy.seal_block": "Seal",
+  "item.ancientthaumaturgy.portal_wand": "Cafeteria Magic Handheld Portal Seal™",
+
   "block.ancientthaumaturgy.crystal_block.air": "Air Crystal Block",
   "block.ancientthaumaturgy.crystal_block.earth": "Earth Crystal Block",
   "block.ancientthaumaturgy.crystal_block.fire": "Fire Crystal Block",
   "block.ancientthaumaturgy.crystal_block.water": "Water Crystal Block",
   "block.ancientthaumaturgy.crystal_block.magic": "Magic Crystal Block",
   "block.ancientthaumaturgy.crystal_block.corruption": "Corruption Crystal Block",
+  "block.ancientthaumaturgy.crystal_cluster.air": "Air Crystal Cluster",
+  "block.ancientthaumaturgy.crystal_cluster.earth": "Earth Crystal Cluster",
+  "block.ancientthaumaturgy.crystal_cluster.fire": "Fire Crystal Cluster",
+  "block.ancientthaumaturgy.crystal_cluster.water": "Water Crystal Cluster",
+  "block.ancientthaumaturgy.crystal_cluster.magic": "Magic Crystal Cluster",
+  "block.ancientthaumaturgy.crystal_cluster.corruption": "Corruption Crystal Cluster",
+
+  "block.ancientthaumaturgy.seal_block": "Seal",
   "block.ancientthaumaturgy.crucible_block": "Crucible",
   "block.ancientthaumaturgy.tube_block": "Thaumic Tube",
   "block.ancientthaumaturgy.tank_block": "Thaumic Tank",
