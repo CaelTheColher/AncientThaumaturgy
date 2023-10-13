@@ -1,0 +1,17 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
+    },
+    {
+      "tag": "ancientthaumaturgy:crystals"
+    }
+  ],
+  "vis": 20,
+  "infuseTime": 10,
+  "result": {
+    "item": "ancientthaumaturgy:enchanted_wood",
+    "count": 1
+  }
+}

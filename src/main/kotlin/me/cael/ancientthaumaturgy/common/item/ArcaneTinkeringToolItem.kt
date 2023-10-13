@@ -29,7 +29,4 @@ class ArcaneTinkeringToolItem : Item(Settings().maxCount(1)) {
         return ActionResult.PASS
     }
 
-
-
-
 }

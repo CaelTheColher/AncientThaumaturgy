@@ -1,4 +1,4 @@
-package me.cael.ancientthaumaturgy.common.item
+package me.cael.ancientthaumaturgy.common.item.staff
 
 import net.minecraft.block.BlockState
 import net.minecraft.entity.player.PlayerEntity

@@ -5,6 +5,8 @@ package me.cael.ancientthaumaturgy.common.item
 import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.item.lexicon.LexiconItem
+import me.cael.ancientthaumaturgy.common.item.staff.ExchangeWandItem
+import me.cael.ancientthaumaturgy.common.item.staff.PortalWandItem
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
 import net.minecraft.item.*
@@ -37,7 +39,13 @@ object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
     val THAUMIUM_SHOVEL = register("thaumium_shovel", ShovelItem(ThaumiumToolMaterial(), 1.5f, -3.0f, Item.Settings()))
     val THAUMIUM_HOE = register("thaumium_hoe", HoeItem(ThaumiumToolMaterial(), -2, -1.0f, Item.Settings()))
 
+    val ENCHANTED_WOOD = register("enchanted_wood", EnchantedWoodItem())
+
     val PORTAL_WAND = register("portal_wand", PortalWandItem())
+    val EXCHANGE_WAND = register("staff_earth", ExchangeWandItem())
+    val FIRE_WAND = register("staff_fire", Item(Item.Settings().maxCount(1)))
+    val LIGHTNING_WAND = register("staff_air", Item(Item.Settings().maxCount(1)))
+    val WATER_WAND = register("staff_water", Item(Item.Settings().maxCount(1)))
 
     override fun initialize() {
         BlockCompendium.registerBlockItems(map)
