@@ -1,0 +1,17 @@
+{
+  "type": "ancientthaumaturgy:infuser",
+  "ingredients": [
+    {
+      "item": "ancientthaumaturgy:crystal/fire"
+    },
+    {
+      "item": "ancientthaumaturgy:enchanted_wood"
+    }
+  ],
+  "vis": 200,
+  "infuseTime": 40,
+  "result": {
+    "item": "ancientthaumaturgy:staff_fire",
+    "count": 1
+  }
+}

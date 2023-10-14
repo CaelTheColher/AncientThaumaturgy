@@ -6,6 +6,7 @@ import me.cael.ancientthaumaturgy.AncientThaumaturgy
 import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.item.lexicon.LexiconItem
 import me.cael.ancientthaumaturgy.common.item.staff.ExchangeWandItem
+import me.cael.ancientthaumaturgy.common.item.staff.FireWandItem
 import me.cael.ancientthaumaturgy.common.item.staff.PortalWandItem
 import me.cael.ancientthaumaturgy.utils.RegistryCompendium
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents
@@ -43,7 +44,7 @@ object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
 
     val PORTAL_WAND = register("portal_wand", PortalWandItem())
     val EXCHANGE_WAND = register("staff_earth", ExchangeWandItem())
-    val FIRE_WAND = register("staff_fire", Item(Item.Settings().maxCount(1)))
+    val FIRE_WAND = register("staff_fire", FireWandItem())
     val LIGHTNING_WAND = register("staff_air", Item(Item.Settings().maxCount(1)))
     val WATER_WAND = register("staff_water", Item(Item.Settings().maxCount(1)))
 

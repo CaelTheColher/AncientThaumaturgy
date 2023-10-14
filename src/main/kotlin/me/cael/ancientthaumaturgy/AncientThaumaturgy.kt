@@ -4,6 +4,7 @@ import me.cael.ancientthaumaturgy.common.block.BlockCompendium
 import me.cael.ancientthaumaturgy.common.blockentity.BlockEntityCompendium
 import me.cael.ancientthaumaturgy.common.blockentity.sealcombination.CombinationRegistry
 import me.cael.ancientthaumaturgy.common.container.ScreenHandlerCompendium
+import me.cael.ancientthaumaturgy.common.entity.EntityCompendium
 import me.cael.ancientthaumaturgy.common.item.ItemCompendium
 import me.cael.ancientthaumaturgy.common.recipe.CrucibleRecipe
 import me.cael.ancientthaumaturgy.common.recipe.InfuserRecipe
@@ -34,6 +35,7 @@ object AncientThaumaturgy : ModInitializer {
         ScreenHandlerCompendium.initialize()
         ItemCompendium.initialize()
         CombinationRegistry.registerCombinations()
+        EntityCompendium.initialize()
         Registry.register(Registries.RECIPE_SERIALIZER, InfuserRecipe.ID, InfuserRecipe.SERIALIZER)
         Registry.register(Registries.RECIPE_TYPE, InfuserRecipe.ID, InfuserRecipe.TYPE)
         Registry.register(Registries.RECIPE_SERIALIZER, CrucibleRecipe.ID, CrucibleRecipe.SERIALIZER)
