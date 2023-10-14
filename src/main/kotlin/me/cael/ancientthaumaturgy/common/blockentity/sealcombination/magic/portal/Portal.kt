@@ -75,7 +75,7 @@ class Portal(val frequency: Char) : AbstractSealCombination() {
         )) { true }
         val partnerPos = seal.partner!!.pos.toCenterPos()
         val partnerDir = seal.partner!!.getFacing()
-        val exitPos = partnerPos.withBias(partnerDir, 1.0)
+        val exitPos = partnerPos.offset(partnerDir, 1.0)
         val pitch = Math.toDegrees(asin(-partnerDir.unitVector.y).toDouble())
         val yaw = Math.toDegrees(atan2(partnerDir.unitVector.x, partnerDir.unitVector.z).toDouble())
         nearbyPlayers.forEach { player ->

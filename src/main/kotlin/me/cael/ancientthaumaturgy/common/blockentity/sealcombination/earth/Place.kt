@@ -26,7 +26,7 @@ class Place(range: Double, depth: Double) : AbstractSealCombination(10, range, d
     private fun tryPlace(world: World, pos: BlockPos, stack: ItemStack) : Boolean {
         val state = world.getBlockState(pos)
         val block = (stack.item as BlockItem).block
-        val canPlace = (state.material.isReplaceable  && block.defaultState.canPlaceAt(world, pos))
+        val canPlace = (state.isReplaceable  && block.defaultState.canPlaceAt(world, pos))
         if (canPlace && world.setBlockState(pos, block.defaultState)) {
             val soundGroup = block.defaultState.soundGroup
             world.playSound(null, pos, soundGroup.placeSound, SoundCategory.BLOCKS, soundGroup.volume, soundGroup.pitch)

@@ -50,7 +50,7 @@ object ItemCompendium: RegistryCompendium<Item>(Registries.ITEM) {
     override fun initialize() {
         BlockCompendium.registerBlockItems(map)
         map.forEach {(_, item) ->
-            ItemGroupEvents.modifyEntriesEvent(AncientThaumaturgy.creativeTab).register {
+            ItemGroupEvents.modifyEntriesEvent(Registries.ITEM_GROUP.getKey(AncientThaumaturgy.creativeTab).get()).register {
                 it.add(item)
             }
         }

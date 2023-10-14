@@ -7,7 +7,7 @@ import me.cael.ancientthaumaturgy.utils.forEach
 import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.block.Block
 import net.minecraft.item.BlockItem
-import net.minecraft.loot.context.LootContext
+import net.minecraft.loot.context.LootContextParameterSet
 import net.minecraft.loot.context.LootContextType
 import net.minecraft.registry.tag.BlockTags
 import net.minecraft.server.world.ServerWorld
@@ -56,8 +56,9 @@ class CreateOre(range: Double, depth: Double) : AbstractSealCombination(25, rang
         }
 
         fun getOre(world: ServerWorld): Block {
-            val table = world.server.lootManager.getTable(identifier("seal/ore/default"))
-            val ctx = LootContext.Builder(world).random(world.random).build(ORE_SEAL_LOOT_CONTEXT)
+            val table = world.server.lootManager.getLootTable(identifier("seal/ore/default"))
+
+            val ctx = LootContextParameterSet.Builder(world).build(ORE_SEAL_LOOT_CONTEXT)
             val stackList = table.generateLoot(ctx)
             return ((stackList[0].item) as BlockItem).block
         }

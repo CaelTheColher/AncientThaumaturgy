@@ -95,21 +95,21 @@ object RenderLexicon {
             ms.scale(0.0035f, 0.0035f, -0.0035f)
 
             val title = "Lexica"
-            font.draw(title, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
+            font.draw(title, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, TextRenderer.TextLayerType.NORMAL, 0, light)
 
             ms.translate(-15.0, 10.0, 0.0)
             val title2 = "Thaumaturga"
-            font.draw(title2, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
+            font.draw(title2, 0f, 0f, 0xD69700, false, ms.peek().positionMatrix, buffers, TextRenderer.TextLayerType.NORMAL, 0, light)
 
             ms.translate(0.0, 10.0, 0.0)
             ms.scale(0.50f, 0.50f, 0.50f)
             val edition: Text = Text.literal("1st Edition").fillStyle(Style.EMPTY.withBold(true).withItalic(true))
-            font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().positionMatrix, buffers, false, 0, light)
+            font.draw(edition, 0f, 0f, 0xA07100, false, ms.peek().positionMatrix, buffers, TextRenderer.TextLayerType.NORMAL, 0, light)
 
             ms.translate(7.5, 190.0, 0.0)
             val authorTitle = "A book by Tector"
             val len: Int = font.getWidth(authorTitle)
-            font.draw(authorTitle, 58 - len / 2f, -8f, 0xD69700, false, ms.peek().positionMatrix, buffers, false, 0, light)
+            font.draw(authorTitle, 58 - len / 2f, -8f, 0xD69700, false, ms.peek().positionMatrix, buffers, TextRenderer.TextLayerType.NORMAL, 0, light)
         }
 
         ms.pop()

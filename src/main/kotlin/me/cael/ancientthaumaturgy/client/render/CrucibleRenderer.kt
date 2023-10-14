@@ -11,7 +11,7 @@ import net.minecraft.client.render.OverlayTexture
 import net.minecraft.client.render.RenderLayer
 import net.minecraft.client.render.VertexConsumerProvider
 import net.minecraft.client.render.block.entity.BlockEntityRenderer
-import net.minecraft.client.render.model.json.ModelTransformation
+import net.minecraft.client.render.model.json.ModelTransformationMode
 import net.minecraft.client.util.SpriteIdentifier
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.item.ItemStack
@@ -76,7 +76,7 @@ class CrucibleRenderer : BlockEntityRenderer<CrucibleBlockEntity> {
             val y = (random.nextFloat() * 2.0f - 1.0f) * 0.15f * 0.5f
             val z = (random.nextFloat() * 2.0f - 1.0f) * 0.15f * 0.5f
             matrices.translate(x.toDouble(), y.toDouble(), z.toDouble())
-            MinecraftClient.getInstance().itemRenderer.renderItem(stack, ModelTransformation.Mode.GROUND, light, overlay, matrices, vertexConsumers, 0)
+            MinecraftClient.getInstance().itemRenderer.renderItem(stack, ModelTransformationMode.GROUND, light, overlay, matrices, vertexConsumers, entity.world, 0)
             matrices.pop()
         }
         matrices.pop()

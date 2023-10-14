@@ -41,7 +41,7 @@ class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Bloc
     }
 
     private fun checkForItems() {
-        val itemEntities = world!!.getOtherEntities(null, Box(pos)) { it is ItemEntity && (inventory[0].isEmpty || inventory[0].isItemEqual(it.stack) ) }
+        val itemEntities = world!!.getOtherEntities(null, Box(pos)) { it is ItemEntity && (inventory[0].isEmpty || inventory[0].item == (it.stack.item) ) }
         if (itemEntities.isEmpty()) return
         val itemEntity = itemEntities.removeFirst() as ItemEntity
         val item = itemEntity.stack
@@ -49,7 +49,7 @@ class CrucibleBlockEntity(pos: BlockPos, state: BlockState) : MachineEntity(Bloc
             inventory[0] = item.copy()
             item.count = 0
         }
-        if (item.isItemEqual(inventory[0])) {
+        if (item.item == inventory[0].item) {
             val remaining = inventory[0].maxCount - inventory[0].count
             val toAdd = if(item.count >= remaining) remaining else item.count
             inventory[0].count += toAdd

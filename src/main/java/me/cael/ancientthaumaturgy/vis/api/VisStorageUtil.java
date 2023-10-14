@@ -54,7 +54,7 @@ public class VisStorageUtil {
 	 * This can typically be used for inventories or slots that want to accept vis storages only.
 	 */
 	public static boolean isEnergyStorage(ItemStack stack) {
-		return ContainerItemContext.withInitial(stack).find(VisStorage.ITEM) != null;
+		return ContainerItemContext.withConstant(stack).find(VisStorage.ITEM) != null;
 	}
 
 	private VisStorageUtil() {

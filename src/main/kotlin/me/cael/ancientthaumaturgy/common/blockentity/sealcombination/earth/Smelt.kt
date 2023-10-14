@@ -44,7 +44,7 @@ class Smelt(range: Double, depth: Double) : AbstractSealCombination(10, range, d
     private fun getSmeltingResult(item: Item, world: World) : ItemStack? {
         val recipe = world.recipeManager.getFirstMatch(RecipeType.SMELTING, SimpleInventory(item.defaultStack), world)
         if (!recipe.isPresent) return null
-        return recipe.get().output.copy()
+        return recipe.get().getOutput(world.registryManager).copy()
     }
 
 }

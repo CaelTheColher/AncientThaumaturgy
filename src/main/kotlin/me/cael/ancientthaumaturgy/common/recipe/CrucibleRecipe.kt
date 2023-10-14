@@ -11,6 +11,7 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.Recipe
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.RecipeType
+import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
 import net.minecraft.world.World
@@ -19,11 +20,11 @@ class CrucibleRecipe(private val identifier: Identifier, private val group: Stri
 
     override fun matches(inv: CrucibleBlockEntity, world: World): Boolean = input.test(inv.inventory[0])
 
-    override fun craft(inv: CrucibleBlockEntity?): ItemStack = Items.AIR.defaultStack
+    override fun craft(inv: CrucibleBlockEntity?, registryManager: DynamicRegistryManager): ItemStack? = Items.AIR.defaultStack
 
     override fun fits(width: Int, height: Int): Boolean = false
 
-    override fun getOutput(): ItemStack = Items.AIR.defaultStack
+    override fun getOutput(registryManager: DynamicRegistryManager): ItemStack? = Items.AIR.defaultStack
 
     override fun getId(): Identifier = identifier
 

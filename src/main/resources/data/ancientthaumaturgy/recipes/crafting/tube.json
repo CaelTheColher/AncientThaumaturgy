@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "C#C",
+    "GGG"
+  ],
+  "key": {
+    "#": {
+      "tag": "ancientthaumaturgy:crystals"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "ancientthaumaturgy:tube_block",
+    "count": 4
+  }
+}

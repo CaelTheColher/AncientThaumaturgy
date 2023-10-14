@@ -30,7 +30,7 @@ dependencies {
 
     // Dependency
 
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+//	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 	// Compatibility
 
@@ -39,7 +39,7 @@ dependencies {
 
 	// Testing
 
-	modRuntimeOnly "com.ptsmods:devlogin:3.1.1"
+//	modRuntimeOnly "com.ptsmods:devlogin:3.1.1"
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.

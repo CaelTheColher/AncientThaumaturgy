@@ -61,7 +61,7 @@ class TankBlock(settings: Settings) : BlockWithEntity(settings) {
         builder.add(UP, DOWN)
     }
 
-    override fun isTranslucent(state: BlockState, world: BlockView, pos: BlockPos): Boolean = true
+    override fun isTransparent(state: BlockState, world: BlockView, pos: BlockPos): Boolean = true
     override fun createBlockEntity(pos: BlockPos, state: BlockState): BlockEntity = TankBlockEntity(pos, state)
     override fun getOutlineShape(state: BlockState, world: BlockView, pos: BlockPos, context: ShapeContext): VoxelShape = OUTLINE_SHAPE
     override fun getRenderType(state: BlockState): BlockRenderType = BlockRenderType.MODEL

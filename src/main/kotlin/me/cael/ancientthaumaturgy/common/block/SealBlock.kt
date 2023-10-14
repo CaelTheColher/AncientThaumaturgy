@@ -31,7 +31,7 @@ import net.minecraft.world.World
 import net.minecraft.world.tick.OrderedTick
 
 @Suppress("OVERRIDE_DEPRECATION")
-class SealBlock : WallMountedBlock(FabricBlockSettings.of(Material.DECORATION).noCollision()), Waterloggable, BlockEntityProvider {
+class SealBlock : WallMountedBlock(FabricBlockSettings.create().noCollision()), Waterloggable, BlockEntityProvider {
 
     companion object {
         val WATERLOGGED: BooleanProperty = Properties.WATERLOGGED

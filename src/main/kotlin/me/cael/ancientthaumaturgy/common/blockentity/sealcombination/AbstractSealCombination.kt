@@ -14,7 +14,9 @@ abstract class AbstractSealCombination(val delay: Int = 1, val range: Double = 0
 
     fun getArea(pos: BlockPos, direction: Direction): Box {
         val newPos = pos.add(direction.vector)
-                .add(range * direction.offsetX, direction.offsetY.toDouble(), range * direction.offsetZ)
+                .add((range * direction.offsetX).toInt(), direction.offsetY.toDouble().toInt(),
+                    (range * direction.offsetZ).toInt()
+                )
         return Box(newPos, newPos).expand(range, range*depth, range)
     }
 

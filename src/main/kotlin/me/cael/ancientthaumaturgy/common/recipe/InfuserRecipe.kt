@@ -8,12 +8,13 @@ import me.cael.ancientthaumaturgy.utils.identifier
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.recipe.*
+import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.util.Identifier
 import net.minecraft.util.JsonHelper
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.world.World
 
-class InfuserRecipe(private val identifier: Identifier, private val group: String, private val output: ItemStack, val input: DefaultedList<Ingredient>, val vis: Int, val infuseTime: Int) : Recipe<InfuserBlockEntity> {
+class InfuserRecipe(val identifier: Identifier, private val group: String, val output: ItemStack, val input: DefaultedList<Ingredient>, val vis: Int, val infuseTime: Int) : Recipe<InfuserBlockEntity> {
 
     override fun matches(inv: InfuserBlockEntity, world: World): Boolean {
         val matches = input.filter { ingredient ->
@@ -22,11 +23,11 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
         return matches.size == input.size
     }
 
-    override fun craft(inv: InfuserBlockEntity?): ItemStack = output.copy()
+    override fun craft(inv: InfuserBlockEntity?, registryManager: DynamicRegistryManager?): ItemStack? = output.copy()
 
     override fun fits(width: Int, height: Int): Boolean = false
 
-    override fun getOutput(): ItemStack = output
+    override fun getOutput(registryManager: DynamicRegistryManager?): ItemStack? = output
 
     override fun getId(): Identifier = identifier
 
@@ -85,7 +86,7 @@ class InfuserRecipe(private val identifier: Identifier, private val group: Strin
         }
 
         override fun write(buf: PacketByteBuf, recipe: InfuserRecipe) {
-            buf.writeString(recipe.group)
+            buf.writeString(recipe.getGroup())
             buf.writeVarInt(recipe.input.size)
 
             recipe.input.iterator().forEach {

@@ -6,8 +6,8 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.entity.BlockEntity
 import net.minecraft.block.entity.BlockEntityType
 import net.minecraft.nbt.NbtCompound
-import net.minecraft.network.Packet
 import net.minecraft.network.listener.ClientPlayPacketListener
+import net.minecraft.network.packet.Packet
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.BlockPos
@@ -27,7 +27,7 @@ open class MachineEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockSt
     open fun tick() {
         if (visStorage.supportsExtraction()) {
             val targets = linkedSetOf<VisStorage>()
-            Direction.values().forEach { direction ->
+            Direction.entries.forEach { direction ->
                 val targetPos = pos.offset(direction)
                 if (!(world!!.getBlockEntity(targetPos) is TankBlockEntity && this is TankBlockEntity)) {
                     VisStorage.SIDED.find(world, targetPos, direction.opposite)?.let { target ->
