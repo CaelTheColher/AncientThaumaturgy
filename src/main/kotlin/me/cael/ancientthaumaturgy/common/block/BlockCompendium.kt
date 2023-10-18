@@ -52,9 +52,14 @@ object BlockCompendium: RegistryCompendium<Block>(Registries.BLOCK) {
     val INFUSER_BLOCK = register("infuser_block", InfuserBlock(FabricBlockSettings.create().nonOpaque().strength(3.0F, 6.0F).sounds(BlockSoundGroup.COPPER).requiresTool()))
     val CRUCIBLE_BLOCK = register("crucible_block", CrucibleBlock(FabricBlockSettings.create().mapColor(MapColor.ORANGE).strength(3.0F, 6.0F).requiresTool().sounds(BlockSoundGroup.COPPER)))
 
+    val PORTABLE_HOLE_BLOCK = register("portable_hole_block", PortableHoleBlock(FabricBlockSettings.create().noCollision().noBlockBreakParticles().dropsNothing().strength(-1.0F, 3600000.0F)))
+
     fun registerBlockItems(itemMap: MutableMap<Identifier, Item>) {
         map.forEach { (identifier, block) ->
-            itemMap[identifier] = BlockItem(block, Item.Settings())
+            itemMap[identifier] = when (block) {
+                PORTABLE_HOLE_BLOCK -> return@forEach
+                else -> BlockItem(block, Item.Settings())
+            }
         }
     }
 

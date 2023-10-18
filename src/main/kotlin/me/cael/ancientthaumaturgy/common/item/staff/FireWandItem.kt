@@ -19,7 +19,7 @@ class FireWandItem : Item(Settings().maxCount(1)) {
 
     override fun usageTick(world: World, user: LivingEntity, stack: ItemStack, remainingUseTicks: Int) {
         if (world.isClient) return
-        for (i in 1..3) {
+        repeat(3) {
             val fireEntity = FireParticleEntity(world, user)
             val rot = user.rotationVector
             fireEntity.setVelocity(rot.x, rot.y, rot.z, 0.3f, 4.0f)

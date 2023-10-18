@@ -33,6 +33,8 @@
   "item.ancientthaumaturgy.staff_air"  : "Wand of Lightning",
   "item.ancientthaumaturgy.staff_water": "Wand of Water",
 
+  "item.ancientthaumaturgy.portable_hole": "Portable Hole",
+
   "block.ancientthaumaturgy.crystal_block.air"         : "Air Crystal Block",
   "block.ancientthaumaturgy.crystal_block.earth"       : "Earth Crystal Block",
   "block.ancientthaumaturgy.crystal_block.fire"        : "Fire Crystal Block",

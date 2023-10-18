@@ -12,6 +12,7 @@ object BlockEntityRendererCompendium: GenericCompendium<BlockEntityRendererFacto
         register("seal_block", BlockEntityRendererFactory { SealRenderer() })
         register("tank_block", BlockEntityRendererFactory { TankRenderer() })
         register("crucible_block", BlockEntityRendererFactory { CrucibleRenderer() })
+        register("portable_hole_block", BlockEntityRendererFactory { PortableHoleEntityRenderer() })
     }
 
     @Suppress("UNCHECKED_CAST")

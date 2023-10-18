@@ -3,9 +3,15 @@
   "package": "me.cael.ancientthaumaturgy.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "AccessorLootContextTypes"
+    "AccessorLootContextTypes",
+    "MixinAbstractBlockState",
+    "MixinBlockEntity",
+    "MixinDirectBlockEntityTickInvoker",
+    "MixinWorldChunk"
   ],
   "client": [
+    "MixinBlockEntityRenderDispatcher",
+    "MixinChunkBuilder",
     "MixinHeldItemRenderer",
     "MixinMinecraftClient"
   ],

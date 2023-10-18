@@ -14,8 +14,4 @@ object EntityCompendium : RegistryCompendium<EntityType<*>>(Registries.ENTITY_TY
         type: EntityType<FireParticleEntity>, world: World -> FireParticleEntity(type, world)
     }.dimensions(EntityDimensions.fixed(0.25f, 0.25f)).build())
 
-    override fun initialize() {
-        super.initialize()
-    }
-
 }

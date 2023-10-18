@@ -108,7 +108,7 @@ class TubeBlock(settings: Settings) : BlockWithEntity(settings) {
 
     private val SHAPE_CACHE = hashSetOf<TubeShape>()
     private fun getShape(state: BlockState): VoxelShape {
-        val directions = Direction.values().filter { dir -> state[getProperty(dir)] }.toTypedArray()
+        val directions = Direction.entries.filter { dir -> state[getProperty(dir)] }.toTypedArray()
         var tubeShapeCache = SHAPE_CACHE.firstOrNull { shape -> shape.directions.contentEquals(directions) }
         if (tubeShapeCache == null) {
             var shape = run {
@@ -123,7 +123,7 @@ class TubeBlock(settings: Settings) : BlockWithEntity(settings) {
                     CENTER_SHAPE
                 }
             }
-            Direction.values().forEach { direction ->
+            Direction.entries.forEach { direction ->
                 if (state[getProperty(direction)]) shape = VoxelShapes.union(shape, getShape(direction))
             }
             tubeShapeCache = TubeShape(directions, shape)

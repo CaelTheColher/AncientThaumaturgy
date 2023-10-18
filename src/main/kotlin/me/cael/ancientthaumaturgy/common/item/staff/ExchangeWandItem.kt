@@ -26,8 +26,9 @@ class ExchangeWandItem : Item(Settings().maxCount(1)) {
         if(selected == null || player.inventory.count(selected) <= 0 || context.world.getBlockState(pos).block == selected!!.block) return ActionResult.FAIL
 
         if(!player.isCreative) {
-            player.inventory.getStack { itemStack -> itemStack.item == selected }?.decrement(1)
+            player.inventory.getStack({ it.item == selected })?.decrement(1)
         }
+
         // TODO: try to put the item directly in the player's inventory and replace the block directly
         context.world.breakBlock(pos, true, player)
         context.world.setBlockState(pos, selected!!.block.defaultState)
